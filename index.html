@@ -1,0 +1,1150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Councils, One Campus — SLC &amp; TVC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#100d0a;
+    --charcoal:#1a1510;
+    --charcoal-2:#221b14;
+    --paper:#f4efe2;
+    --muted:#a89c86;
+    --muted-dim:#6f6555;
+    --gold:#f0a83c;
+    --gold-dim:#c98a2e;
+    --gold-line:rgba(240,168,60,0.35);
+    --ember:#e07a2a;
+    --ember-dim:#b85a17;
+    --ember-line:rgba(224,122,42,0.35);
+    --parchment:#ece2cc;
+    --line:rgba(244,239,226,0.12);
+    --shadow:0 20px 50px rgba(0,0,0,0.45);
+    --ease:cubic-bezier(.22,.85,.32,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Manrope',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; z-index:70; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 0%, transparent 45%, rgba(0,0,0,0.55) 115%);
+  }
+  body::after{
+    content:''; position:fixed; inset:0; z-index:71; pointer-events:none; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .nav-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:101;
+    background:linear-gradient(90deg, var(--gold), var(--ember));
+  }
+
+  /* curtain reveal + page transition */
+  .curtain{ position:fixed; inset:0; z-index:200; display:flex; pointer-events:none; }
+  .curtain-panel{ flex:1; background:var(--ink); position:relative; transition:transform 0.55s var(--ease); }
+  .curtain-panel.left{ border-right:1px solid var(--line); }
+  .curtain.open .curtain-panel.left{ transform:translateX(-100%); }
+  .curtain.open .curtain-panel.right{ transform:translateX(100%); }
+  .curtain-mark{
+    position:absolute; top:50%; left:50%; z-index:201; font-family:'Cinzel',serif; font-weight:600;
+    letter-spacing:0.03em; opacity:0; transform:translate(-50%,-50%) scale(0.6);
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .curtain.mark-show .curtain-mark{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+  /* custom cursor */
+  body.has-cursor, body.has-cursor *{ cursor:none !important; }
+  .cursor-ring, .cursor-dot{
+    position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:400;
+    transform:translate(-50%,-50%); opacity:0;
+  }
+  body.has-cursor .cursor-ring, body.has-cursor .cursor-dot{ opacity:1 !important; }
+  .cursor-ring{
+    width:32px; height:32px; border:1px solid var(--gold-line);
+    transition:width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background-color 0.25s var(--ease), opacity 0.2s;
+  }
+  .cursor-ring.hover{ width:54px; height:54px; background:rgba(240,168,60,0.08); border-color:var(--gold); }
+  .cursor-dot{ width:5px; height:5px; background:var(--gold); transition:opacity 0.2s; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--ink); }
+  ::-webkit-scrollbar-thumb{ background:linear-gradient(var(--gold), var(--ember)); border-radius:10px; border:2px solid var(--ink); }
+  html{ scrollbar-width:thin; scrollbar-color:var(--gold-dim) var(--ink); }
+  h1,h2,h3,.crest-font{ font-family:'Cinzel', serif; letter-spacing:0.01em; }
+  img{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  ::selection{ background:var(--gold); color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  section{ position:relative; }
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    background:linear-gradient(to bottom, rgba(16,13,10,0.92), rgba(16,13,10,0));
+    backdrop-filter:blur(2px);
+    transition:background 0.4s var(--ease);
+  }
+  .nav-mark{ display:flex; align-items:center; gap:10px; font-family:'Cinzel',serif; font-size:15px; font-weight:600; color:var(--paper); }
+  .nav-mark .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px var(--gold); }
+  .nav-links{ display:flex; gap:8px; }
+  .nav-links button{
+    font-size:13px; font-weight:600; padding:8px 16px; border-radius:100px;
+    color:var(--muted); border:1px solid transparent; transition:all 0.3s var(--ease);
+  }
+  .nav-links button.active{ color:var(--ink); background:var(--paper); }
+  .nav-links button:not(.active):hover{ color:var(--paper); border-color:var(--line); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:140px 24px 80px; position:relative;
+  }
+  #particles{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .hero-rays{
+    position:absolute; top:50%; left:50%; width:920px; height:920px; margin:-460px 0 0 -460px;
+    background:conic-gradient(from 0deg,
+      transparent 0deg, rgba(240,168,60,0.06) 8deg, transparent 22deg,
+      transparent 158deg, rgba(224,122,42,0.06) 170deg, transparent 184deg,
+      transparent 338deg, rgba(240,168,60,0.05) 350deg, transparent 360deg);
+    animation:rotateRays 46s linear infinite; mix-blend-mode:screen; z-index:1; pointer-events:none;
+  }
+  @keyframes rotateRays{ to{ transform:rotate(360deg); } }
+  .hero-glow{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(460px circle at var(--mx,50%) var(--my,30%), rgba(240,168,60,0.13), transparent 70%);
+  }
+  .hero-inner{ position:relative; z-index:2; max-width:760px; perspective:800px; }
+  .hero-kicker{
+    font-size:13px; color:var(--muted); font-weight:600; margin-bottom:22px;
+    opacity:0; transform:translateY(10px); animation:rise 0.9s var(--ease) 0.1s forwards;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 5.4vw, 4.1rem); font-weight:600; line-height:1.08; color:var(--paper);
+  }
+  .hero h1 .word{
+    display:inline-block; opacity:0; transform:translateY(26px) rotateX(50deg); transform-origin:50% 100%;
+    animation:wordRise 0.65s var(--ease) forwards;
+    animation-delay:calc(0.95s + var(--i) * 0.045s);
+  }
+  @keyframes wordRise{ to{ opacity:1; transform:translateY(0) rotateX(0); } }
+  .hero h1 em{
+    font-style:normal; color:var(--gold);
+    animation:emGlow 1.8s var(--ease) 1.7s forwards;
+  }
+  @keyframes emGlow{
+    0%{ text-shadow:0 0 0 rgba(240,168,60,0); }
+    55%{ text-shadow:0 0 26px rgba(240,168,60,0.65); }
+    100%{ text-shadow:0 0 8px rgba(240,168,60,0.25); }
+  }
+  .hero p.sub{
+    margin-top:22px; font-size:17px; color:var(--muted); max-width:520px; margin-left:auto; margin-right:auto;
+    opacity:0; transform:translateY(14px); animation:rise 0.9s var(--ease) 1.75s forwards;
+  }
+  .hero-crests{
+    margin-top:56px; display:flex; align-items:center; justify-content:center; gap:56px;
+    opacity:0; transform:translateY(20px); animation:rise 1s var(--ease) 2.05s forwards;
+  }
+  .hero-crest{ display:flex; flex-direction:column; align-items:center; gap:14px; position:relative; }
+  .hero-crest::before{
+    content:''; position:absolute; top:44%; left:50%; width:150px; height:150px; z-index:-1;
+    transform:translate(-50%,-50%) scale(0.4); border-radius:50%; opacity:0;
+    background:radial-gradient(circle, rgba(240,168,60,0.38), transparent 70%);
+    animation:crestGlow 1.5s var(--ease) 2.05s forwards;
+  }
+  .hero-crest:nth-child(3)::before{ background:radial-gradient(circle, rgba(224,122,42,0.38), transparent 70%); }
+  @keyframes crestGlow{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(0.4); }
+    60%{ opacity:1; }
+    100%{ opacity:0.55; transform:translate(-50%,-50%) scale(1); }
+  }
+  .hero-crest img{
+    width:108px; height:108px; object-fit:contain; filter:drop-shadow(0 12px 24px rgba(0,0,0,0.5));
+    transition:transform 0.15s ease-out; will-change:transform;
+  }
+  .hero-crest .shine{ position:relative; display:block; overflow:hidden; border-radius:14px; }
+  .hero-crest .shine::after{
+    content:''; position:absolute; top:0; left:-150%; width:60%; height:100%;
+    background:linear-gradient(75deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation:shineSweep 5.5s ease-in-out infinite;
+  }
+  .hero-crest:nth-child(3) .shine::after{ animation-delay:0.5s; }
+  @keyframes shineSweep{
+    0%{ left:-150%; } 55%{ left:-150%; } 75%{ left:150%; } 100%{ left:150%; }
+  }
+  .hero-crest span{ font-size:12px; letter-spacing:0.04em; color:var(--muted-dim); font-weight:600; }
+  .hero-divider{
+    width:1px; height:90px; background:linear-gradient(to bottom, transparent, var(--line), transparent);
+    position:relative;
+  }
+  .hero-divider::before{
+    content:'✦'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    color:var(--gold); font-size:14px; background:var(--ink); padding:6px;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  /* ---------- org section shared ---------- */
+  .org-section{ padding:120px 0 100px; border-top:1px solid var(--line); overflow:hidden; }
+  .org-section.slc{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
+  .org-section.tvc{ background:linear-gradient(180deg, var(--charcoal) 0%, var(--ink) 100%); }
+
+  .org-watermark{
+    position:absolute; top:300px; left:50%; transform:translateX(-50%); z-index:0; pointer-events:none;
+    font-family:'Cinzel',serif; font-weight:700; font-size:min(30vw, 360px); line-height:1;
+    color:transparent; -webkit-text-stroke:1px var(--line); white-space:nowrap; user-select:none;
+  }
+  .org-section.slc .org-watermark{ -webkit-text-stroke:1.5px var(--gold-line); }
+  .org-section.tvc .org-watermark{ -webkit-text-stroke:1.5px var(--ember-line); }
+
+  .stats-row{ display:flex; gap:40px; margin-top:24px; }
+  .stat{ display:flex; flex-direction:column; }
+  .stat .num{ font-family:'Cinzel',serif; font-size:27px; font-weight:600; color:var(--paper); }
+  .org-section.slc .stat .num{ color:var(--gold); }
+  .org-section.tvc .stat .num{ color:var(--ember); }
+  .stat .label{ font-size:11px; color:var(--muted-dim); margin-top:2px; }
+
+  .org-section canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; opacity:0.6; }
+
+  .org-head{ display:flex; align-items:center; gap:28px; margin-bottom:64px; position:relative; z-index:2; }
+  .crest-glow{ position:relative; flex-shrink:0; }
+  .crest-glow::before{
+    content:''; position:absolute; top:50%; left:50%; width:112px; height:112px; z-index:-1;
+    transform:translate(-50%,-50%) scale(0.9); border-radius:50%; animation:breathe 4.2s ease-in-out infinite;
+  }
+  .org-section.slc .crest-glow::before{ background:radial-gradient(circle, rgba(240,168,60,0.3), transparent 70%); }
+  .org-section.tvc .crest-glow::before{ background:radial-gradient(circle, rgba(224,122,42,0.3), transparent 70%); }
+  @keyframes breathe{
+    0%,100%{ opacity:0.45; transform:translate(-50%,-50%) scale(0.88); }
+    50%{ opacity:1; transform:translate(-50%,-50%) scale(1.08); }
+  }
+  .org-head img{ width:76px; height:76px; object-fit:contain; flex-shrink:0; }
+  .org-head h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); color:var(--paper); font-weight:600; }
+  .org-head .accent{ }
+  .org-section.slc .org-head .accent{ color:var(--gold); }
+  .org-section.tvc .org-head .accent{ color:var(--ember); }
+  .org-head p{ color:var(--muted); font-size:15px; margin-top:6px; max-width:480px; }
+
+  /* leadership cards */
+  .leader-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:24px; margin-bottom:76px; position:relative; z-index:2; }
+  .leader-card{
+    padding:0; min-height:280px; background:var(--charcoal-2);
+    border:1px solid var(--line); position:relative; clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%);
+    transition:transform 0.18s ease-out, border-color 0.35s var(--ease); will-change:transform;
+    perspective:1000px; cursor:pointer;
+  }
+  .leader-card:hover{ transform:translateY(-4px); }
+  .card-inner{ position:relative; transform-style:preserve-3d; transition:transform 0.65s var(--ease); }
+  .leader-card.flipped .card-inner{ transform:rotateY(180deg); }
+  .card-face{ backface-visibility:hidden; display:flex; gap:0; align-items:stretch; width:100%; min-height:280px; }
+  .card-face.back{
+    position:absolute; inset:0; transform:rotateY(180deg); flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; gap:10px;
+  }
+  .card-face.back .quote{ font-family:'Cinzel',serif; font-size:14px; color:var(--paper); line-height:1.55; }
+  .card-face.back .quote-hint{ font-size:10.5px; color:var(--muted-dim); }
+  .flip-cue{ position:absolute; top:14px; right:16px; font-size:15px; color:var(--muted-dim); opacity:0.6; }
+  .org-section.slc .leader-card:hover{ border-color:var(--gold-line); }
+  .org-section.tvc .leader-card:hover{ border-color:var(--ember-line); }
+  .org-section.slc .leader-card{ background:linear-gradient(112deg, rgba(240,168,60,0.2), rgba(34,27,20,0.96) 42%, #17120e 100%); }
+  .org-section.tvc .leader-card{ background:linear-gradient(112deg, rgba(224,122,42,0.22), rgba(34,27,20,0.96) 42%, #17120e 100%); }
+  .leader-avatar{
+    width:42%; height:280px; border-radius:0; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel',serif; font-weight:600; font-size:32px; color:var(--paper); object-fit:contain;
+    object-position:center bottom; background:transparent;
+  }
+  .leader-info{ flex:1; min-width:0; align-self:center; padding:44px 22px 24px 20px; overflow-wrap:anywhere; }
+  .leader-info .role{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-dim); margin-bottom:9px; }
+  .org-section.slc .leader-info .role{ color:var(--gold-dim); }
+  .org-section.tvc .leader-info .role{ color:var(--ember-dim); }
+  .leader-info .name{ font-size:19px; font-weight:600; color:var(--paper); font-family:'Cinzel',serif; }
+  .leader-info .line{ font-size:13px; color:var(--muted); margin-top:4px; }
+
+  /* divisions */
+  .divisions-label{ font-size:13px; color:var(--muted); margin-bottom:18px; position:relative; z-index:2; }
+  .tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; position:relative; z-index:2; }
+  .tab{
+    padding:10px 18px; font-size:13.5px; font-weight:600; color:var(--muted); border:1px solid var(--line);
+    transition:all 0.3s var(--ease); clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);
+  }
+  .org-section.slc .tab.active{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+  .org-section.tvc .tab.active{ background:var(--ember); color:var(--ink); border-color:var(--ember); }
+  .tab:not(.active):hover{ color:var(--paper); border-color:var(--muted-dim); }
+
+  .members-panel{ position:relative; min-height:180px; z-index:2; }
+  .members-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:16px;
+  }
+
+  .member-card{
+    background:var(--charcoal-2); border:1px solid var(--line); padding:18px 16px 20px; text-align:center;
+    clip-path:polygon(14px 0,100% 0,100% 100%,0 100%,0 14px);
+    transition:transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    opacity:0; animation:cardIn 0.5s var(--ease) both;
+  }
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
+  .member-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); }
+  .org-section.slc .member-card:hover{ border-color:var(--gold-line); }
+  .org-section.tvc .member-card:hover{ border-color:var(--ember-line); }
+  .member-avatar{
+    width:56px; height:56px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel',serif; font-weight:600; font-size:16px; color:var(--paper); object-fit:cover;
+  }
+  .org-section.slc .member-avatar{ background:linear-gradient(145deg, rgba(240,168,60,0.28), rgba(240,168,60,0.08)); border:1px solid var(--gold-line); }
+  .org-section.tvc .member-avatar{ background:linear-gradient(145deg, rgba(224,122,42,0.28), rgba(224,122,42,0.08)); border:1px solid var(--ember-line); }
+  .member-card .name{ font-size:13.5px; font-weight:700; color:var(--paper); }
+  .member-card .role{ font-size:11.5px; color:var(--muted-dim); margin-top:3px; }
+
+  /* ---------- news & events ---------- */
+  .org-section.news{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
+  .org-section.news .org-watermark{ -webkit-text-stroke:1.5px var(--line); }
+  .news-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px; position:relative; z-index:2; }
+  .news-card{ background:var(--charcoal-2); border:1px solid var(--line); cursor:pointer; overflow:hidden; clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%); transition:transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); opacity:0; animation:cardIn 0.5s var(--ease) both; }
+  .news-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); }
+  .news-card.slc:hover{ border-color:var(--gold-line); }
+  .news-card.tvc:hover{ border-color:var(--ember-line); }
+  .news-thumb{ height:140px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .news-thumb::before{ content:attr(data-label); position:absolute; font-family:'Cinzel',serif; font-weight:700; font-size:38px; color:transparent; -webkit-text-stroke:1.5px rgba(244,239,226,0.4); white-space:nowrap; }
+  .news-thumb.slc{ background:linear-gradient(135deg, rgba(240,168,60,0.4), rgba(16,13,10,0.95)); }
+  .news-thumb.tvc{ background:linear-gradient(135deg, rgba(224,122,42,0.4), rgba(16,13,10,0.95)); }
+  .news-thumb.joint{ background:linear-gradient(135deg, rgba(240,168,60,0.32), rgba(224,122,42,0.32)); }
+  .news-body{ padding:18px 20px 22px; }
+  .news-tags{ display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .news-tag{ font-size:10.5px; font-weight:700; padding:3px 11px; border-radius:100px; }
+  .news-tag.org-slc{ background:rgba(240,168,60,0.14); color:var(--gold); }
+  .news-tag.org-tvc{ background:rgba(224,122,42,0.14); color:var(--ember); }
+  .news-tag.org-joint{ background:linear-gradient(90deg, rgba(240,168,60,0.14), rgba(224,122,42,0.14)); color:var(--paper); }
+  .news-tag.type{ background:rgba(244,239,226,0.08); color:var(--muted); }
+  .news-title{ font-family:'Cinzel',serif; font-size:16.5px; font-weight:600; color:var(--paper); margin-bottom:7px; }
+  .news-excerpt{ font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:10px; }
+  .news-date-line{ font-size:11.5px; color:var(--muted-dim); }
+
+  .news-modal{ position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:24px; }
+  .news-modal.open{ display:flex; }
+  .news-modal-backdrop{ position:absolute; inset:0; background:rgba(8,6,4,0.78); backdrop-filter:blur(3px); }
+  .news-modal-card{ position:relative; max-width:640px; width:100%; max-height:86vh; overflow-y:auto; background:var(--charcoal-2); border:1px solid var(--line); clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%); }
+  .news-modal-close{ position:absolute; top:14px; right:16px; z-index:2; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.55); color:var(--paper); font-size:15px; display:flex; align-items:center; justify-content:center; }
+  .news-modal-hero{ height:210px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .news-modal-hero::before{ content:attr(data-label); position:absolute; font-family:'Cinzel',serif; font-weight:700; font-size:52px; color:transparent; -webkit-text-stroke:1.5px rgba(244,239,226,0.4); }
+  .news-modal-hero.slc{ background:linear-gradient(135deg, rgba(240,168,60,0.4), rgba(16,13,10,0.95)); }
+  .news-modal-hero.tvc{ background:linear-gradient(135deg, rgba(224,122,42,0.4), rgba(16,13,10,0.95)); }
+  .news-modal-hero.joint{ background:linear-gradient(135deg, rgba(240,168,60,0.32), rgba(224,122,42,0.32)); }
+  .news-modal-body{ padding:26px 28px 30px; }
+  .news-modal-title{ font-family:'Cinzel',serif; font-size:21px; color:var(--paper); margin:12px 0 6px; }
+  .news-modal-date{ font-size:12.5px; color:var(--muted-dim); margin-bottom:18px; }
+  .news-modal-desc{ font-size:14px; line-height:1.75; color:var(--muted); }
+
+  /* ---------- roster marquee ---------- */
+  .roster{ padding:36px 0; border-top:1px solid var(--line); overflow:hidden; background:var(--charcoal-2); }
+  .roster-track{ display:flex; gap:40px; width:max-content; animation:marquee 50s linear infinite; }
+  .roster:hover .roster-track{ animation-play-state:paused; }
+  .roster-track .item{ font-family:'Cinzel',serif; font-size:13.5px; letter-spacing:0.02em; white-space:nowrap; color:var(--muted-dim); }
+  .roster-track .item.gold{ color:var(--gold-dim); }
+  .roster-track .item.ember{ color:var(--ember-dim); }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  /* ---------- spark burst ---------- */
+  .spark-particle{ position:fixed; width:4px; height:4px; border-radius:50%; pointer-events:none; z-index:160; }
+  @keyframes sparkOut{ to{ transform:translate(var(--dx), var(--dy)) scale(0); opacity:0; } }
+
+  footer{ padding:56px 32px 40px; text-align:center; border-top:1px solid var(--line); }
+  footer .crest-font{ font-size:14px; color:var(--muted); }
+  footer p{ font-size:12.5px; color:var(--muted-dim); margin-top:10px; max-width:460px; margin-left:auto; margin-right:auto; }
+
+  @media (max-width:1500px){
+    .leader-row{ grid-template-columns:1fr; }
+  }
+
+  @media (max-width:720px){
+    body{ padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
+    .nav{
+      top:auto; left:50%; right:auto; bottom:calc(14px + env(safe-area-inset-bottom));
+      transform:translateX(-50%); justify-content:center; padding:6px;
+      border:1px solid rgba(244,239,226,0.14); border-radius:999px;
+      background:rgba(26,21,16,0.94); backdrop-filter:blur(14px); box-shadow:0 12px 32px rgba(0,0,0,0.4);
+    }
+    .nav-mark{ display:none; }
+    .nav-links{ gap:4px; }
+    .nav-links button{ min-width:64px; padding:10px 14px; font-size:12px; }
+    .leader-row{ grid-template-columns:1fr; }
+    .leader-card, .card-face{ min-height:250px; }
+    .leader-avatar{ width:38%; height:250px; }
+    .leader-info{ padding:42px 18px 20px 16px; }
+    .leader-info .name{ font-size:clamp(16px, 4.8vw, 19px); }
+    .hero-crests{ gap:28px; }
+    .hero-crest img{ width:80px; height:80px; }
+    .org-head{ flex-direction:column; text-align:center; align-items:center; }
+  }
+</style>
+</head>
+<body>
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="curtain-panel left"></div>
+  <div class="curtain-panel right"></div>
+  <div class="curtain-mark" id="curtainMark">✦</div>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<div class="nav-progress" id="navProgress"></div>
+<nav class="nav">
+  <div class="nav-mark"><span class="dot"></span> Two Councils</div>
+  <div class="nav-links" id="navLinks">
+    <button data-target="home" class="active">Home</button>
+    <button data-target="slc">SLC</button>
+    <button data-target="tvc">TVC</button>
+  </div>
+</nav>
+
+<main id="app">
+<div class="page active" data-page="home">
+<section class="hero" id="home">
+  <canvas id="particles"></canvas>
+  <div class="hero-rays"></div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker">Website Organisasi · Masih dalam pengembangan</div>
+    <h1><span class="word" style="--i:0">Ini</span> <span class="word" style="--i:1">masih</span> <span class="word" style="--i:2">fase</span> <span class="word" style="--i:3"><em>prototype.</em></span></h1>
+    <p class="sub">Kalau ada saran atau masukan, langsung ngomong ke aku saja — Faith.</p>
+    <div class="hero-crests">
+      <div class="hero-crest">
+        <span class="shine"><img src="image/Logo_SLC.png" alt="SLC crest"></span>
+        <span>Student Leader Community</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-crest">
+        <span class="shine"><img src="image/Logo_TVC.png" alt="TVC crest"></span>
+        <span>The Vanguard Coordinator</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="org-section news" id="news">
+  <canvas id="particlesNews"></canvas>
+  <div class="org-watermark">NEWS</div>
+  <div class="wrap">
+    <div class="org-head"><div>
+      <h2>News <span style="color:var(--muted);">&amp;</span> Events</h2>
+      <p>Updates and events from both councils, in one place.</p>
+    </div></div>
+    <div class="news-grid" id="newsList"></div>
+  </div>
+</section>
+</div>
+
+<div class="page" data-page="slc">
+<section class="org-section slc" id="slc">
+  <canvas id="particlesSlc"></canvas>
+  <div class="org-watermark">SLC</div>
+  <div class="wrap">
+    <div class="org-head">
+      <div class="crest-glow"><img src="image/Logo_SLC.png" alt="SLC crest"></div>
+      <div>
+        <h2>Student Leader <span class="accent">Community</span></h2>
+        <p>The council that plans, organizes and holds together everything happening on campus outside the classroom.</p>
+        <div class="stats-row" id="slcStats"></div>
+      </div>
+    </div>
+
+    <div class="leader-row" id="slcLeaders"></div>
+
+    <div class="divisions-label">Divisions</div>
+    <div class="tabs" id="slcTabs"></div>
+    <div class="members-panel" id="slcMembers"></div>
+  </div>
+</section>
+</div>
+
+<div class="page" data-page="tvc">
+<section class="org-section tvc" id="tvc">
+  <canvas id="particlesTvc"></canvas>
+  <div class="org-watermark">TVC</div>
+  <div class="wrap">
+    <div class="org-head">
+      <div class="crest-glow"><img src="image/Logo_TVC.png" alt="TVC crest"></div>
+      <div>
+        <h2>The Vanguard <span class="accent">Coordinator</span></h2>
+        <p>The coordination arm that keeps every class, every logistics chain and every rollout moving in step.</p>
+        <div class="stats-row" id="tvcStats"></div>
+      </div>
+    </div>
+
+    <div class="leader-row" id="tvcLeaders"></div>
+
+    <div class="divisions-label">Divisions</div>
+    <div class="tabs" id="tvcTabs"></div>
+    <div class="members-panel" id="tvcMembers"></div>
+  </div>
+</section>
+</div>
+
+</main>
+
+<div class="news-modal" id="newsModal" aria-hidden="true">
+  <div class="news-modal-backdrop" id="newsModalBackdrop"></div>
+  <div class="news-modal-card" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+    <button class="news-modal-close" id="newsModalClose" aria-label="Close">✕</button>
+    <div class="news-modal-hero" id="newsModalHero"></div>
+    <div class="news-modal-body">
+      <div class="news-tags" id="newsModalTags"></div>
+      <h3 class="news-modal-title" id="newsModalTitle"></h3>
+      <div class="news-modal-date" id="newsModalDate"></div>
+      <p class="news-modal-desc" id="newsModalDesc"></p>
+    </div>
+  </div>
+</div>
+
+<section class="roster">
+  <div class="roster-track" id="rosterTrack"></div>
+</section>
+
+<footer>
+  <div class="crest-font">Two Councils, One Campus</div>
+  <p>This is a starting template — open the data section at the top of the page script to swap in real names, roles and photos for both councils.</p>
+</footer>
+
+<script>
+/* =========================================================
+   EDIT ME — all site content lives here.
+   For any member, set "img" to a photo URL to show a real
+   photo; leave it empty ("") to show an initials badge.
+   ========================================================= */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const ORGS = {
+  slc: {
+    color: 'gold',
+    leader:   { name: 'Rifky Azril Ar Rahman', role: 'Leader',    line: 'Leads the Student Leader Community for Masa Jihad 2026\u20132027.', img: 'image/Ketua_SLC.png', quote: 'Asal: Jombang' },
+    coLeader: { name: 'Muhammad Atthaya Rasyendria', role: 'Co-Leader', line: 'Supports and coordinates across every division.', img: 'image/Wakil_SLC.png', quote: 'Asal: Samarinda' },
+    divisions: [
+      { name: 'Sekretaris', members: [
+        {name:'Fathan Rafif Athaya', role:'Denpasar', img:''},
+        {name:'Zhaahir Ali Prabelio', role:'Jombang', img:''},
+      ]},
+      { name: 'Bendahara', members: [
+        {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', img:''},
+        {name:'Luthfi Rafif Arkana', role:'Jayapura', img:''},
+      ]},
+      { name: 'Keamanan', members: [
+        {name:'Mirzadinata Setiyawan', role:'Sidoarjo', img:''},
+        {name:'Ahmad Haidar Al Farras', role:'Gresik', img:''},
+        {name:'Galih Fajar Malik Hakiim', role:'Malang', img:''},
+        {name:'Adli Shidqi Prawira', role:'Batam', img:''},
+        {name:'Muhammad Kafil Kayzan', role:'Ponorogo', img:''},
+        {name:'Keenan Nararya Fuad', role:'Gresik', img:''},
+        {name:'Verdi Aviansyah Mahatama Puguh', role:'Batu', img:''},
+        {name:'Raditra Priyanto', role:'Berau', img:''},
+        {name:'Alfero Ramanda Ediezahirudin Rafie', role:'Probolinggo', img:''},
+        {name:'Ahmad Mutanabbi Mirawanto', role:'Malang', img:''},
+      ]},
+      { name: 'Dakwah Masjid', members: [
+        {name:'Kiagus M Daffa Agha Afkar', role:'Sangatta', img:''},
+        {name:'Radithya Al Iskandar Rayhan Putra', role:'Surabaya', img:''},
+        {name:'Raka Aulia Faridi', role:'Lampung', img:''},
+        {name:'Fayyad Alghani', role:'Banjarmasin', img:''},
+        {name:'Riyadh Rifky Balfas', role:'Surabaya', img:''},
+        {name:'Muhammad Ammar Dany Riadi', role:'Berau', img:''},
+        {name:'Teuku Riffat Alfatha Iskandharsyah', role:'Balikpapan', img:''},
+        {name:'Adis Akmal', role:'Sangatta', img:''},
+        {name:'Muhammad Ibra Kenbizuqi', role:'Lubuklinggau', img:''},
+        {name:'Aqila Izza Adirachman', role:'Tuban', img:''},
+      ]},
+      { name: 'Olahraga', members: [
+        {name:'Muhammad Fawwaz Imaadul Haq', role:'Surabaya', img:''},
+        {name:'Muhammad Fathan Abidzar Dliya`ulhaq', role:'Mojokerto', img:''},
+        {name:'Muhammad Azzam Ibrahim', role:'Sidoarjo', img:''},
+        {name:'Muhammad Jenthara Priyandra Pradana Maheswara', role:'Sidoarjo', img:''},
+        {name:'Rakha Firjatullah', role:'Balikpapan', img:''},
+        {name:'Rifqi Ferdinanta Fadli', role:'Surabaya', img:''},
+        {name:'Muhammad Zulham Amirullah', role:'Pontianak', img:''},
+        {name:'Rafi Nurcahyo Adati', role:'Manado', img:''},
+        {name:'Rezky Alifi Chaniago', role:'Bali', img:''},
+        {name:'Syauqi Imam Azka', role:'Samarinda', img:''},
+      ]},
+      { name: 'Bersih Lingkungan', members: [
+        {name:'Ahmad Fauzan', role:'Sudu', img:''},
+        {name:'Reyhan Axelle Bonaro Widodo', role:'Banyuwangi', img:''},
+        {name:'Ahmad Maulana Zidan Amrullah', role:'Yogyakarta', img:''},
+        {name:'Adzka Faqih Abdillah', role:'Martapura', img:''},
+        {name:'Muhammad Abid Abkary', role:'Sampit', img:''},
+        {name:'Muhammad Jeap Nuh Hamzah', role:'Samarinda', img:''},
+        {name:'Muhammad Naufal Adhitya Al Fathir Yusuf', role:'Sangatta', img:''},
+        {name:'Rasya Zhafran Al-Thafsyah', role:'Jember', img:''},
+        {name:'Alfino Irwandy Yusuf', role:'Sumenep', img:''},
+        {name:'Putra Aditya Soleman', role:'Manado', img:''},
+      ]},
+      { name: 'Informasi', members: [
+        {name:'Muhammad Naufal Adqaury Ibnu Syaifa', role:'Sorowako', img:''},
+        {name:'Hanif Sandriano Shiddiq', role:'Cepu', img:''},
+        {name:'Muhammad Afkar Nizam Arviansyah', role:'Jakarta', img:''},
+        {name:'Muhammad Arkan Najwan Arviansyah', role:'Jakarta', img:''},
+        {name:'M. Arif Rezky Alfahadi', role:'Samboja', img:''},
+        {name:'Natka Sadewa Asmoro', role:'Samarinda', img:''},
+        {name:'Abid Yusuf Fahlavi Subagiyo', role:'Pekalongan', img:''},
+        {name:'Axel Keanu Ghalva Ramadhan', role:'Sidoarjo', img:''},
+        {name:'Mochamad Daffa Nafiis', role:'Surabaya', img:''},
+        {name:'Nufail Alingga Kusworo', role:'Jakarta', img:''},
+      ]},
+      { name: 'Bahasa', members: [
+        {name:'Muh. Hisyaam Dzaki Mubarak', role:'Jayapura', img:''},
+        {name:'Gallant Radithya Ghani Prasetyo', role:'Sangatta', img:''},
+        {name:'Hafidz Rafi Rabbani', role:'Wamena', img:''},
+        {name:'Muhammad Althaf Arkana Yusuf', role:'Pekanbaru', img:''},
+        {name:'Ro\'yal Aini Arsyl Putra', role:'Lamongan', img:''},
+        {name:'Andi Afzal Ghaizani', role:'Makassar', img:''},
+        {name:'Muhammad Rafif', role:'Banjarmasin', img:''},
+        {name:'Fahmi Abdullah Hazim', role:'Pontianak', img:''},
+        {name:'Qeis Fauzi Ghudzamir Zain', role:'Bandar Lampung', img:''},
+        {name:'Muhammad Mikail Robbani', role:'Probolinggo', img:''},
+      ]},
+      { name: 'Enterpreneur', members: [
+        {name:'Antares Aesar Aulayain', role:'Surabaya', img:''},
+        {name:'M. Noval Fairuz Ahmad', role:'Makassar', img:''},
+        {name:'Nabil Alyasih Nur Ramadhan', role:'Malang', img:''},
+        {name:'Muhammad Rezky Aulia Rahman', role:'Malang', img:''},
+        {name:'Alif Muhammad', role:'Malang', img:''},
+        {name:'Fardy Al Abqary', role:'Aceh', img:''},
+        {name:'Trisandi Bharata', role:'Sangatta', img:''},
+        {name:'Nabil Hanif', role:'Balikpapan', img:''},
+        {name:'Ridho Alghifary', role:'Tarakan', img:''},
+        {name:'Nazreivo Sulthan Azizan', role:'Surabaya', img:''},
+        {name:'Gilang Nugraha Dwi Guna', role:'Tuban', img:''},
+        {name:'Muhammad Yahya Yanuar', role:'Bima', img:''},
+        {name:'Hadi Safwan', role:'Sidoarjo', img:''},
+      ]},
+      { name: 'Bapenta', members: [
+        {name:'Salahhuddin Prameswara Anindita', role:'Malang', img:''},
+        {name:'Muhammad Rakha Azka', role:'Makassar', img:''},
+        {name:'Faqih Ahsan Haniif', role:'Samarinda', img:''},
+        {name:'Hikmal Rifqie Alghifari Aldrian', role:'Pasuruan', img:''},
+        {name:'Muhammad Khalifabyaz Mirza Wardhana', role:'Bogor', img:''},
+        {name:'Al Mizan Khairan Raytama Hidayat', role:'Jayapura', img:''},
+        {name:'Muhammad Rafif Setyawan', role:'Batam', img:''},
+        {name:'Michael Al Ardh', role:'Batu', img:''},
+        {name:'Dhafie Shofwan Ash Shidqie', role:'Samarinda', img:''},
+        {name:'Muhammad Kenzie Prihady', role:'Bontang', img:''},
+        {name:'Adhyaksa Idrus', role:'Makassar', img:''},
+        {name:'Achmad Kelvin Arviansyah', role:'Surabaya', img:''},
+      ]},
+      { name: 'Kesenian', members: [
+        {name:'Andra Izrami Satya Wardana', role:'Serang', img:''},
+        {name:'Ibrahim Mauladi', role:'Lamongan', img:''},
+        {name:'Harits Ghifar Musyafak', role:'Tangerang', img:''},
+        {name:'Nicholas Ardian Ananta', role:'Jakarta', img:''},
+        {name:'Rifky Vio Dhiaurrahman', role:'Sangatta', img:''},
+        {name:'Akhtar Maulana Fattahillah', role:'Sangatta', img:''},
+        {name:'Ahmad Adli Assyauqi', role:'Kutai Timur', img:''},
+        {name:'Barack Octo Wahyumirizky', role:'Malang', img:''},
+        {name:'Rezky Noor Fadilah', role:'Palangkaraya', img:''},
+        {name:'Eka Dymaz Janitra Fatkhur Rokhman', role:'Kuta', img:''},
+      ]},
+      { name: 'Multimedia', members: [
+        {name:'Ahmad Farel Panatagama', role:'Tulungagung', img:''},
+        {name:'Queenzy Hafidhu Zikry', role:'Semarang', img:''},
+        {name:'Alif Luqmanurrahman Pradhana', role:'Malang', img:''},
+        {name:'Muhammad Thoriq Akbar', role:'Malang', img:''},
+        {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:''},
+        {name:'Ali Qiyal Mukhlis', role:'Lampung', img:''},
+        {name:'Faith Athallah Efendi', role:'Tuban', img:''},
+        {name:'Abdurrahman', role:'Samarinda', img:''},
+        {name:'Akasyah Zafran Ghifari', role:'Gresik', img:''},
+        {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:''},
+      ]},
+      { name: 'Dapur', members: [
+        {name:'Aufa Haiqal', role:'Sangatta', img:''},
+        {name:'Radjendra Kafka Aelino', role:'Madiun', img:''},
+        {name:'Muhammad Radja Syahputra Bachri', role:'Surabaya', img:''},
+        {name:'Bhaga Persada Brahmana', role:'Pekanbaru', img:''},
+        {name:'Muhammad Athaillah Rahmansyah', role:'Bontang', img:''},
+        {name:'Rayyan Azka Ahmad', role:'Sidoarjo', img:''},
+        {name:'Muhammad Raditya Laisafero', role:'Malang', img:''},
+        {name:'Muhammad Fakhry Ubaydillah Tsaaqif', role:'Sidoarjo', img:''},
+        {name:'Nizar Muzhaffar Sulistyono', role:'Sidoarjo', img:''},
+        {name:'Akmal Rafa Hernaufal', role:'Mojokerto', img:''},
+      ]},
+      { name: 'Pengajaran', members: [
+        {name:'Farelle Pratadiazta Savana', role:'Sidoarjo', img:''},
+        {name:'El Pandora Deni', role:'Surabaya', img:''},
+        {name:'Aldito Emery Illona Masruri', role:'Tanjung Pinang', img:''},
+        {name:'Muhammad Raihansyah Adzkiya\' Wahyudi', role:'Surabaya', img:''},
+        {name:'Muhammad Zafir Ardiansyah', role:'Malang', img:''},
+        {name:'Muhammad Dzaki Akmal', role:'Balikpapan', img:''},
+        {name:'Ataya Fikri Rizqullah Imanuddin', role:'Gresik', img:''},
+        {name:'Hamam Aslam Ahmad Yasak', role:'Jember', img:''},
+        {name:'Rausyan Farras Aly Muhammad', role:'Lamongan', img:''},
+        {name:'Fadhil Athaya Syadid Rizqullah', role:'Probolinggo', img:''},
+      ]},
+      { name: 'Kesehatan', members: [
+        {name:'Zufaro Ardiyoso Razak', role:'Sangatta', img:''},
+        {name:'Syaamil Abdurrahman', role:'Samarinda', img:''},
+        {name:'Atha Rakan Firdaus', role:'Pasuruan', img:''},
+        {name:'Dheyya Alhijri Rochim', role:'Depok', img:''},
+        {name:'Muhammad Kenzie Pratinanggawa', role:'Bekasi', img:''},
+        {name:'Alden Salim Widagdo', role:'Sidoarjo', img:''},
+        {name:'Athaya Daffa Rafif', role:'Riau', img:''},
+        {name:'Narendra Kasyafani Majeed', role:'Sidoarjo', img:''},
+        {name:'Nazril Khairan Windya Putra', role:'Lombok', img:''},
+        {name:'Thaha Yasin Nurwahid', role:'Paser', img:''},
+      ]},
+      { name: 'Laundry', members: [
+        {name:'Muhammad Hilmi Fathuddin', role:'Surabaya', img:''},
+        {name:'Arjuna Ghazy Wibowo', role:'Pekanbaru', img:''},
+        {name:'M. Fikri Khalifah Alham Nurham', role:'Jayapura', img:''},
+        {name:'Muhammad Qanantha Syauqie', role:'Jayapura', img:''},
+        {name:'Malvino Garde Gana', role:'Sumatera Selatan', img:''},
+        {name:'Muhammad Fairus Irzam', role:'Balikpapan', img:''},
+        {name:'Haraka Hiroshi Ilmi', role:'Lamongan', img:''},
+      ]},
+    ]
+  },
+  tvc: {
+    color: 'ember',
+    leader:   { name: 'Kenzo Alvaro Pradana', role: 'Leader',    line: 'Owns the overall coordination playbook for TVC.', img: 'image/Ketua_TVC.png', quote: 'Coordination is invisible when it works — that\'s the whole job.' },
+    coLeader: { name: 'Ratih Kusuma Dewi',     role: 'Co-Leader', line: 'Keeps every division synced week to week.', img: 'image/Wakil_TVC.png', quote: 'We don\'t wait for chaos to plan for it.' },
+    divisions: [
+      { name: 'Class Coordination', members: [
+        {name:'Arka Wibisono', role:'Division Head', img:''},
+        {name:'Naila Zahra', role:'Member', img:''},
+        {name:'Pandu Kusuma', role:'Member', img:''},
+        {name:'Devina Anjani', role:'Member', img:''},
+      ]},
+      { name: 'Logistics & Operations', members: [
+        {name:'Rangga Dwi Saputra', role:'Division Head', img:''},
+        {name:'Melati Anggraeni', role:'Member', img:''},
+        {name:'Fikri Aulia', role:'Member', img:''},
+      ]},
+      { name: 'Communications', members: [
+        {name:'Syifa Nur Azizah', role:'Division Head', img:''},
+        {name:'Bayu Kristanto', role:'Member', img:''},
+        {name:'Almira Safitri', role:'Member', img:''},
+      ]},
+      { name: 'Training & Development', members: [
+        {name:'Ivan Maulana', role:'Division Head', img:''},
+        {name:'Gita Puspita', role:'Member', img:''},
+        {name:'Rafi Hidayat', role:'Member', img:''},
+      ]},
+      { name: 'Special Projects', members: [
+        {name:'Kevin Alamsyah', role:'Division Head', img:''},
+        {name:'Nabila Chairunnisa', role:'Member', img:''},
+        {name:'Yoga Prasetya', role:'Member', img:''},
+      ]},
+    ]
+  }
+};
+
+const NEWS = [
+  {date:'2026-10-03',org:'joint',type:'Event',title:'SLC × TVC Leadership Summit',excerpt:'Both councils meet to plan the final quarter of the term.',body:'Division heads from SLC and TVC meet to align calendars, share updates, and coordinate upcoming campus events.'},
+  {date:'2026-09-27',org:'tvc',type:'Announcement',title:'New Class Coordination Rota Published',excerpt:'The updated weekly rota for class coordinators is now available.',body:'Each class has a coordinator and backup for every week. Coordinators should confirm their schedule with their division head.'},
+  {date:'2026-09-20',org:'slc',type:'Event',title:'Annual Charity Bazaar',excerpt:'Stalls, games and a bake sale support the campus scholarship fund.',body:'Students hosted stalls, games, a bake sale, and a raffle in the main courtyard. Proceeds support the campus scholarship fund.'},
+  {date:'2026-09-14',org:'tvc',type:'Event',title:'Coordinator Training Bootcamp',excerpt:'A workshop for new class coordinators on logistics and communication.',body:'New coordinators learned to plan equipment requests, escalate issues, and hand off responsibilities. Senior TVC members led the sessions.'},
+  {date:'2026-09-08',org:'slc',type:'Announcement',title:'Academic Mentoring Program Launched',excerpt:'Senior students can sign up to mentor juniors in core subjects.',body:'Weekly after-school mentoring sessions are being matched by subject need. Teachers can also refer students through their homeroom.'},
+  {date:'2026-08-30',org:'slc',type:'Event',title:'Campus Clean-Up Day',excerpt:'More than 80 students joined the campus-wide clean-up.',body:'Students cleaned campus grounds, the sports field, and parking areas. The division plans to repeat the event each term.'},
+  {date:'2026-08-22',org:'tvc',type:'Announcement',title:'New Logistics Tracking Sheet Rolled Out',excerpt:'Event equipment and venue requests now use one shared tracker.',body:'A shared tracking sheet replaces separate request chats to reduce double-bookings and lost requests. Contact your coordinator for access.'},
+  {date:'2026-08-15',org:'slc',type:'Event',title:'SLC Election Results Announced',excerpt:'This term’s leader and co-leader were confirmed after a campus-wide vote.',body:'Following a week of campaigning and voting, the new SLC leadership was confirmed at an assembly and shared its first priorities.'},
+];
+
+/* ========================= rendering ========================= */
+function initials(name){
+  return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function avatarNode(person, sizeClass){
+  if(person.img){
+    const img = document.createElement('img');
+    img.src = person.img; img.alt = person.name;
+    img.className = sizeClass;
+    return img;
+  }
+  const div = document.createElement('div');
+  div.className = sizeClass;
+  div.textContent = initials(person.name);
+  return div;
+}
+
+function sparkBurst(x, y, color){
+  for(let i=0; i<9; i++){
+    const s = document.createElement('div');
+    s.className = 'spark-particle';
+    const angle = Math.random()*Math.PI*2;
+    const dist = 26 + Math.random()*38;
+    s.style.left = x+'px'; s.style.top = y+'px';
+    s.style.background = color;
+    s.style.setProperty('--dx', Math.cos(angle)*dist+'px');
+    s.style.setProperty('--dy', Math.sin(angle)*dist+'px');
+    s.style.animation = 'sparkOut 0.6s ease-out forwards';
+    document.body.appendChild(s);
+    setTimeout(()=> s.remove(), 650);
+  }
+}
+
+function renderLeaders(orgKey){
+  const org = ORGS[orgKey];
+  const row = document.getElementById(orgKey+'Leaders');
+  [org.leader, org.coLeader].forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'leader-card';
+
+    const inner = document.createElement('div');
+    inner.className = 'card-inner';
+
+    const front = document.createElement('div');
+    front.className = 'card-face front';
+    const av = avatarNode(p, 'leader-avatar');
+    const info = document.createElement('div');
+    info.className = 'leader-info';
+    info.innerHTML = `<div class="role">${p.role}</div><div class="name">${p.name}</div><div class="line">${p.line}</div>`;
+    front.appendChild(av); front.appendChild(info);
+
+    const back = document.createElement('div');
+    back.className = 'card-face back';
+    back.innerHTML = `<div class="quote">${p.quote}</div><div class="quote-hint">Tap to flip back</div>`;
+
+    inner.appendChild(front); inner.appendChild(back);
+    card.appendChild(inner);
+
+    const cue = document.createElement('span');
+    cue.className = 'flip-cue';
+    cue.textContent = '❝';
+    card.appendChild(cue);
+
+    card.addEventListener('click', (e)=>{
+      card.classList.toggle('flipped');
+      if(!reduceMotion) sparkBurst(e.clientX, e.clientY, orgKey === 'slc' ? '#f0a83c' : '#e07a2a');
+    });
+    row.appendChild(card);
+  });
+}
+
+function renderDivisions(orgKey){
+  const org = ORGS[orgKey];
+  const tabsEl = document.getElementById(orgKey+'Tabs');
+  const panelEl = document.getElementById(orgKey+'Members');
+
+  function showDivision(idx){
+    tabsEl.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', i===idx));
+    panelEl.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'members-grid';
+    org.divisions[idx].members.forEach((m,i)=>{
+      const card = document.createElement('div');
+      card.className = 'member-card';
+      card.style.animationDelay = (i*0.045)+'s';
+      const av = avatarNode(m, 'member-avatar');
+      card.appendChild(av);
+      const name = document.createElement('div'); name.className='name'; name.textContent = m.name;
+      const role = document.createElement('div'); role.className='role'; role.textContent = m.role;
+      card.appendChild(name); card.appendChild(role);
+      grid.appendChild(card);
+    });
+    panelEl.appendChild(grid);
+  }
+
+  org.divisions.forEach((d,i)=>{
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (i===0 ? ' active' : '');
+    tab.textContent = d.name;
+    tab.addEventListener('click', ()=>showDivision(i));
+    tabsEl.appendChild(tab);
+  });
+  showDivision(0);
+}
+
+function renderStats(orgKey){
+  const org = ORGS[orgKey];
+  const memberCount = org.divisions.reduce((sum,d)=>sum + d.members.length, 0);
+  const stats = [
+    { num: org.divisions.length, label: 'Divisions' },
+    { num: 2, label: 'Leaders' },
+    { num: memberCount, label: 'Members' },
+  ];
+  const row = document.getElementById(orgKey+'Stats');
+  stats.forEach(s=>{
+    const el = document.createElement('div');
+    el.className = 'stat';
+    el.innerHTML = `<span class="num" data-count="${s.num}">0</span><span class="label">${s.label}</span>`;
+    row.appendChild(el);
+  });
+}
+
+function formatNewsDate(date){
+  return new Intl.DateTimeFormat('en', {day:'numeric', month:'short', year:'numeric', timeZone:'UTC'}).format(new Date(`${date}T00:00:00Z`));
+}
+
+function renderNews(){
+  const list = document.getElementById('newsList');
+  [...NEWS].sort((a,b)=>b.date.localeCompare(a.date)).forEach((item,index)=>{
+    const card = document.createElement('article');
+    card.className = `news-card ${item.org}`;
+    card.style.animationDelay = `${index * 0.05}s`;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.innerHTML = `<div class="news-thumb ${item.org}" data-label="${item.type.toUpperCase()}"></div><div class="news-body"><div class="news-tags"><span class="news-tag org-${item.org}">${item.org === 'joint' ? 'SLC × TVC' : item.org.toUpperCase()}</span><span class="news-tag type">${item.type}</span></div><h3 class="news-title">${item.title}</h3><p class="news-excerpt">${item.excerpt}</p><div class="news-date-line">${formatNewsDate(item.date)}</div></div>`;
+    card.addEventListener('click', ()=>openNews(item));
+    card.addEventListener('keydown', event=>{
+      if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openNews(item); }
+    });
+    list.appendChild(card);
+  });
+}
+
+function openNews(item){
+  const modal = document.getElementById('newsModal');
+  const hero = document.getElementById('newsModalHero');
+  hero.className = `news-modal-hero ${item.org}`;
+  hero.dataset.label = item.type.toUpperCase();
+  document.getElementById('newsModalTags').innerHTML = `<span class="news-tag org-${item.org}">${item.org === 'joint' ? 'SLC × TVC' : item.org.toUpperCase()}</span><span class="news-tag type">${item.type}</span>`;
+  document.getElementById('newsModalTitle').textContent = item.title;
+  document.getElementById('newsModalDate').textContent = formatNewsDate(item.date);
+  document.getElementById('newsModalDesc').textContent = item.body;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('newsModalClose').focus();
+}
+
+function closeNews(){
+  document.getElementById('newsModal').classList.remove('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+}
+
+document.getElementById('newsModalClose').addEventListener('click', closeNews);
+document.getElementById('newsModalBackdrop').addEventListener('click', closeNews);
+document.addEventListener('keydown', event=>{
+  if(event.key === 'Escape') closeNews();
+});
+
+function renderRoster(){
+  const track = document.getElementById('rosterTrack');
+  const names = [];
+  ['slc','tvc'].forEach(key=>{
+    const org = ORGS[key];
+    const cls = key === 'slc' ? 'gold' : 'ember';
+    names.push({n: org.leader.name, cls});
+    names.push({n: org.coLeader.name, cls});
+    org.divisions.forEach(d => d.members.forEach(m => names.push({n: m.name, cls})));
+  });
+  const doubled = names.concat(names);
+  track.innerHTML = doubled.map(p => `<span class="item ${p.cls}">${p.n}</span>`).join('<span class="item">·</span>');
+}
+renderRoster();
+renderNews();
+
+['slc','tvc'].forEach(key=>{
+  renderLeaders(key);
+  renderDivisions(key);
+  renderStats(key);
+});
+
+/* ========================= page switching ========================= */
+let currentPage = 'home';
+const curtain = document.getElementById('curtain');
+const curtainMark = document.getElementById('curtainMark');
+const navButtons = document.querySelectorAll('.nav-links button');
+const startedField = { home:false, slc:false, tvc:false };
+
+function ensureField(key){
+  if(reduceMotion || startedField[key]) return;
+  startedField[key] = true;
+  if(key === 'home'){
+    createEmberField(document.getElementById('particles'), {count:46, colors:['240,168,60','224,122,42'], speedMin:0.18, speedMax:0.68});
+    createEmberField(document.getElementById('particlesNews'), {count:22, colors:['240,168,60','224,122,42'], speedMin:0.1, speedMax:0.35});
+  }else if(key === 'slc'){
+    createEmberField(document.getElementById('particlesSlc'), {count:24, colors:['240,168,60'], speedMin:0.1, speedMax:0.35});
+  }else if(key === 'tvc'){
+    createEmberField(document.getElementById('particlesTvc'), {count:24, colors:['224,122,42'], speedMin:0.1, speedMax:0.35});
+  }
+}
+
+function setMark(key){
+  if(key === 'home'){ curtainMark.textContent = '✦'; curtainMark.style.color = 'var(--paper)'; curtainMark.style.fontSize = '24px'; }
+  else if(key === 'slc'){ curtainMark.textContent = 'SLC'; curtainMark.style.color = 'var(--gold)'; curtainMark.style.fontSize = '19px'; }
+  else if(key === 'tvc'){ curtainMark.textContent = 'TVC'; curtainMark.style.color = 'var(--ember)'; curtainMark.style.fontSize = '19px'; }
+}
+
+function swapPage(key){
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === key));
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === key));
+  currentPage = key;
+  window.scrollTo(0, 0);
+  ensureField(key);
+}
+
+function goToPage(key){
+  if(key === currentPage) return;
+  if(reduceMotion){ swapPage(key); return; }
+  setMark(key);
+  curtain.classList.add('mark-show');
+  curtain.classList.remove('open');
+  setTimeout(()=>{
+    swapPage(key);
+    setTimeout(()=>{
+      curtain.classList.remove('mark-show');
+      curtain.classList.add('open');
+    }, 240);
+  }, 560);
+}
+
+navButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>goToPage(btn.dataset.target));
+});
+document.querySelectorAll('[data-goto]').forEach(el=>{
+  el.addEventListener('click', ()=>goToPage(el.dataset.goto));
+});
+
+/* ========================= curtain reveal (initial load) ========================= */
+if(reduceMotion){
+  curtain.classList.add('open');
+  ensureField('home');
+}else{
+  document.documentElement.style.overflow = 'hidden';
+  setMark('home');
+  setTimeout(()=> curtain.classList.add('mark-show'), 50);
+  setTimeout(()=>{
+    curtain.classList.remove('mark-show');
+    curtain.classList.add('open');
+    document.documentElement.style.overflow = '';
+  }, 650);
+  ensureField('home');
+}
+
+/* ========================= custom cursor ========================= */
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+if(finePointer && !reduceMotion){
+  document.body.classList.add('has-cursor');
+  const ring = document.getElementById('cursorRing');
+  const dot = document.getElementById('cursorDot');
+  let rx=innerWidth/2, ry=innerHeight/2, mx=rx, my=ry;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  window.addEventListener('mousemove', e=>{
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx+'px'; dot.style.top = my+'px';
+  });
+  (function loop(){
+    rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  const hoverables = 'a, button, .member-card, .leader-card, .hero-crest, .tab, .nav-mark, .news-card, .news-modal-close';
+  document.addEventListener('mouseover', e=>{
+    if(e.target.closest(hoverables)) ring.classList.add('hover');
+  });
+  document.addEventListener('mouseout', e=>{
+    if(e.target.closest(hoverables)) ring.classList.remove('hover');
+  });
+}
+
+/* ========================= tilt + mouse glow ========================= */
+if(!reduceMotion){
+  const hero = document.getElementById('home');
+  const heroGlow = document.getElementById('heroGlow');
+  hero.addEventListener('mousemove', e=>{
+    const r = hero.getBoundingClientRect();
+    heroGlow.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    heroGlow.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+
+  function attachTilt(el, max){
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(700px) rotateX(${(-py*max).toFixed(2)}deg) rotateY(${(px*max).toFixed(2)}deg) translateY(-4px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform = ''; });
+  }
+  document.querySelectorAll('.hero-crest img').forEach(im => attachTilt(im, 16));
+  document.querySelectorAll('.leader-card').forEach(c => attachTilt(c, 5));
+}
+
+/* ========================= stat count-up ========================= */
+function animateCount(el, target, duration){
+  const start = performance.now();
+  function step(now){
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target);
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.querySelectorAll('.stat .num').forEach(num=>{
+        animateCount(num, parseInt(num.dataset.count, 10), reduceMotion ? 1 : 1000);
+      });
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.4});
+document.querySelectorAll('.stats-row').forEach(row => statObserver.observe(row));
+
+/* ========================= nav scroll progress ========================= */
+const progressBar = document.getElementById('navProgress');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = pct + '%';
+}, { passive:true });
+
+/* ========================= ember particles ========================= */
+function createEmberField(canvasEl, opts){
+  if(!canvasEl) return;
+  const cfg = Object.assign({count:40, colors:['240,168,60'], speedMin:0.15, speedMax:0.55}, opts);
+  const ctx = canvasEl.getContext('2d');
+  let w,h,particles;
+  function resize(){
+    w = canvasEl.width = canvasEl.offsetWidth;
+    h = canvasEl.height = canvasEl.offsetHeight;
+  }
+  function makeParticles(){
+    particles = Array.from({length: cfg.count}, ()=>({
+      x: Math.random()*w,
+      y: h + Math.random()*h,
+      r: 1 + Math.random()*2.2,
+      speed: cfg.speedMin + Math.random()*(cfg.speedMax-cfg.speedMin),
+      drift: (Math.random()-0.5)*0.3,
+      alpha: 0.12 + Math.random()*0.35,
+      hue: cfg.colors[Math.floor(Math.random()*cfg.colors.length)]
+    }));
+  }
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.y -= p.speed;
+      p.x += p.drift;
+      if(p.y < -10){ p.y = h + 10; p.x = Math.random()*w; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${p.hue},${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('resize', resize);
+  resize(); makeParticles(); tick();
+}
+</script>
+</body>
+</html>
