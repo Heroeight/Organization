@@ -1,0 +1,1724 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Leadership Community &amp; The Vanguard Coordinator | Al Izzah Batu</title>
+<meta name="description" content="Ruang informasi Student Leader Community dan The Vanguard Coordinator, organisasi santri SMA Al Izzah Leadership School Batu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#100d0a;
+    --charcoal:#1a1510;
+    --charcoal-2:#221b14;
+    --paper:#f4efe2;
+    --muted:#a89c86;
+    --muted-dim:#6f6555;
+    --gold:#f0a83c;
+    --gold-dim:#c98a2e;
+    --gold-line:rgba(240,168,60,0.35);
+    --ember:#e07a2a;
+    --ember-dim:#b85a17;
+    --ember-line:rgba(224,122,42,0.35);
+    --parchment:#ece2cc;
+    --line:rgba(244,239,226,0.12);
+    --shadow:0 20px 50px rgba(0,0,0,0.45);
+    --ease:cubic-bezier(.22,.85,.32,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Manrope',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; z-index:70; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 0%, transparent 45%, rgba(0,0,0,0.55) 115%);
+  }
+  body::after{
+    content:''; position:fixed; inset:0; z-index:71; pointer-events:none; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .nav-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:101;
+    background:linear-gradient(90deg, var(--gold), var(--ember));
+  }
+
+  /* curtain reveal + page transition */
+  .curtain{ position:fixed; inset:0; z-index:200; display:flex; pointer-events:none; }
+  .curtain-panel{ flex:1; background:var(--ink); position:relative; transition:transform 0.55s var(--ease); }
+  .curtain-panel.left{ border-right:1px solid var(--line); }
+  .curtain.open .curtain-panel.left{ transform:translateX(-100%); }
+  .curtain.open .curtain-panel.right{ transform:translateX(100%); }
+  .curtain-mark{
+    position:absolute; top:50%; left:50%; z-index:201; font-family:'Cinzel',serif; font-weight:600;
+    letter-spacing:0.03em; opacity:0; transform:translate(-50%,-50%) scale(0.6);
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .curtain.mark-show .curtain-mark{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+  /* custom cursor */
+  body.has-cursor, body.has-cursor *{ cursor:none !important; }
+  .cursor-ring, .cursor-dot{
+    position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:400;
+    transform:translate(-50%,-50%); opacity:0;
+  }
+  body.has-cursor .cursor-ring, body.has-cursor .cursor-dot{ opacity:1 !important; }
+  .cursor-ring{
+    width:32px; height:32px; border:1px solid var(--gold-line);
+    transition:width 0.25s var(--ease), height 0.25s var(--ease), border-color 0.25s var(--ease), background-color 0.25s var(--ease), opacity 0.2s;
+  }
+  .cursor-ring.hover{ width:54px; height:54px; background:rgba(240,168,60,0.08); border-color:var(--gold); }
+  .cursor-dot{ width:5px; height:5px; background:var(--gold); transition:opacity 0.2s; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--ink); }
+  ::-webkit-scrollbar-thumb{ background:linear-gradient(var(--gold), var(--ember)); border-radius:10px; border:2px solid var(--ink); }
+  html{ scrollbar-width:thin; scrollbar-color:var(--gold-dim) var(--ink); }
+  h1,h2,h3,.crest-font{ font-family:'Cinzel', serif; letter-spacing:0.01em; }
+  img{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  ::selection{ background:var(--gold); color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  section{ position:relative; }
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    background:linear-gradient(to bottom, rgba(16,13,10,0.92), rgba(16,13,10,0));
+    backdrop-filter:blur(2px);
+    transition:background 0.4s var(--ease);
+  }
+  .nav-mark{ display:flex; align-items:center; gap:10px; font-family:'Cinzel',serif; font-size:15px; font-weight:600; color:var(--paper); }
+  .nav-mark .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px var(--gold); }
+  .nav-links{ display:flex; gap:8px; }
+  .nav-links button{
+    font-size:13px; font-weight:600; padding:8px 16px; border-radius:100px;
+    color:var(--muted); border:1px solid transparent; transition:all 0.3s var(--ease);
+  }
+  .nav-links button.active{ color:var(--ink); background:var(--paper); }
+  .nav-links button:not(.active):hover{ color:var(--paper); border-color:var(--line); }
+  .nav-links button[data-target="slc"]{ color:var(--gold); }
+  .nav-links button[data-target="slc"].active{ color:var(--gold); background:rgba(240,168,60,0.12); border-color:var(--gold-line); }
+  .nav-links button[data-target="slc"]:not(.active):hover{ color:var(--gold); border-color:var(--gold-line); }
+  .nav-links button[data-target="tvc"]{ color:var(--ember); }
+  .nav-links button[data-target="tvc"].active{ color:var(--ember); background:rgba(224,122,42,0.12); border-color:var(--ember-line); }
+  .nav-links button[data-target="tvc"]:not(.active):hover{ color:var(--ember); border-color:var(--ember-line); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh; display:flex; align-items:center; justify-content:center;
+    padding:130px 5.5vw 84px; position:relative; overflow:hidden;
+  }
+  #particles{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .hero-rays{
+    position:absolute; top:50%; left:50%; width:max(150vmax, 920px); height:max(150vmax, 920px);
+    translate:-50% -50%;
+    background:conic-gradient(from 0deg,
+      transparent 0deg, rgba(240,168,60,0.06) 8deg, transparent 22deg,
+      transparent 158deg, rgba(224,122,42,0.06) 170deg, transparent 184deg,
+      transparent 338deg, rgba(240,168,60,0.05) 350deg, transparent 360deg);
+    animation:rotateRays 46s linear infinite; mix-blend-mode:screen; z-index:1; pointer-events:none;
+  }
+  @keyframes rotateRays{ to{ transform:rotate(360deg); } }
+  .hero-glow{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(460px circle at var(--mx,50%) var(--my,30%), rgba(240,168,60,0.13), transparent 70%);
+  }
+  .hero-inner{
+    position:relative; z-index:2; width:min(100%, 1320px); max-width:1320px;
+    display:grid; grid-template-columns:minmax(0, 1.2fr) minmax(280px, 0.62fr);
+    align-items:center; gap:clamp(48px, 7vw, 110px); perspective:800px;
+  }
+  .hero-copy{ min-width:0; }
+  .hero-kicker{
+    font-size:11px; color:var(--muted); font-weight:700; letter-spacing:0.12em; margin-bottom:28px;
+    opacity:0; transform:translateY(10px); animation:rise 0.9s var(--ease) 0.1s forwards;
+  }
+  .hero h1{
+    font-size:clamp(3.5rem, 5vw, 5.8rem); font-weight:500; line-height:0.98; color:var(--paper); max-width:100%;
+  }
+  .hero h1 .word{
+    display:inline-block; opacity:0; transform:translateY(26px) rotateX(50deg); transform-origin:50% 100%;
+    animation:wordRise 0.65s var(--ease) forwards;
+    animation-delay:calc(0.95s + var(--i) * 0.045s);
+  }
+  @keyframes wordRise{ to{ opacity:1; transform:translateY(0) rotateX(0); } }
+  .hero h1 em{
+    font-style:normal; color:var(--gold);
+    animation:emGlow 1.8s var(--ease) 1.7s forwards;
+  }
+  @keyframes emGlow{
+    0%{ text-shadow:0 0 0 rgba(240,168,60,0); }
+    55%{ text-shadow:0 0 26px rgba(240,168,60,0.65); }
+    100%{ text-shadow:0 0 8px rgba(240,168,60,0.25); }
+  }
+  .hero p.sub{
+    margin-top:28px; font-size:16px; color:var(--muted); max-width:690px;
+    opacity:0; transform:translateY(14px); animation:rise 0.9s var(--ease) 1.75s forwards;
+  }
+  .upcoming-panel{
+    max-width:none; margin:0; padding:28px 0 30px; text-align:left;
+    opacity:0; transform:translateY(14px); animation:rise 0.8s var(--ease) 1.95s forwards;
+  }
+  .agenda-strip{ position:relative; z-index:72; display:flex; align-items:center; padding:36px 5.5vw; background:linear-gradient(180deg, #17120d, var(--ink)); overflow:hidden; }
+  .agenda-strip::before{
+    content:''; position:absolute; inset:36px 5.5vw; z-index:0;
+    background-image:url('image/Event/Murobicup & Artshow/Murobicup.jpg'); background-size:cover; background-position:center 42%;
+    filter:saturate(0.95); border:1px solid var(--gold-line); border-radius:3px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.34);
+  }
+  .agenda-strip::after{
+    content:''; position:absolute; inset:36px 5.5vw; z-index:0; border-radius:3px;
+    background:linear-gradient(90deg, rgba(16,13,10,0.9) 0%, rgba(16,13,10,0.76) 38%, rgba(16,13,10,0.24) 76%, rgba(16,13,10,0.12) 100%),
+      linear-gradient(0deg, rgba(16,13,10,0.36), transparent 55%);
+  }
+  .agenda-strip .upcoming-panel{
+    position:relative; z-index:1; width:min(100%, 1320px); margin:0 auto;
+    padding:34px clamp(24px, 5vw, 72px); text-align:left;
+  }
+  .agenda-strip .upcoming-heading{
+    width:max-content; gap:10px; padding:8px 12px; border:1px solid rgba(240,168,60,0.28);
+    border-radius:999px; background:rgba(16,13,10,0.5); font-size:10px; backdrop-filter:blur(8px);
+  }
+  .agenda-strip .upcoming-pulse{ width:8px; height:8px; }
+  .agenda-strip .upcoming-list{ margin-top:17px; }
+  .agenda-strip .upcoming-item{
+    display:grid; grid-template-columns:minmax(0,1.15fr) minmax(280px,0.85fr); align-items:center;
+    gap:clamp(28px,5vw,72px); padding:clamp(24px,4vw,48px);
+    border:1px solid rgba(240,168,60,0.3); border-radius:4px;
+    background:linear-gradient(110deg, rgba(16,13,10,0.72), rgba(16,13,10,0.88));
+    box-shadow:0 20px 50px rgba(0,0,0,0.22); backdrop-filter:blur(8px);
+  }
+  .upcoming-event-label{ color:var(--gold); font-size:10px; font-weight:800; letter-spacing:0.16em; }
+  .agenda-strip .upcoming-item h2{ margin-top:10px; font-size:clamp(27px, 3.5vw, 44px); line-height:1.15; letter-spacing:-0.035em; }
+  .agenda-strip .upcoming-item p{ margin-top:10px; color:rgba(244,239,226,0.78); font-size:14px; line-height:1.7; }
+  .upcoming-sponsor{ padding-left:clamp(22px,3vw,40px); border-left:1px solid rgba(240,168,60,0.26); }
+  .upcoming-sponsor-label{ color:var(--gold); font-size:10px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; }
+  .agenda-strip .upcoming-sponsor p{ margin-top:7px; font-size:12px; }
+  .upcoming-sponsor-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px; margin-top:18px; }
+  .upcoming-sponsor-button{
+    min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:0 16px;
+    border:1px solid var(--gold); border-radius:2px; background:var(--gold); color:var(--ink);
+    font-size:11px; font-weight:800; transition:transform 0.25s var(--ease), background 0.25s ease, color 0.25s ease;
+  }
+  .upcoming-sponsor-button:hover{ transform:translateY(-2px); background:var(--paper); border-color:var(--paper); }
+  .upcoming-sponsor-button:focus-visible,.upcoming-sponsor-secondary:focus-visible{ outline:2px solid var(--paper); outline-offset:4px; }
+  .upcoming-sponsor-secondary{ color:var(--paper); font-size:11px; font-weight:700; transition:color 0.2s ease; }
+  .upcoming-sponsor-secondary:hover{ color:var(--gold); }
+  .recent-event-section{ position:relative; padding:44px 5.5vw 52px; background:linear-gradient(180deg, var(--ink), #17120d); }
+  .recent-event-card{
+    position:relative; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(300px,0.9fr);
+    max-width:1320px; min-height:330px; margin:0 auto; overflow:hidden;
+    border:1px solid var(--gold-line); background:linear-gradient(135deg, #292016, #17120e 72%);
+    box-shadow:0 24px 60px rgba(0,0,0,0.32);
+  }
+  .recent-event-photo{ position:relative; min-height:330px; overflow:hidden; background:#211911; }
+  .recent-event-photo::after{ content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent 65%, rgba(16,13,10,0.28)); pointer-events:none; }
+  .recent-event-photo img{ width:100%; height:100%; position:absolute; inset:0; object-fit:cover; transition:transform 0.8s var(--ease); }
+  .recent-event-card:hover .recent-event-photo img{ transform:scale(1.04); }
+  .recent-event-copy{ position:relative; display:flex; flex-direction:column; justify-content:center; padding:clamp(26px,4vw,54px); }
+  .recent-event-kicker{ display:flex; align-items:center; gap:9px; color:var(--gold); font-size:10px; font-weight:800; letter-spacing:0.14em; }
+  .recent-event-kicker .event-org-logo{ width:32px; height:32px; padding:4px; }
+  .recent-event-check{ width:21px; height:21px; display:grid; place-items:center; border:1px solid var(--gold-line); border-radius:50%; font-size:12px; }
+  .recent-event-date{ margin-top:22px; color:var(--muted-dim); font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+  .recent-event-title{ margin-top:7px; color:var(--paper); font-size:clamp(25px,3vw,38px); line-height:1.16; }
+  .recent-event-description{ max-width:440px; margin-top:12px; color:var(--muted); font-size:13px; line-height:1.75; }
+  .recent-event-button{ width:max-content; display:inline-flex; align-items:center; gap:12px; margin-top:24px; padding:11px 15px; border:1px solid var(--gold-line); color:var(--paper); font-size:11px; font-weight:800; transition:gap 0.25s var(--ease), background 0.25s ease, color 0.25s ease; }
+  .recent-event-button:hover{ gap:17px; background:rgba(240,168,60,0.1); color:var(--gold); }
+  .recent-event-button:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; }
+
+  .leadership-banner{ position:relative; z-index:2; padding:36px 5.5vw 0; background:linear-gradient(180deg, #17120d, #100d0a); }
+  .leadership-banner-inner{ width:min(100%, 1320px); margin:0 auto; }
+  .leadership-banner-top{ display:grid; grid-template-columns:minmax(0, 1.55fr) minmax(260px, 0.9fr); gap:clamp(26px, 4vw, 68px); align-items:flex-start; }
+  .leadership-banner-title{ font-family:'Cinzel',serif; font-size:clamp(2.8rem, 4vw, 5.3rem); line-height:0.9; letter-spacing:-0.065em; color:var(--paper); font-weight:700; }
+  .leadership-banner-copy{ max-width:560px; margin-left:auto; margin-top:16px; color:rgba(244,239,226,0.82); font-size:14px; line-height:1.48; }
+  .leadership-banner-divider{ height:1px; background:var(--line); margin-top:28px; }
+  .leadership-banner-stats{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .leadership-stat{ min-height:210px; padding:22px 18px 18px; border-right:1px solid var(--line); }
+  .leadership-stat:first-child{ padding-left:0; }
+  .leadership-stat:last-child{ border-right:none; padding-right:0; }
+  .leadership-stat strong{ display:block; color:var(--gold); font-family:'Cinzel',serif; font-size:clamp(2.6rem, 3.3vw, 5rem); line-height:1; letter-spacing:-0.06em; font-weight:700; }
+  .leadership-stat h3{ margin-top:22px; color:var(--paper); font-size:10px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; }
+  .leadership-stat p{ margin-top:10px; max-width:320px; color:var(--muted); font-size:14px; line-height:1.65; }
+
+  .upcoming-heading{ display:flex; align-items:center; gap:9px; color:var(--gold); font-size:10px; font-weight:800; letter-spacing:0.12em; }
+  .upcoming-pulse{ width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(240,168,60,0.12); animation:upcomingPulse 1.8s ease-out infinite; }
+  @keyframes upcomingPulse{ 50%{ box-shadow:0 0 0 7px rgba(240,168,60,0.02); } }
+  .upcoming-list{ margin-top:9px; }
+  .upcoming-item{ min-width:0; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .upcoming-item h2{ font-family:'Manrope',sans-serif; font-size:14px; font-weight:800; color:var(--paper); }
+  .upcoming-item p{ margin-top:3px; color:var(--muted); font-size:11px; }
+  .upcoming-mark{ flex:0 0 auto; color:var(--gold); font-family:'Cinzel',serif; font-size:20px; }
+  .hero-index{ min-width:0; align-self:center; opacity:0; transform:translateY(14px); animation:rise 0.9s var(--ease) 1.3s forwards; }
+  .hero-index-label{ padding-bottom:14px; color:var(--muted-dim); font-size:9px; font-weight:800; letter-spacing:0.18em; }
+  .hero-index-list{ list-style:none; border-top:1px solid var(--line); }
+  .hero-index-item{ border-bottom:1px solid var(--line); }
+  .hero-index-link{
+    width:100%; min-height:62px; display:grid; grid-template-columns:28px minmax(0,1fr) 18px;
+    align-items:center; gap:12px; text-align:left; color:var(--paper); transition:color 0.25s ease, padding 0.25s ease;
+  }
+  .hero-index-link:hover{ padding-left:5px; color:var(--gold); }
+  .hero-index-number{ color:var(--gold-dim); font-family:'Cinzel',serif; font-size:10px; }
+  .hero-index-copy{ min-width:0; }
+  .hero-index-copy strong{ display:block; font-family:'Cinzel',serif; font-size:16px; font-weight:600; }
+  .hero-index-copy small{ display:block; margin-top:3px; color:var(--muted-dim); font-size:9px; font-weight:700; letter-spacing:0.1em; }
+  .hero-index-arrow{ color:var(--muted-dim); font-size:16px; text-align:right; transition:color 0.25s ease, transform 0.25s ease; }
+  .hero-index-link:hover .hero-index-arrow{ color:var(--gold); transform:translateX(3px); }
+  .hero-index-link:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  /* ---------- org section shared ---------- */
+  .org-section{ padding:120px 0 100px; border-top:1px solid var(--line); overflow:hidden; }
+  .org-section.slc{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
+  .org-section.tvc{ background:linear-gradient(180deg, var(--charcoal) 0%, var(--ink) 100%); }
+
+  .org-watermark{
+    position:absolute; top:300px; left:50%; transform:translateX(-50%); z-index:0; pointer-events:none;
+    font-family:'Cinzel',serif; font-weight:700; font-size:min(30vw, 360px); line-height:1;
+    color:transparent; -webkit-text-stroke:1px var(--line); white-space:nowrap; user-select:none;
+  }
+  .org-section.slc .org-watermark{ -webkit-text-stroke:1.5px var(--gold-line); }
+  .org-section.tvc .org-watermark{ -webkit-text-stroke:1.5px var(--ember-line); }
+
+  .org-section canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; opacity:0.6; }
+
+  .org-head{ display:flex; align-items:center; gap:28px; margin-bottom:64px; position:relative; z-index:2; }
+  .crest-glow{ position:relative; flex-shrink:0; }
+  .crest-glow::before{
+    content:''; position:absolute; top:50%; left:50%; width:112px; height:112px; z-index:-1;
+    transform:translate(-50%,-50%) scale(0.9); border-radius:50%; animation:breathe 4.2s ease-in-out infinite;
+  }
+  .org-section.slc .crest-glow::before{ background:radial-gradient(circle, rgba(240,168,60,0.3), transparent 70%); }
+  .org-section.tvc .crest-glow::before{ background:radial-gradient(circle, rgba(224,122,42,0.3), transparent 70%); }
+  @keyframes breathe{
+    0%,100%{ opacity:0.45; transform:translate(-50%,-50%) scale(0.88); }
+    50%{ opacity:1; transform:translate(-50%,-50%) scale(1.08); }
+  }
+  .org-head img{ width:76px; height:76px; object-fit:contain; flex-shrink:0; }
+  .org-head h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); color:var(--paper); font-weight:600; }
+  .org-section.slc .org-head .accent{ color:var(--gold); }
+  .org-section.tvc .org-head .accent{ color:var(--ember); }
+  .org-head p{ color:var(--muted); font-size:15px; margin-top:6px; max-width:480px; }
+
+  /* leadership cards */
+  .leader-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; max-width:960px; margin:0 auto 76px; position:relative; z-index:2; }
+  .leader-card{
+    padding:0; min-height:280px; background:var(--charcoal-2);
+    border:1px solid var(--line); position:relative; clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%);
+    transition:transform 0.18s ease-out, border-color 0.35s var(--ease); will-change:transform;
+    perspective:1000px; cursor:pointer;
+  }
+  .leader-card:hover{ transform:translateY(-4px); }
+  .card-inner{ position:relative; transform-style:preserve-3d; transition:transform 0.65s var(--ease); }
+  .leader-card.flipped .card-inner{ transform:rotateY(180deg); }
+  .card-face{ backface-visibility:hidden; display:flex; gap:0; align-items:stretch; width:100%; min-height:280px; }
+  .card-face.back{
+    position:absolute; inset:0; transform:rotateY(180deg); flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; gap:9px; padding:24px 30px;
+  }
+  .card-face.back .leader-back-role{ font-size:10px; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:0.1em; }
+  .org-section.tvc .card-face.back .leader-back-role{ color:var(--ember); }
+  .card-face.back .leader-back-name{ font-family:'Cinzel',serif; font-size:17px; line-height:1.3; overflow-wrap:anywhere; }
+  .card-face.back .leader-back-line{ max-width:390px; color:var(--muted); font-size:12px; line-height:1.55; }
+  .card-face.back .quote{ font-family:'Cinzel',serif; font-size:14px; color:var(--paper); line-height:1.55; }
+  .card-face.back .quote-hint{ font-size:10.5px; color:var(--muted-dim); }
+  .leader-back-instagram{ color:var(--gold); font-size:11px; font-weight:800; }
+  .org-section.tvc .leader-back-instagram{ color:var(--ember); }
+  .flip-cue{ position:absolute; top:14px; right:16px; font-size:15px; color:var(--muted-dim); opacity:0.6; }
+  .leader-card:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; }
+  .org-section.tvc .leader-card:focus-visible{ outline-color:var(--ember); }
+  .org-section.slc .leader-card:hover{ border-color:var(--gold-line); }
+  .org-section.tvc .leader-card:hover{ border-color:var(--ember-line); }
+  .org-section.slc .leader-card{ background:linear-gradient(112deg, rgba(240,168,60,0.2), rgba(34,27,20,0.96) 42%, #17120e 100%); }
+  .org-section.tvc .leader-card{ background:linear-gradient(112deg, rgba(224,122,42,0.22), rgba(34,27,20,0.96) 42%, #17120e 100%); }
+  .leader-avatar{
+    width:42%; height:280px; border-radius:0; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel',serif; font-weight:600; font-size:32px; color:var(--paper); object-fit:contain;
+    object-position:center bottom; background:transparent;
+  }
+  .leader-info{ flex:1; min-width:0; align-self:center; padding:44px 22px 24px 20px; overflow-wrap:anywhere; }
+  .leader-info .role{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-dim); margin-bottom:9px; }
+  .org-section.slc .leader-info .role{ color:var(--gold-dim); }
+  .org-section.tvc .leader-info .role{ color:var(--ember-dim); }
+  .leader-info .name{ font-size:19px; font-weight:600; color:var(--paper); font-family:'Cinzel',serif; }
+  .leader-info .line{ font-size:13px; color:var(--muted); margin-top:4px; }
+
+  /* divisions */
+  .divisions-label{ font-size:13px; color:var(--muted); margin-bottom:18px; position:relative; z-index:2; }
+  .select-wrap{
+    position:relative; width:min(100%, 420px); margin-bottom:36px;
+    z-index:2;
+  }
+  .select-wrap::after{
+    content:'▾'; position:absolute; right:18px; top:50%; transform:translateY(-50%);
+    font-size:18px; color:var(--gold); pointer-events:none; text-shadow:0 0 12px rgba(240,168,60,0.45);
+  }
+  .org-section.tvc .select-wrap::after{ color:var(--ember); text-shadow:0 0 12px rgba(224,122,42,0.45); }
+  .division-select{
+    display:block; width:100%; min-height:54px; padding:0 48px 0 18px;
+    border:1px solid rgba(240,168,60,0.86); background:linear-gradient(180deg, rgba(35,26,20,0.96), rgba(16,13,10,0.98));
+    color:var(--paper); border-radius:10px; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02), 0 0 0 1px rgba(240,168,60,0.08), 0 18px 35px rgba(0,0,0,0.35);
+    font:700 15px 'Manrope',sans-serif; cursor:pointer;
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  }
+  .org-section.tvc .division-select{ border-color:rgba(224,122,42,0.88); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02), 0 0 0 1px rgba(224,122,42,0.08), 0 18px 35px rgba(0,0,0,0.35); }
+  .division-select:hover{ border-color:rgba(240,168,60,1); }
+  .org-section.tvc .division-select:hover{ border-color:rgba(224,122,42,1); }
+  .division-select:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .org-section.tvc .division-select:focus-visible{ outline-color:var(--ember); }
+  .division-select option{ background:#1a1510; color:var(--paper); padding:14px 18px; }
+  .division-select option:checked,
+  .division-select option:hover{ background:linear-gradient(90deg, rgba(35,104,255,0.82), rgba(45,92,204,0.88)); color:#fff; }
+
+  .members-panel{ position:relative; min-height:180px; z-index:2; }
+  .members-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:16px;
+  }
+  .member-card{
+    background:var(--charcoal-2); border:1px solid var(--line); padding:18px 16px 20px; text-align:center;
+    clip-path:polygon(14px 0,100% 0,100% 100%,0 100%,0 14px);
+    transition:transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    opacity:0; animation:cardIn 0.5s var(--ease) both;
+  }
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:translateY(0);} }
+  .member-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); }
+  .org-section.slc .member-card:hover{ border-color:var(--gold-line); }
+  .org-section.tvc .member-card:hover{ border-color:var(--ember-line); }
+  .member-avatar{
+    width:56px; height:56px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel',serif; font-weight:600; font-size:16px; color:var(--paper); object-fit:cover;
+  }
+  .org-section.slc .member-avatar{ background:linear-gradient(145deg, rgba(240,168,60,0.28), rgba(240,168,60,0.08)); border:1px solid var(--gold-line); }
+  .org-section.tvc .member-avatar{ background:linear-gradient(145deg, rgba(224,122,42,0.28), rgba(224,122,42,0.08)); border:1px solid var(--ember-line); }
+  .member-card .name{ font-size:13.5px; font-weight:700; color:var(--paper); }
+  .member-card .unit{ font-size:10.5px; color:var(--gold-dim); margin-top:3px; }
+  .member-card .role{ font-size:11.5px; color:var(--muted-dim); margin-top:3px; }
+  .member-card[role="button"]{ cursor:pointer; }
+  .member-card:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .org-section.tvc .member-card:focus-visible{ outline-color:var(--ember); }
+
+  /* ---------- news & events ---------- */
+  .org-section.news{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
+  .org-section.news .org-watermark{ -webkit-text-stroke:1.5px var(--line); }
+  .news-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px; position:relative; z-index:2; }
+  .news-card{ background:var(--charcoal-2); border:1px solid var(--line); cursor:pointer; overflow:hidden; clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%); transition:transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); opacity:0; animation:cardIn 0.5s var(--ease) both; }
+  .news-card[hidden], .news-toggle[hidden]{ display:none; }
+  .news-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); }
+  .news-card.slc:hover{ border-color:var(--gold-line); }
+  .news-card.tvc:hover{ border-color:var(--ember-line); }
+  .news-card.school:hover{ border-color:rgba(239,49,56,0.55); }
+  .news-thumb{ height:140px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .news-thumb::before{ display:none; }
+  .news-thumb.slc{ background:linear-gradient(135deg, rgba(240,168,60,0.4), rgba(16,13,10,0.95)); }
+  .news-thumb.tvc{ background:linear-gradient(135deg, rgba(224,122,42,0.4), rgba(16,13,10,0.95)); }
+  .news-thumb.school{ background:linear-gradient(135deg, rgba(239,49,56,0.3), rgba(25,49,75,0.82)); }
+  .news-thumb-image{ width:100%; height:100%; object-fit:cover; transition:transform 0.65s var(--ease); }
+  .news-card:hover .news-thumb-image{ transform:scale(1.06); }
+  .news-thumb::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.34)); pointer-events:none; }
+  .event-org-logos{ display:flex; align-items:center; gap:6px; }
+  .event-org-logo{ width:28px; height:28px; padding:4px; object-fit:contain; border:1px solid rgba(244,239,226,0.28); border-radius:50%; background:rgba(16,13,10,0.76); }
+  .event-org-logo.slc{ border-color:var(--gold-line); }
+  .event-org-logo.tvc{ border-color:var(--ember-line); }
+  .news-body{ padding:18px 20px 22px; }
+  .news-tags{ display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .news-tags .event-org-logos{ margin-left:auto; }
+  .news-tag{ font-size:10.5px; font-weight:700; padding:3px 11px; border-radius:100px; }
+  .news-tag.org-slc{ background:rgba(240,168,60,0.14); color:var(--gold); }
+  .news-tag.org-tvc{ background:rgba(224,122,42,0.14); color:var(--ember); }
+  .news-tag.org-joint{ background:linear-gradient(90deg, rgba(240,168,60,0.14), rgba(224,122,42,0.14)); color:var(--paper); }
+  .news-tag.org-school{ background:linear-gradient(90deg, rgba(239,49,56,0.18), rgba(25,49,75,0.48)); color:var(--paper); }
+  .news-tag.type{ background:rgba(244,239,226,0.08); color:var(--muted); }
+  .news-title{ font-family:'Cinzel',serif; font-size:16.5px; font-weight:600; color:var(--paper); margin-bottom:7px; }
+  .news-excerpt{ font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:10px; }
+  .news-date-line{ font-size:11.5px; color:var(--muted-dim); }
+  .news-toggle{
+    display:flex; align-items:center; gap:12px; margin:28px auto 0; padding:10px 16px 10px 18px; border:1px solid var(--line);
+    color:var(--muted); font-size:12px; font-weight:700; transition:color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .news-toggle:hover{ color:var(--paper); border-color:var(--gold-line); background:rgba(240,168,60,0.06); }
+  .news-toggle:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .news-toggle-icon{ width:24px; height:24px; flex:0 0 24px; display:grid; place-items:center; border:1px solid var(--gold-line); border-radius:50%; color:var(--gold); transition:transform 0.35s var(--ease); }
+  .news-toggle-icon::before{ content:''; width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); }
+  .news-toggle[aria-expanded="true"] .news-toggle-icon{ transform:rotate(180deg); }
+  .news-card.is-revealing{ animation:cardIn 0.5s var(--ease) both; }
+
+  .news-modal{ position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; visibility:hidden; pointer-events:none; transition:opacity 0.35s var(--ease), visibility 0.35s; }
+  .news-modal.open{ opacity:1; visibility:visible; pointer-events:auto; }
+  .news-modal-backdrop{ position:absolute; inset:0; background:rgba(8,6,4,0.78); backdrop-filter:blur(0); transition:backdrop-filter 0.45s var(--ease); }
+  .news-modal.open .news-modal-backdrop{ backdrop-filter:blur(5px); }
+  .news-modal-card{ position:relative; max-width:960px; width:100%; max-height:88vh; overflow-y:auto; background:var(--charcoal-2); border:1px solid var(--line); clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%); opacity:0; transform:translateY(24px) scale(0.975); transition:opacity 0.4s var(--ease), transform 0.5s var(--ease); }
+  .news-modal.open .news-modal-card{ opacity:1; transform:translateY(0) scale(1); }
+  .news-modal-close{ position:absolute; top:14px; right:16px; z-index:2; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.55); color:var(--paper); font-size:15px; display:flex; align-items:center; justify-content:center; }
+  .news-modal-hero{ height:clamp(210px, 34vw, 360px); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#100d0a; }
+  .news-modal-hero.slc{ background:linear-gradient(135deg, rgba(240,168,60,0.4), rgba(16,13,10,0.95)); }
+  .news-modal-hero.tvc{ background:linear-gradient(135deg, rgba(224,122,42,0.4), rgba(16,13,10,0.95)); }
+  .news-modal-hero.school{ background:linear-gradient(135deg, rgba(239,49,56,0.3), rgba(25,49,75,0.82)); }
+  .news-modal-image{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.035); transition:opacity 0.35s var(--ease), transform 0.7s var(--ease); }
+  .news-modal-image.visible{ opacity:1; transform:scale(1); }
+  .news-gallery-control{ position:absolute; top:50%; z-index:1; display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(244,239,226,0.35); border-radius:50%; background:rgba(16,13,10,0.62); color:var(--paper); font-size:24px; line-height:1; transform:translateY(-50%); transition:background 0.2s ease, border-color 0.2s ease, scale 0.2s ease; }
+  .news-gallery-control:hover{ background:rgba(16,13,10,0.9); border-color:var(--gold); scale:1.06; }
+  .news-gallery-control[hidden]{ display:none; }
+  .news-gallery-prev{ left:18px; }
+  .news-gallery-next{ right:18px; }
+  .news-gallery-count{ position:absolute; right:18px; bottom:16px; z-index:1; padding:5px 10px; border:1px solid rgba(244,239,226,0.22); border-radius:99px; background:rgba(16,13,10,0.68); color:var(--paper); font-size:11px; font-variant-numeric:tabular-nums; }
+  .news-modal-body{ padding:26px 28px 30px; }
+  .news-modal-title{ font-family:'Cinzel',serif; font-size:21px; color:var(--paper); margin:12px 0 6px; }
+  .news-modal-date{ font-size:12.5px; color:var(--muted-dim); margin-bottom:18px; }
+  .news-modal-desc{ font-size:14px; line-height:1.75; color:var(--muted); }
+
+  .profile-modal{ position:fixed; inset:0; z-index:310; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; visibility:hidden; pointer-events:none; transition:opacity 0.3s var(--ease), visibility 0.3s; }
+  .profile-modal.open{ opacity:1; visibility:visible; pointer-events:auto; }
+  .profile-backdrop{ position:absolute; inset:0; background:rgba(8,6,4,0.82); backdrop-filter:blur(5px); }
+  .profile-card{ position:relative; width:min(100%, 720px); max-height:min(86vh, 760px); overflow:auto; background:linear-gradient(145deg, #282016, #17120e 68%); border:1px solid var(--gold-line); clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%); opacity:0; transform:translateY(18px); transition:opacity 0.3s var(--ease), transform 0.35s var(--ease); }
+  .profile-modal.tvc .profile-card{ border-color:var(--ember-line); }
+  .profile-modal.open .profile-card{ opacity:1; transform:translateY(0); }
+  .profile-close{ position:absolute; top:12px; right:12px; z-index:2; width:38px; height:38px; display:grid; place-items:center; border:1px solid var(--line); background:rgba(16,13,10,0.82); font-size:17px; }
+  .profile-main{ display:grid; grid-template-columns:220px minmax(0,1fr); gap:28px; padding:32px; }
+  .profile-portrait-wrap{ min-height:250px; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 35%, rgba(240,168,60,0.18), transparent 70%), #100d0a; border:1px solid var(--line); }
+  .profile-portrait{ width:100%; height:250px; object-fit:contain; color:var(--paper); font:600 48px 'Cinzel',serif; }
+  .profile-org{ color:var(--gold); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; }
+  .profile-title{ margin-top:7px; font-size:clamp(20px, 4vw, 28px); line-height:1.2; overflow-wrap:anywhere; }
+  .profile-role{ margin-top:8px; color:var(--muted); font-size:13px; }
+  .profile-facts{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:22px; }
+  .profile-fact{ padding-top:10px; border-top:1px solid var(--line); }
+  .profile-fact dt{ color:var(--muted-dim); font-size:10px; text-transform:uppercase; letter-spacing:0.08em; }
+  .profile-fact dd{ margin-top:3px; color:var(--paper); font-size:13px; font-weight:700; overflow-wrap:anywhere; }
+  .profile-bio{ margin-top:18px; color:var(--muted); font-size:13px; line-height:1.7; }
+  .profile-instagram{ display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding-bottom:4px; border-bottom:1px solid var(--gold-line); color:var(--gold); font-size:12px; font-weight:800; }
+  .profile-gallery{ padding:0 32px 30px; }
+  .profile-gallery[hidden]{ display:none; }
+  .profile-gallery h4{ margin-bottom:12px; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:0.1em; }
+  .profile-gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:10px; }
+  .profile-gallery-grid img{ width:100%; aspect-ratio:1; object-fit:cover; border:1px solid var(--line); }
+  .profile-modal.tvc .profile-portrait-wrap{ background:radial-gradient(ellipse at 50% 35%, rgba(224,122,42,0.18), transparent 70%), #100d0a; }
+  .profile-modal.tvc .profile-org,.profile-modal.tvc .profile-instagram{ color:var(--ember); }
+  .profile-modal.tvc .profile-instagram{ border-color:var(--ember-line); }
+  @media (max-width:560px){
+    .profile-main{ grid-template-columns:1fr; gap:18px; padding:24px 20px; }
+    .profile-portrait-wrap{ min-height:170px; }
+    .profile-portrait{ height:170px; }
+    .profile-gallery{ padding:0 20px 24px; }
+  }
+
+  /* ---------- organization overview ---------- */
+  .organization-overview{ padding:76px 0 84px; border-top:1px solid var(--line); background:var(--charcoal); }
+  .overview-heading{ display:flex; align-items:end; justify-content:space-between; gap:32px; margin-bottom:34px; }
+  .overview-heading h2{ font-size:clamp(1.6rem, 3vw, 2.25rem); font-weight:600; }
+  .overview-heading p{ max-width:490px; color:var(--muted); font-size:13px; }
+  .overview-grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid var(--line); }
+  .overview-item{ padding:24px 26px 0 0; }
+  .overview-item + .overview-item{ padding-left:26px; border-left:1px solid var(--line); }
+  .overview-item strong{ display:block; color:var(--gold); font-family:'Cinzel',serif; font-size:clamp(1.75rem, 3vw, 2.5rem); font-weight:600; line-height:1.2; }
+  .overview-item h3{ margin-top:8px; color:var(--paper); font-size:14px; font-weight:700; }
+  .overview-item p{ margin-top:6px; max-width:300px; color:var(--muted); font-size:13px; line-height:1.7; }
+
+  /* ---------- spark burst ---------- */
+  .spark-particle{ position:fixed; width:4px; height:4px; border-radius:50%; pointer-events:none; z-index:160; }
+  @keyframes sparkOut{ to{ transform:translate(var(--dx), var(--dy)) scale(0); opacity:0; } }
+
+  footer{ padding:58px 32px 24px; border-top:1px solid var(--gold-line); background:linear-gradient(180deg, #1b1510, #100d0a 80%); }
+  .footer-main{ max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.15fr 1.2fr 0.8fr; gap:52px; padding-bottom:42px; }
+  .footer-brand-lockup{ display:flex; align-items:center; gap:14px; }
+  .footer-brand-copy strong{ display:block; font-family:'Cinzel',serif; color:var(--paper); font-size:15px; font-weight:600; }
+  .footer-brand-copy span{ display:block; margin-top:3px; color:var(--muted-dim); font-size:10px; }
+  .footer-emblems{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  .footer-emblems img{ width:38px; height:38px; object-fit:contain; }
+  .footer-summary{ max-width:310px; margin-top:18px; color:var(--muted); font-size:12px; line-height:1.75; }
+  .footer-heading{ margin-bottom:15px; color:var(--paper); font-family:'Cinzel',serif; font-size:13px; font-weight:600; }
+  .footer-contact{ display:grid; gap:10px; color:var(--muted); font-size:11.5px; line-height:1.65; }
+  .footer-contact a:hover,.footer-links a:hover,.footer-links button:hover{ color:var(--gold); }
+  .footer-contact-label{ display:block; color:var(--muted-dim); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; }
+  .footer-links{ display:grid; gap:11px; justify-items:start; }
+  .footer-links a,.footer-links button{ color:var(--muted); font-size:11.5px; text-align:left; transition:color 0.2s ease; }
+  .footer-links button{ padding:0; }
+  .footer-socials{ display:flex; flex-wrap:wrap; gap:8px 15px; margin-top:16px; }
+  .footer-socials a{ color:var(--muted-dim); font-size:10.5px; font-weight:700; }
+  .footer-socials a:hover{ color:var(--gold); }
+  .footer-bottom{ max-width:1120px; margin:0 auto; padding-top:18px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:16px; color:var(--muted-dim); font-size:10px; }
+  .footer-bottom a{ color:var(--muted); }
+  .footer-bottom a:hover{ color:var(--gold); }
+
+  @media (max-width:900px){
+    .leader-row{ grid-template-columns:1fr; }
+    .hero-inner{ grid-template-columns:1fr; gap:46px; }
+    .hero-index{ width:100%; }
+  }
+
+  @media (max-width:720px){
+    body{ padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
+    .hero{ min-height:100svh; align-items:flex-start; padding:118px 24px 120px; }
+    .hero-inner{ grid-template-columns:1fr; gap:42px; }
+    .hero-kicker{ margin-bottom:20px; font-size:10px; }
+    .hero h1{ font-size:clamp(3rem, 10vw, 5rem); }
+    .hero p.sub{ margin-top:20px; font-size:15px; }
+    .agenda-strip{ padding:20px 16px; }
+    .agenda-strip::before,.agenda-strip::after{ inset:20px 16px; }
+    .agenda-strip::after{
+      background:linear-gradient(90deg, rgba(16,13,10,0.88), rgba(16,13,10,0.76) 62%, rgba(16,13,10,0.38)),
+        linear-gradient(0deg, rgba(16,13,10,0.34), transparent 55%);
+    }
+    .agenda-strip .upcoming-panel{ padding:28px 22px; }
+    .agenda-strip .upcoming-item{ grid-template-columns:1fr; gap:24px; padding:25px 20px; }
+    .agenda-strip .upcoming-item h2{ font-size:clamp(23px, 7vw, 31px); }
+    .agenda-strip .upcoming-item p{ max-width:360px; font-size:12px; }
+    .upcoming-sponsor{ padding:20px 0 0; border-left:0; border-top:1px solid rgba(240,168,60,0.26); }
+    .leadership-banner{ padding:28px 16px 0; }
+    .leadership-banner-top{ grid-template-columns:1fr; }
+    .leadership-banner-copy{ margin-left:0; margin-top:0; }
+    .leadership-banner-stats{ grid-template-columns:1fr; }
+    .leadership-stat{ min-height:auto; padding:26px 0; border-right:none; border-bottom:1px solid var(--line); }
+    .leadership-stat:last-child{ border-bottom:none; }
+    .recent-event-section{ padding:28px 24px 40px; }
+    .recent-event-card{ grid-template-columns:1fr; }
+    .recent-event-photo{ min-height:220px; }
+    .recent-event-photo::after{ background:linear-gradient(0deg, rgba(16,13,10,0.24), transparent 65%); }
+    .recent-event-copy{ padding:24px 22px 28px; }
+    .recent-event-date{ margin-top:17px; }
+    .recent-event-title{ font-size:clamp(25px,7vw,34px); }
+    .hero-index{ width:100%; }
+    .hero-index-link{ min-height:58px; }
+    .nav{
+      top:auto; left:50%; right:auto; bottom:calc(14px + env(safe-area-inset-bottom));
+      transform:translateX(-50%); justify-content:center; padding:6px;
+      border:1px solid rgba(244,239,226,0.14); border-radius:999px;
+      background:rgba(26,21,16,0.94); backdrop-filter:blur(14px); box-shadow:0 12px 32px rgba(0,0,0,0.4);
+    }
+    .nav-mark{ display:none; }
+    .nav-links{ gap:4px; }
+    .nav-links button{ min-width:64px; padding:10px 14px; font-size:12px; }
+    .leader-card, .card-face{ min-height:250px; }
+    .leader-avatar{ width:38%; height:250px; }
+    .leader-info{ padding:42px 18px 20px 16px; }
+    .leader-info .name{ font-size:clamp(16px, 4.8vw, 19px); }
+    .org-head{ flex-direction:column; text-align:center; align-items:center; }
+    .overview-heading{ display:block; }
+    .overview-heading p{ margin-top:10px; }
+    .overview-grid{ grid-template-columns:1fr; }
+    .overview-item, .overview-item + .overview-item{ padding:18px 0; border-left:0; border-bottom:1px solid var(--line); }
+    footer{ padding:42px 24px 22px; }
+    .footer-main{ grid-template-columns:1fr 1fr; gap:30px 24px; padding-bottom:30px; }
+    .footer-brand{ grid-column:1 / -1; }
+    .footer-bottom{ align-items:flex-start; flex-direction:column; }
+  }
+  @media (max-width:420px){
+    .hero{ padding-left:20px; padding-right:20px; }
+    .hero-index-link{ grid-template-columns:24px minmax(0,1fr) 16px; gap:9px; }
+    .hero-index-copy strong{ font-size:14px; }
+    .hero-index-copy small{ font-size:8px; }
+    .footer-main{ grid-template-columns:1fr; gap:26px; }
+    .footer-brand{ grid-column:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="curtain-panel left"></div>
+  <div class="curtain-panel right"></div>
+  <div class="curtain-mark" id="curtainMark">✦</div>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<div class="nav-progress" id="navProgress"></div>
+<nav class="nav">
+  <div class="nav-mark"><span class="dot"></span> ALS ORGANIZATIONS</div>
+  <div class="nav-links" id="navLinks">
+    <button data-target="home" class="active">Beranda</button>
+    <button data-target="slc">SLC</button>
+    <button data-target="tvc">TVC</button>
+  </div>
+</nav>
+
+<main id="app">
+<div class="page active" data-page="home">
+<section class="hero" id="home">
+  <canvas id="particles"></canvas>
+  <div class="hero-rays"></div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-kicker">AL IZZAH LEADERSHIP SCHOOL · BATU</div>
+      <h1><span class="word" style="--i:0">Sekolah</span> <span class="word" style="--i:1">pemimpin</span><br><span class="word" style="--i:2">yang</span> <span class="word" style="--i:3"><em>amanah.</em></span></h1>
+      <p class="sub">SLC dan TVC menjadi ruang belajar memimpin, melayani, dan menghidupkan nilai Al Izzah di tengah kehidupan santri.</p>
+    </div>
+    <nav class="hero-index" aria-label="Jelajahi Al Izzah">
+      <div class="hero-index-label">JELAJAHI AL IZZAH</div>
+      <ol class="hero-index-list">
+        <li class="hero-index-item"><button class="hero-index-link" type="button" data-goto="slc"><span class="hero-index-number">01</span><span class="hero-index-copy"><strong>Student Leader Community</strong><small>ORGANISASI SLC</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></button></li>
+        <li class="hero-index-item"><button class="hero-index-link" type="button" data-goto="tvc"><span class="hero-index-number">02</span><span class="hero-index-copy"><strong>The Vanguard Coordinator</strong><small>ORGANISASI TVC</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></button></li>
+        <li class="hero-index-item"><a class="hero-index-link" href="#news"><span class="hero-index-number">03</span><span class="hero-index-copy"><strong>Events</strong><small>AGENDA ORGANISASI</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
+        <li class="hero-index-item"><a class="hero-index-link" href="https://forms.gle/Si2iNztbBV6wMpkx6" target="_blank" rel="noopener noreferrer"><span class="hero-index-number">04</span><span class="hero-index-copy"><strong>Beri Kami Saran</strong><small>FORM FEEDBACK</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
+      </ol>
+    </nav>
+  </div>
+</section>
+<section class="recent-event-section" aria-labelledby="recentEventHeading">
+  <article class="recent-event-card" id="recentEventCard">
+    <div class="recent-event-photo"><img id="recentEventImage" src="" alt=""></div>
+    <div class="recent-event-copy">
+      <div class="recent-event-kicker"><span class="recent-event-check" aria-hidden="true">✓</span>CURRENT EVENT<div class="event-org-logos" id="recentEventLogos" aria-label="Organisasi penyelenggara"></div></div>
+      <div class="recent-event-date" id="recentEventDate"></div>
+      <h2 class="recent-event-title" id="recentEventHeading"></h2>
+      <p class="recent-event-description" id="recentEventDescription"></p>
+      <button class="recent-event-button" id="recentEventButton" type="button"><span>Lihat cerita kegiatan</span><span aria-hidden="true">↗</span></button>
+    </div>
+  </article>
+</section>
+<section class="leadership-banner" id="leadershipOverview" aria-label="Ringkasan kepengurusan">
+  <div class="leadership-banner-inner">
+    <div class="leadership-banner-top">
+      <h2 class="leadership-banner-title">SATU AMANAH, SATU PERIODE</h2>
+      <p class="leadership-banner-copy">Student Leader Community dan The Vanguard Coordinator menjalankan masa jihad 2026–2027 bersama para pengurus yang siap belajar, melayani, dan menuntut amanah.</p>
+    </div>
+    <div class="leadership-banner-divider" aria-hidden="true"></div>
+    <div class="leadership-banner-stats">
+      <article class="leadership-stat">
+        <strong>185</strong>
+        <h3>Pengurus</h3>
+        <p>148 pengurus SLC dan 37 pengurus TVC.</p>
+      </article>
+      <article class="leadership-stat">
+        <strong>2026–2027</strong>
+        <h3>Masa Jihad</h3>
+        <p>Periode kepengurusan SLC dan TVC saat ini.</p>
+      </article>
+      <article class="leadership-stat">
+        <strong>02</strong>
+        <h3>Organisasi</h3>
+        <p>Student Leader Community dan The Vanguard Coordinator.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="feedback-placeholder" id="feedback" aria-label="Feedback placeholder" style="display:none;">
+  <div class="wrap">
+    <p>Form feedback akan ditambahkan nanti.</p>
+  </div>
+</section>
+<section class="agenda-strip" aria-labelledby="upcomingTitle">
+  <div class="upcoming-panel">
+    <div class="upcoming-heading"><span class="upcoming-pulse" aria-hidden="true"></span>ACARA MENDATANG</div>
+    <div class="upcoming-list">
+      <article class="upcoming-item">
+        <div class="upcoming-event-copy">
+          <div class="upcoming-event-label">ARTSHOW · MUROBI CUP</div>
+          <h2 id="upcomingTitle">Artshow &amp; Murobi Cup</h2>
+          <p>Satu rangkaian acara santri Al Izzah Batu. Tanggal, lokasi, dan detail kegiatan akan diumumkan setelah dikonfirmasi panitia.</p>
+        </div>
+        <div class="upcoming-sponsor">
+          <span class="upcoming-sponsor-label">Terbuka untuk kolaborasi</span>
+          <p>Ingin mendukung acara ini sebagai sponsor? Hubungi panitia untuk berdiskusi tentang peluang kerja sama.</p>
+          <div class="upcoming-sponsor-actions">
+            <a class="upcoming-sponsor-button" href="https://api.whatsapp.com/send?phone=6282333304236&amp;text=Assalamu%27alaikum%2C%20saya%20tertarik%20menjadi%20sponsor%20untuk%20Artshow%20%26%20Murobi%20Cup.%20Mohon%20informasi%20lebih%20lanjut%20tentang%20peluang%20kerja%20sama." target="_blank" rel="noopener" aria-label="Hubungi Antares melalui WhatsApp tentang sponsor Artshow dan Murobi Cup">
+              Hubungi panitia <span aria-hidden="true">↗</span>
+            </a>
+            <a class="upcoming-sponsor-secondary" href="https://api.whatsapp.com/send?phone=6282152164236&amp;text=Assalamu%27alaikum%2C%20saya%20tertarik%20menjadi%20sponsor%20untuk%20Artshow%20%26%20Murobi%20Cup.%20Mohon%20informasi%20lebih%20lanjut%20tentang%20peluang%20kerja%20sama." target="_blank" rel="noopener" aria-label="Hubungi Noval melalui WhatsApp tentang sponsor Artshow dan Murobi Cup">
+              Kontak alternatif: Noval ↗
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="org-section news" id="news">
+  <canvas id="particlesNews"></canvas>
+  <div class="org-watermark">KABAR</div>
+  <div class="wrap">
+    <div class="org-head"><div>
+      <h2>Events</h2>
+    <p>Dokumentasi kegiatan Student Leader Community dan The Vanguard Coordinator.</p>
+    </div></div>
+    <div class="news-grid" id="newsList"></div>
+    <button class="news-toggle" id="newsToggle" type="button" aria-expanded="false" aria-controls="newsList"><span class="news-toggle-label">Tampilkan lainnya</span><span class="news-toggle-icon" aria-hidden="true"></span></button>
+  </div>
+</section>
+</div>
+
+<div class="page" data-page="slc">
+<section class="org-section slc" id="slc">
+  <canvas id="particlesSlc"></canvas>
+  <div class="org-watermark">SLC</div>
+  <div class="wrap">
+    <div class="org-head">
+      <div class="crest-glow"><img src="image/Logo/Logo_SLC.png" alt="Lambang SLC"></div>
+      <div>
+        <h2>Student Leader <span class="accent">Community</span></h2>
+        <p>Organisasi santri SMA Al Izzah Putra yang merancang kegiatan dan menggerakkan potensi melalui bidang-bidang kepengurusan, agar santri belajar berinisiatif, melayani, dan berkontribusi di lingkungan ma’had.</p>
+      </div>
+    </div>
+
+    <div class="leader-row" id="slcLeaders"></div>
+
+    <label class="divisions-label" for="slcDivisionSelect">Bidang kepengurusan</label>
+    <div class="select-wrap">
+      <select class="division-select" id="slcDivisionSelect" aria-label="Bidang SLC"></select>
+    </div>
+    <div class="members-panel" id="slcMembers"></div>
+  </div>
+</section>
+</div>
+
+<div class="page" data-page="tvc">
+<section class="org-section tvc" id="tvc">
+  <canvas id="particlesTvc"></canvas>
+  <div class="org-watermark">TVC</div>
+  <div class="wrap">
+    <div class="org-head">
+      <div class="crest-glow"><img src="image/Logo/Logo_TVC.png" alt="Lambang TVC"></div>
+      <div>
+        <h2>The Vanguard <span class="accent">Coordinator</span></h2>
+        <p>The Vanguard Coordinator adalah organisasi santri SMA Al Izzah Putra yang mengoordinasikan antarbagian dan pelaksanaan agenda. Jika SLC berfokus merancang kegiatan dan menggerakkan potensi, TVC membantu memastikan rencana berjalan tertib dan bertanggung jawab.</p>
+      </div>
+    </div>
+
+    <div class="leader-row" id="tvcLeaders"></div>
+
+    <label class="divisions-label" for="tvcDivisionSelect">Bidang kepengurusan</label>
+    <div class="select-wrap">
+      <select class="division-select" id="tvcDivisionSelect" aria-label="Bidang TVC"></select>
+    </div>
+    <div class="members-panel" id="tvcMembers"></div>
+  </div>
+</section>
+</div>
+
+</main>
+
+<div class="news-modal" id="newsModal" aria-hidden="true">
+  <div class="news-modal-backdrop" id="newsModalBackdrop"></div>
+  <div class="news-modal-card" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+    <button class="news-modal-close" id="newsModalClose" aria-label="Tutup">✕</button>
+    <div class="news-modal-hero" id="newsModalHero">
+      <img class="news-modal-image" id="newsModalImage" alt="">
+      <button class="news-gallery-control news-gallery-prev" id="newsGalleryPrev" type="button" aria-label="Foto sebelumnya">‹</button>
+      <button class="news-gallery-control news-gallery-next" id="newsGalleryNext" type="button" aria-label="Foto berikutnya">›</button>
+      <span class="news-gallery-count" id="newsGalleryCount" aria-live="polite"></span>
+    </div>
+    <div class="news-modal-body">
+      <div class="news-tags" id="newsModalTags"><div class="event-org-logos" id="newsModalLogos" aria-label="Organisasi penyelenggara"></div></div>
+      <h3 class="news-modal-title" id="newsModalTitle"></h3>
+      <div class="news-modal-date" id="newsModalDate"></div>
+      <p class="news-modal-desc" id="newsModalDesc"></p>
+    </div>
+  </div>
+</div>
+
+<div class="profile-modal" id="profileModal" aria-hidden="true">
+  <div class="profile-backdrop" id="profileBackdrop"></div>
+  <section class="profile-card" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+    <button class="profile-close" id="profileClose" type="button" aria-label="Tutup profil">✕</button>
+    <div class="profile-main">
+      <div class="profile-portrait-wrap" id="profilePortraitWrap"></div>
+      <div class="profile-copy">
+        <div class="profile-org" id="profileOrg"></div>
+        <h2 class="profile-title" id="profileTitle"></h2>
+        <p class="profile-role" id="profileRole"></p>
+        <dl class="profile-facts" id="profileFacts"></dl>
+        <p class="profile-bio" id="profileBio" hidden></p>
+        <a class="profile-instagram" id="profileInstagram" target="_blank" rel="noopener" hidden></a>
+      </div>
+    </div>
+    <div class="profile-gallery" id="profileGallery" hidden>
+      <h4>Galeri</h4>
+      <div class="profile-gallery-grid" id="profileGalleryGrid"></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <section class="footer-brand" aria-label="Identitas organisasi">
+      <div class="footer-brand-lockup">
+        <div class="footer-emblems">
+          <img src="image/Logo/Logo_SLC.png" alt="Lambang SLC">
+          <img src="image/Logo/Logo_TVC.png" alt="Lambang TVC">
+        </div>
+        <div class="footer-brand-copy"><strong>AL IZZAH BATU</strong><span>INTERNATIONAL ISLAMIC BOARDING SCHOOL</span></div>
+      </div>
+      <p class="footer-summary">Student Leader Community dan The Vanguard Coordinator. Bersama belajar memimpin dengan adab, lillah, dan syukur.</p>
+    </section>
+    <section aria-labelledby="footerContactTitle">
+      <h2 class="footer-heading" id="footerContactTitle">Hubungi Kami</h2>
+      <div class="footer-contact">
+        <div><span class="footer-contact-label">Alamat</span>Jl. Indragiri, Gg. 6, Sumberejo, Kec. Batu, Kota Batu, Jawa Timur 65318</div>
+        <div><span class="footer-contact-label">Telepon</span><a href="https://api.whatsapp.com/send?phone=6282333304236" target="_blank" rel="noopener">082333304236 - Antares Aesar</a> · <a href="https://api.whatsapp.com/send?phone=6282152164236" target="_blank" rel="noopener">082152164236 - Noval Fairuz</a></div>
+      </div>
+    </section>
+    <section aria-labelledby="footerLinksTitle">
+      <h2 class="footer-heading" id="footerLinksTitle">Tautan</h2>
+      <nav class="footer-links" aria-label="Tautan footer">
+        <a href="https://alizzah-batu.sch.id/" target="_blank" rel="noopener">Situs resmi Al Izzah</a>
+      </nav>
+      <div class="footer-socials" aria-label="Media sosial Al Izzah">
+        <a href="https://www.instagram.com/slc_als/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@mahad_alizzah_batu" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.youtube.com/@slc_als/videos" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </section>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Al Izzah International Islamic Boarding School · Kota Batu</span><a href="https://alizzah-batu.sch.id/" target="_blank" rel="noopener">alizzah-batu.sch.id</a></div>
+</footer>
+
+<script>
+/* Data pengurus dan dokumentasi kegiatan organisasi. */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const ORGS = {
+  slc: {
+    color: 'gold',
+    leader:   { name: 'Rifky Azril Ar Rahman', role: 'Ketua',    line: 'Memimpin Student Leader Community Masa Jihad 2026–2027.', img: 'image/Ketua-wakil/Ketua_SLC.png', quote: 'Asal: Jombang' },
+    coLeader: { name: 'Muhammad Atthaya Rasyendria', role: 'Wakil Ketua', line: 'Mendampingi koordinasi dan kerja seluruh bidang.', img: 'image/Ketua-wakil/Wakil_SLC.png', quote: 'Asal: Samarinda' },
+    divisions: [
+      { name: 'Daily Manager', members: [
+        {name:'Fathan Rafif Athaya', role:'Denpasar', unit:'Sekretaris', img:''},
+        {name:'Zhaahir Ali Prabelio', role:'Jombang', unit:'Sekretaris', img:''},
+        {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', unit:'Bendahara', img:''},
+        {name:'Luthfi Rafif Arkana', role:'Jayapura', unit:'Bendahara', img:''},
+      ]},
+      { name: 'Keamanan', members: [
+        {name:'Mirzadinata Setiyawan', role:'Sidoarjo', img:''},
+        {name:'Ahmad Haidar Al Farras', role:'Gresik', img:''},
+        {name:'Galih Fajar Malik Hakiim', role:'Malang', img:''},
+        {name:'Adli Shidqi Prawira', role:'Batam', img:''},
+        {name:'Muhammad Kafil Kayzan', role:'Ponorogo', img:''},
+        {name:'Keenan Nararya Fuad', role:'Gresik', img:''},
+        {name:'Verdi Aviansyah Mahatama Puguh', role:'Batu', img:''},
+        {name:'Raditra Priyanto', role:'Berau', img:''},
+        {name:'Alfero Ramanda Ediezahirudin Rafie', role:'Probolinggo', img:''},
+        {name:'Ahmad Mutanabbi Mirawanto', role:'Malang', img:''},
+      ]},
+      { name: 'Multimedia', members: [
+        {name:'Ahmad Farel Panatagama', role:'Tulungagung', img:''},
+        {name:'Queenzy Hafidhu Zikry', role:'Semarang', img:''},
+        {name:'Alif Luqmanurrahman Pradhana', role:'Malang', img:''},
+        {name:'Muhammad Thoriq Akbar', role:'Malang', img:''},
+        {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:''},
+        {name:'Ali Qiyal Mukhlis', role:'Lampung', img:''},
+        {name:'Faith Athallah Efendi', role:'Tuban', img:''},
+        {name:'Abdurrahman', role:'Samarinda', img:''},
+        {name:'Akasyah Zafran Ghifari', role:'Gresik', img:''},
+        {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:''},
+      ]},
+      { name: 'Dakwah Masjid', members: [
+        {name:'Kiagus M Daffa Agha Afkar', role:'Sangatta', img:''},
+        {name:'Radithya Al Iskandar Rayhan Putra', role:'Surabaya', img:''},
+        {name:'Raka Aulia Faridi', role:'Lampung', img:''},
+        {name:'Fayyad Alghani', role:'Banjarmasin', img:''},
+        {name:'Riyadh Rifky Balfas', role:'Surabaya', img:''},
+        {name:'Muhammad Ammar Dany Riadi', role:'Berau', img:''},
+        {name:'Teuku Riffat Alfatha Iskandharsyah', role:'Balikpapan', img:''},
+        {name:'Adis Akmal', role:'Sangatta', img:''},
+        {name:'Muhammad Ibra Kenbizuqi', role:'Lubuklinggau', img:''},
+        {name:'Aqila Izza Adirachman', role:'Tuban', img:''},
+      ]},
+      { name: 'Olahraga', members: [
+        {name:'Muhammad Fawwaz Imaadul Haq', role:'Surabaya', img:''},
+        {name:'Muhammad Fathan Abidzar Dliya`ulhaq', role:'Mojokerto', img:''},
+        {name:'Muhammad Azzam Ibrahim', role:'Sidoarjo', img:''},
+        {name:'Muhammad Jenthara Priyandra Pradana Maheswara', role:'Sidoarjo', img:''},
+        {name:'Rakha Firjatullah', role:'Balikpapan', img:''},
+        {name:'Rifqi Ferdinanta Fadli', role:'Surabaya', img:''},
+        {name:'Muhammad Zulham Amirullah', role:'Pontianak', img:''},
+        {name:'Rafi Nurcahyo Adati', role:'Manado', img:''},
+        {name:'Rezky Alifi Chaniago', role:'Bali', img:''},
+        {name:'Syauqi Imam Azka', role:'Samarinda', img:''},
+      ]},
+      { name: 'Bersih Lingkungan', members: [
+        {name:'Ahmad Fauzan', role:'Sudu', img:''},
+        {name:'Reyhan Axelle Bonaro Widodo', role:'Banyuwangi', img:''},
+        {name:'Ahmad Maulana Zidan Amrullah', role:'Yogyakarta', img:''},
+        {name:'Adzka Faqih Abdillah', role:'Martapura', img:''},
+        {name:'Muhammad Abid Abkary', role:'Sampit', img:''},
+        {name:'Muhammad Jeap Nuh Hamzah', role:'Samarinda', img:''},
+        {name:'Muhammad Naufal Adhitya Al Fathir Yusuf', role:'Sangatta', img:''},
+        {name:'Rasya Zhafran Al-Thafsyah', role:'Jember', img:''},
+        {name:'Alfino Irwandy Yusuf', role:'Sumenep', img:''},
+        {name:'Putra Aditya Soleman', role:'Manado', img:''},
+      ]},
+      { name: 'Informasi', members: [
+        {name:'Muhammad Naufal Adqaury Ibnu Syaifa', role:'Sorowako', img:''},
+        {name:'Hanif Sandriano Shiddiq', role:'Cepu', img:''},
+        {name:'Muhammad Afkar Nizam Arviansyah', role:'Jakarta', img:''},
+        {name:'Muhammad Arkan Najwan Arviansyah', role:'Jakarta', img:''},
+        {name:'M. Arif Rezky Alfahadi', role:'Samboja', img:''},
+        {name:'Natka Sadewa Asmoro', role:'Samarinda', img:''},
+        {name:'Abid Yusuf Fahlavi Subagiyo', role:'Pekalongan', img:''},
+        {name:'Axel Keanu Ghalva Ramadhan', role:'Sidoarjo', img:''},
+        {name:'Mochamad Daffa Nafiis', role:'Surabaya', img:''},
+        {name:'Nufail Alingga Kusworo', role:'Jakarta', img:''},
+      ]},
+      { name: 'Bahasa', members: [
+        {name:'Muh. Hisyaam Dzaki Mubarak', role:'Jayapura', img:''},
+        {name:'Gallant Radithya Ghani Prasetyo', role:'Sangatta', img:''},
+        {name:'Hafidz Rafi Rabbani', role:'Wamena', img:''},
+        {name:'Muhammad Althaf Arkana Yusuf', role:'Pekanbaru', img:''},
+        {name:'Ro\'yal Aini Arsyl Putra', role:'Lamongan', img:''},
+        {name:'Andi Afzal Ghaizani', role:'Makassar', img:''},
+        {name:'Muhammad Rafif', role:'Banjarmasin', img:''},
+        {name:'Fahmi Abdullah Hazim', role:'Pontianak', img:''},
+        {name:'Qeis Fauzi Ghudzamir Zain', role:'Bandar Lampung', img:''},
+        {name:'Muhammad Mikail Robbani', role:'Probolinggo', img:''},
+      ]},
+      { name: 'Enterpreneur', members: [
+        {name:'Antares Aesar Aulayain', role:'Surabaya', img:''},
+        {name:'M. Noval Fairuz Ahmad', role:'Makassar', img:''},
+        {name:'Nabil Alyasih Nur Ramadhan', role:'Malang', img:''},
+        {name:'Muhammad Rezky Aulia Rahman', role:'Malang', img:''},
+        {name:'Alif Muhammad', role:'Malang', img:''},
+        {name:'Fardy Al Abqary', role:'Aceh', img:''},
+        {name:'Trisandi Bharata', role:'Sangatta', img:''},
+        {name:'Nabil Hanif', role:'Balikpapan', img:''},
+        {name:'Ridho Alghifary', role:'Tarakan', img:''},
+        {name:'Nazreivo Sulthan Azizan', role:'Surabaya', img:''},
+        {name:'Gilang Nugraha Dwi Guna', role:'Tuban', img:''},
+        {name:'Muhammad Yahya Yanuar', role:'Bima', img:''},
+        {name:'Hadi Safwan', role:'Sidoarjo', img:''},
+      ]},
+      { name: 'Bapenta', members: [
+        {name:'Salahhuddin Prameswara Anindita', role:'Malang', img:''},
+        {name:'Muhammad Rakha Azka', role:'Makassar', img:''},
+        {name:'Faqih Ahsan Haniif', role:'Samarinda', img:''},
+        {name:'Hikmal Rifqie Alghifari Aldrian', role:'Pasuruan', img:''},
+        {name:'Muhammad Khalifabyaz Mirza Wardhana', role:'Bogor', img:''},
+        {name:'Al Mizan Khairan Raytama Hidayat', role:'Jayapura', img:''},
+        {name:'Muhammad Rafif Setyawan', role:'Batam', img:''},
+        {name:'Michael Al Ardh', role:'Batu', img:''},
+        {name:'Dhafie Shofwan Ash Shidqie', role:'Samarinda', img:''},
+        {name:'Muhammad Kenzie Prihady', role:'Bontang', img:''},
+        {name:'Adhyaksa Idrus', role:'Makassar', img:''},
+        {name:'Achmad Kelvin Arviansyah', role:'Surabaya', img:''},
+      ]},
+      { name: 'Kesenian', members: [
+        {name:'Andra Izrami Satya Wardana', role:'Serang', img:''},
+        {name:'Ibrahim Mauladi', role:'Lamongan', img:''},
+        {name:'Harits Ghifar Musyafak', role:'Tangerang', img:''},
+        {name:'Nicholas Ardian Ananta', role:'Jakarta', img:''},
+        {name:'Rifky Vio Dhiaurrahman', role:'Sangatta', img:''},
+        {name:'Akhtar Maulana Fattahillah', role:'Sangatta', img:''},
+        {name:'Ahmad Adli Assyauqi', role:'Kutai Timur', img:''},
+        {name:'Barack Octo Wahyumirizky', role:'Malang', img:''},
+        {name:'Rezky Noor Fadilah', role:'Palangkaraya', img:''},
+        {name:'Eka Dymaz Janitra Fatkhur Rokhman', role:'Kuta', img:''},
+      ]},
+      { name: 'Dapur', members: [
+        {name:'Aufa Haiqal', role:'Sangatta', img:''},
+        {name:'Radjendra Kafka Aelino', role:'Madiun', img:''},
+        {name:'Muhammad Radja Syahputra Bachri', role:'Surabaya', img:''},
+        {name:'Bhaga Persada Brahmana', role:'Pekanbaru', img:''},
+        {name:'Muhammad Athaillah Rahmansyah', role:'Bontang', img:''},
+        {name:'Rayyan Azka Ahmad', role:'Sidoarjo', img:''},
+        {name:'Muhammad Raditya Laisafero', role:'Malang', img:''},
+        {name:'Muhammad Fakhry Ubaydillah Tsaaqif', role:'Sidoarjo', img:''},
+        {name:'Nizar Muzhaffar Sulistyono', role:'Sidoarjo', img:''},
+        {name:'Akmal Rafa Hernaufal', role:'Mojokerto', img:''},
+      ]},
+      { name: 'Pengajaran', members: [
+        {name:'Farelle Pratadiazta Savana', role:'Sidoarjo', img:''},
+        {name:'El Pandora Deni', role:'Surabaya', img:''},
+        {name:'Aldito Emery Illona Masruri', role:'Tanjung Pinang', img:''},
+        {name:'Muhammad Raihansyah Adzkiya\' Wahyudi', role:'Surabaya', img:''},
+        {name:'Muhammad Zafir Ardiansyah', role:'Malang', img:''},
+        {name:'Muhammad Dzaki Akmal', role:'Balikpapan', img:''},
+        {name:'Ataya Fikri Rizqullah Imanuddin', role:'Gresik', img:''},
+        {name:'Hamam Aslam Ahmad Yasak', role:'Jember', img:''},
+        {name:'Rausyan Farras Aly Muhammad', role:'Lamongan', img:''},
+        {name:'Fadhil Athaya Syadid Rizqullah', role:'Probolinggo', img:''},
+      ]},
+      { name: 'Kesehatan', members: [
+        {name:'Zufaro Ardiyoso Razak', role:'Sangatta', img:''},
+        {name:'Syaamil Abdurrahman', role:'Samarinda', img:''},
+        {name:'Atha Rakan Firdaus', role:'Pasuruan', img:''},
+        {name:'Dheyya Alhijri Rochim', role:'Depok', img:''},
+        {name:'Muhammad Kenzie Pratinanggawa', role:'Bekasi', img:''},
+        {name:'Alden Salim Widagdo', role:'Sidoarjo', img:''},
+        {name:'Athaya Daffa Rafif', role:'Riau', img:''},
+        {name:'Narendra Kasyafani Majeed', role:'Sidoarjo', img:''},
+        {name:'Nazril Khairan Windya Putra', role:'Lombok', img:''},
+        {name:'Thaha Yasin Nurwahid', role:'Paser', img:''},
+      ]},
+      { name: 'Laundry', members: [
+        {name:'Muhammad Hilmi Fathuddin', role:'Surabaya', img:''},
+        {name:'Arjuna Ghazy Wibowo', role:'Pekanbaru', img:''},
+        {name:'M. Fikri Khalifah Alham Nurham', role:'Jayapura', img:''},
+        {name:'Muhammad Qanantha Syauqie', role:'Jayapura', img:''},
+        {name:'Malvino Garde Gana', role:'Sumatera Selatan', img:''},
+        {name:'Muhammad Fairus Irzam', role:'Balikpapan', img:''},
+        {name:'Haraka Hiroshi Ilmi', role:'Lamongan', img:''},
+      ]},
+    ]
+  },
+  tvc: {
+    color: 'ember',
+    leader:   { name: 'Yusuf Hazim Suyitno', role: 'Ketua',    line: 'Memimpin The Vanguard Coordinator.', img: 'image/Ketua-wakil/Ketua_TVC.png', quote: 'Asal: Jakarta' },
+    coLeader: { name: 'Muhammad Alfaruq Ardiansyah', role: 'Wakil Ketua', line: 'Mendampingi koordinasi The Vanguard Coordinator.', img: 'image/Ketua-wakil/Wakil_TVC.png', quote: 'Asal: Makassar' },
+    divisions: [
+      { name: 'ANKUSET', members: [
+        {name:'Ibrahim Alfarisi', role:'Gresik', unit:'Anggota', img:''},
+        {name:'Darren Athalla Ghifari', role:'Tanggerang', unit:'Anggota', img:''},
+      ]},
+      { name: 'ANKUKUANG', members: [
+        {name:'Akbar Prasetya', role:'Berau', unit:'Anggota', img:''},
+        {name:'Arya Adriansyah Putra Pratama', role:'Palangka Raya', unit:'Anggota', img:''},
+      ]},
+      { name: 'ANKULAT', members: [
+        {name:'Zhafrano Raja Triarka', role:'Banyuwangi', unit:'Anggota', img:''},
+        {name:'Dimas Rasya Wibowo', role:'Makassar', unit:'Anggota', img:''},
+        {name:'Muhammad Asyam Fawwaz', role:'Banjarbaru', unit:'Anggota', img:''},
+        {name:'Abiyyu Kiya Dhia Almaas', role:'Sidoarjo', unit:'Anggota', img:''},
+        {name:'Mochammad Fachri Akbar', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Mochammad Rizqi Akbar', role:'Bojonegoro', unit:'Anggota', img:''},
+        {name:'Ahmad Hafizh Abdurrahman', role:'Gresik', unit:'Anggota', img:''},
+        {name:'Muhammad Sultan Jafri', role:'Banjarbaru', unit:'Anggota', img:''},
+      ]},
+      { name: 'ANKUPERKAP', members: [
+        {name:'Hanif Rabbani Humayun', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Arkan Athaya Basri', role:'Banyuwangi', unit:'Anggota', img:''},
+        {name:'Ahmaddinajat Billah', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Fatih Ikhsan Zuhaily', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Abiyyu Fawwaz Amanullah', role:'Batam', unit:'Anggota', img:''},
+        {name:'Muhammad Rehan', role:'Balikpapan', unit:'Anggota', img:''},
+        {name:'Muhammad Haafiz Ramadhan', role:'Mojokerto', unit:'Anggota', img:''},
+        {name:'Farel Novrinno Rizky', role:'Surabaya', unit:'Anggota', img:''},
+      ]},
+      { name: 'ANKUKEDAP', members: [
+        {name:'Dika Achmad Luqmansyah', role:'Pasuruan', unit:'Anggota', img:''},
+        {name:'Kaffi Athallah Lirfano', role:'Jakarta', unit:'Anggota', img:''},
+        {name:'Adrian Arhaburrizqi Himawan', role:'Lombok', unit:'Anggota', img:''},
+        {name:'Rahmat Semesta Alam', role:'Nganjuk', unit:'Anggota', img:''},
+        {name:'Muhammad Dzulfiqaar Amril Haq', role:'Berau', unit:'Anggota', img:''},
+        {name:'Ahmad Wildan Alqowiy', role:'Bekasi', unit:'Anggota', img:''},
+        {name:'Ibrahimovic Ghaisan', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Irvin Fico Saverio', role:'Banjarbaru', unit:'Anggota', img:''},
+      ]},
+      { name: 'BINDEP', members: [
+        {name:'Muhammad Athaillah Aidan', role:'Balikpapan', unit:'Ketua Bagian', img:''},
+        {name:'Waldan Yafiq Zhafran', role:'Balikpapan', unit:'Anggota', img:''},
+        {name:'KenzieUmar Muhammad Thufail', role:'Bekasi', unit:'Anggota', img:''},
+        {name:'Ahmad Haedar Habibie', role:'Bojonegoro', unit:'Anggota', img:''},
+        {name:'Ariel Bagoes Sanjaya', role:'Surabaya', unit:'Anggota', img:''},
+        {name:'Daffa Kanz Pratama', role:'Makassar', unit:'Anggota', img:''},
+        {name:'Danish Raynar Nayaka', role:'Berau', unit:'Anggota', img:''},
+      ]},
+    ]
+  }
+};
+
+const NEWS = [
+  {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'Peringatan Hari Kemerdekaan Indonesia melalui upacara dan berbagai lomba di lingkungan Al Izzah Batu.',body:'Independence Day Committee (IDC) memeriahkan Hari Kemerdekaan Republik Indonesia melalui upacara dan berbagai lomba. Kegiatan ini menjadi momen untuk mengenang perjuangan bangsa sekaligus menumbuhkan semangat kebersamaan, sportivitas, dan cinta tanah air di lingkungan Al Izzah Batu.',status:'Dokumentasi kegiatan',images:['image/Event/IDC/ABD05577.JPG','image/Event/IDC/ABD07042.JPG','image/Event/IDC/ABD06779.JPG','image/Event/IDC/ABD06763.JPG','image/Event/IDC/ABD06127.JPG','image/Event/IDC/ABD07651.JPG']},
+  {date:'2026-10-01',org:'school',organization:'School',logo:'image/Event/AZKAR/Logo azkar.png',logoAlt:'Logo AZKAR',type:'Event',title:'AZKAR: Ajang Zona Kreativitas & Apresiasi Remaja',excerpt:'Perayaan Bulan Bahasa melalui AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja).',body:'AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja) diselenggarakan oleh School untuk merayakan Bulan Bahasa.',status:'Sudah terlaksana',images:['image/Event/AZKAR/IMG09980.JPG','image/Event/AZKAR/IMG09675.JPG','image/Event/AZKAR/IMG09669.JPG','image/Event/AZKAR/IMG09561.JPG','image/Event/AZKAR/IMG09551.JPG','image/Event/AZKAR/IMG09540.JPG']},
+  {date:'2026-09-16',org:'slc',type:'Agenda',title:'JMQ: Tes Jam’iyatul Qurra',excerpt:'Seleksi peserta Jam’iyatul Qurra di lingkungan Al Izzah Batu.',body:'Agenda Tes Jam’iyatul Qurra (JMQ) pada 16 September 2026. Foto pada galeri merupakan dokumentasi kegiatan dari arsip lokal situs organisasi.',images:['image/Event/JMQ/_ABD0133.JPG','image/Event/JMQ/_ABD0130.JPG','image/Event/JMQ/_ABD0110.JPG','image/Event/JMQ/_ABD0139.JPG']},
+  {date:'2026-09-12',org:'tvc',type:'Event',title:'Pramuka: Pembukaan Kegiatan',excerpt:'Pembukaan kegiatan Pramuka bersama santri Al Izzah Batu.',body:'Kegiatan pembukaan Pramuka telah terlaksana sebagai awal rangkaian pembinaan dan kegiatan kepramukaan santri Al Izzah Batu.',status:'Sudah terlaksana',images:['image/Event/Pembukaan Pramuka/IMG_1832.JPG','image/Event/Pembukaan Pramuka/IMG_1843-rotated.JPG','image/Event/Pembukaan Pramuka/IMG_1706.JPG','image/Event/Pembukaan Pramuka/IMG_1719.JPG','image/Event/Pembukaan Pramuka/IMG_1794.JPG']},
+  {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/Event/DPP/Logo_DPP.png',logoAlt:'Logo DPP',type:'Event',title:'DPP: Dewan Pergantian Pengurus',excerpt:'Momen pergantian dan serah terima amanah kepengurusan SLC dan TVC.',body:'Dewan Pergantian Pengurus (DPP) menjadi momen pergantian dan serah terima amanah kepengurusan Student Leader Community dan The Vanguard Coordinator.',images:['image/Event/DPP/ABD09161.JPG','image/Event/DPP/ABD09093.JPG','image/Event/DPP/ABD09242.JPG']},
+];
+
+/* ========================= rendering ========================= */
+function initials(name){
+  return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function avatarNode(person, sizeClass){
+  if(person.img){
+    const img = document.createElement('img');
+    img.src = person.img; img.alt = person.name;
+    img.className = sizeClass;
+    return img;
+  }
+  const div = document.createElement('div');
+  div.className = sizeClass;
+  div.textContent = initials(person.name);
+  return div;
+}
+
+function sparkBurst(x, y, color){
+  for(let i=0; i<9; i++){
+    const s = document.createElement('div');
+    s.className = 'spark-particle';
+    const angle = Math.random()*Math.PI*2;
+    const dist = 26 + Math.random()*38;
+    s.style.left = x+'px'; s.style.top = y+'px';
+    s.style.background = color;
+    s.style.setProperty('--dx', Math.cos(angle)*dist+'px');
+    s.style.setProperty('--dy', Math.sin(angle)*dist+'px');
+    s.style.animation = 'sparkOut 0.6s ease-out forwards';
+    document.body.appendChild(s);
+    setTimeout(()=> s.remove(), 650);
+  }
+}
+
+let profileReturnFocus = null;
+function openProfile(person){
+  const modal = document.getElementById('profileModal');
+  modal.className = `profile-modal open ${person.org}`;
+  profileReturnFocus = document.activeElement;
+  document.getElementById('profileOrg').textContent = `${person.orgName} · ${person.division}`;
+  document.getElementById('profileTitle').textContent = person.name;
+  document.getElementById('profileRole').textContent = person.role;
+
+  const portraitWrap = document.getElementById('profilePortraitWrap');
+  portraitWrap.innerHTML = '';
+  const portrait = avatarNode(person, 'profile-portrait');
+  if(portrait instanceof HTMLImageElement){
+    portrait.onerror = ()=>{
+      const fallback = document.createElement('div');
+      fallback.className = 'profile-portrait';
+      fallback.textContent = initials(person.name);
+      portrait.replaceWith(fallback);
+    };
+  }
+  portraitWrap.appendChild(portrait);
+
+  const facts = document.getElementById('profileFacts');
+  facts.innerHTML = '';
+  [{label:'Asal', value:person.origin}, {label:'Bidang', value:person.division}].forEach(fact=>{
+    if(!fact.value) return;
+    const item = document.createElement('div');
+    item.className = 'profile-fact';
+    const label = document.createElement('dt'); label.textContent = fact.label;
+    const value = document.createElement('dd'); value.textContent = fact.value;
+    item.append(label, value); facts.appendChild(item);
+  });
+
+  const bio = document.getElementById('profileBio');
+  bio.textContent = person.bio || '';
+  bio.hidden = !person.bio;
+  const instagram = document.getElementById('profileInstagram');
+  const handle = String(person.instagram || '').trim().replace(/^@/, '');
+  if(/^[A-Za-z0-9._]{1,30}$/.test(handle)){
+    instagram.href = `https://www.instagram.com/${encodeURIComponent(handle)}/`;
+    instagram.textContent = `Instagram · @${handle}`;
+    instagram.hidden = false;
+  }else{
+    instagram.removeAttribute('href');
+    instagram.textContent = '';
+    instagram.hidden = true;
+  }
+
+  const gallery = document.getElementById('profileGallery');
+  const galleryGrid = document.getElementById('profileGalleryGrid');
+  galleryGrid.innerHTML = '';
+  const images = Array.isArray(person.gallery) ? person.gallery.filter(Boolean) : [];
+  images.forEach((src, index)=>{
+    const image = document.createElement('img');
+    image.src = src; image.alt = `${person.name}, foto ${index + 1}`;
+    galleryGrid.appendChild(image);
+  });
+  gallery.hidden = images.length === 0;
+  modal.setAttribute('aria-hidden', 'false');
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('profileClose').focus();
+}
+
+function closeProfile(){
+  const modal = document.getElementById('profileModal');
+  if(!modal.classList.contains('open')) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+  if(profileReturnFocus instanceof HTMLElement) profileReturnFocus.focus();
+}
+
+function renderLeaders(orgKey){
+  const org = ORGS[orgKey];
+  const row = document.getElementById(orgKey+'Leaders');
+  [org.leader, org.coLeader].forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'leader-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Balik kartu profil ${p.name}`);
+    card.setAttribute('aria-pressed', 'false');
+
+    const inner = document.createElement('div');
+    inner.className = 'card-inner';
+
+    const front = document.createElement('div');
+    front.className = 'card-face front';
+    const av = avatarNode(p, 'leader-avatar');
+    const info = document.createElement('div');
+    info.className = 'leader-info';
+    info.innerHTML = `<div class="role">${p.role}</div><div class="name">${p.name}</div><div class="line">${p.line}</div>`;
+    front.appendChild(av); front.appendChild(info);
+
+    const back = document.createElement('div');
+    back.className = 'card-face back';
+    const backRole = document.createElement('div');
+    backRole.className = 'leader-back-role';
+    backRole.textContent = p.role;
+    const backName = document.createElement('div');
+    backName.className = 'leader-back-name';
+    backName.textContent = p.name;
+    const backLine = document.createElement('div');
+    backLine.className = 'leader-back-line';
+    backLine.textContent = p.line;
+    const backOrigin = document.createElement('div');
+    backOrigin.className = 'quote';
+    backOrigin.textContent = p.quote;
+    back.append(backRole, backName, backLine, backOrigin);
+    const handle = String(p.instagram || '').trim().replace(/^@/, '');
+    if(/^[A-Za-z0-9._]{1,30}$/.test(handle)){
+      const instagram = document.createElement('a');
+      instagram.className = 'leader-back-instagram';
+      instagram.href = `https://www.instagram.com/${encodeURIComponent(handle)}/`;
+      instagram.target = '_blank';
+      instagram.rel = 'noopener';
+      instagram.textContent = `Instagram · @${handle}`;
+      instagram.addEventListener('click', event=>event.stopPropagation());
+      back.appendChild(instagram);
+    }
+    const backHint = document.createElement('div');
+    backHint.className = 'quote-hint';
+    backHint.textContent = 'Klik untuk kembali';
+    back.appendChild(backHint);
+
+    inner.appendChild(front); inner.appendChild(back);
+    card.appendChild(inner);
+
+    const cue = document.createElement('span');
+    cue.className = 'flip-cue';
+    cue.textContent = '↻';
+    card.appendChild(cue);
+
+    card.addEventListener('click', (e)=>{
+      card.classList.toggle('flipped');
+      card.setAttribute('aria-pressed', String(card.classList.contains('flipped')));
+      if(!reduceMotion) sparkBurst(e.clientX, e.clientY, orgKey === 'slc' ? '#f0a83c' : '#e07a2a');
+    });
+    card.addEventListener('keydown', event=>{
+      if((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a, button')){
+        event.preventDefault();
+        card.click();
+      }
+    });
+    row.appendChild(card);
+  });
+}
+
+function renderDivisions(orgKey){
+  const org = ORGS[orgKey];
+  const divisionSelect = document.getElementById(orgKey+'DivisionSelect');
+  const panelEl = document.getElementById(orgKey+'Members');
+
+  function showDivision(idx){
+    divisionSelect.value = String(idx);
+    panelEl.innerHTML = '';
+    const division = org.divisions[idx];
+    const grid = document.createElement('div');
+    grid.className = 'members-grid';
+    division.members.forEach((m,i)=>{
+      const card = document.createElement('div');
+      card.className = 'member-card';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `Lihat profil ${m.name}`);
+      card.style.animationDelay = (i*0.045)+'s';
+      const av = avatarNode(m, 'member-avatar');
+      card.appendChild(av);
+      const name = document.createElement('div'); name.className='name'; name.textContent = m.name;
+      if(m.unit){
+        const unit = document.createElement('div'); unit.className='unit'; unit.textContent = m.unit;
+        card.appendChild(name); card.appendChild(unit);
+      }else{
+        card.appendChild(name);
+      }
+      const role = document.createElement('div'); role.className='role'; role.textContent = m.role;
+      card.appendChild(role);
+      const person = { ...m, org:orgKey, orgName:orgKey === 'slc' ? 'SLC' : 'TVC', division:division.name, role:m.unit ? `${m.unit} · ${division.name}` : `Anggota · ${division.name}`, origin:m.role };
+      card.addEventListener('click', ()=>openProfile(person));
+      card.addEventListener('keydown', event=>{
+        if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openProfile(person); }
+      });
+      grid.appendChild(card);
+    });
+    panelEl.appendChild(grid);
+  }
+
+  org.divisions.forEach((d,i)=>{
+    const option = document.createElement('option');
+    option.value = String(i);
+    option.textContent = d.name;
+    divisionSelect.appendChild(option);
+  });
+  divisionSelect.addEventListener('change', ()=>showDivision(Number(divisionSelect.value)));
+  showDivision(0);
+}
+
+function formatNewsDate(date){
+  return new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'}).format(new Date(`${date}T00:00:00Z`));
+}
+
+function renderEventOrgLogos(container, org, logoPath, logoAlt){
+  container.replaceChildren();
+  const orgs = logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${org.toUpperCase()}`}]
+    : (org === 'joint' ? ['slc','tvc'] : [org]).map(key=>({key, src:`image/Logo/Logo_${key.toUpperCase()}.png`, alt:`Logo ${key.toUpperCase()}`}));
+  orgs.forEach(({key,src,alt})=>{
+    const logo = document.createElement('img');
+    logo.className = `event-org-logo ${key}`;
+    logo.src = src;
+    logo.alt = alt;
+    container.appendChild(logo);
+  });
+}
+
+function renderNews(){
+  const list = document.getElementById('newsList');
+  [...NEWS].sort((a,b)=>(b.date || '').localeCompare(a.date || '')).forEach((item,index)=>{
+    const card = document.createElement('article');
+    card.className = `news-card ${item.org}`;
+    card.style.animationDelay = `${index * 0.05}s`;
+    card.hidden = index >= 3;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.innerHTML = `<div class="news-thumb ${item.org}" data-label="${item.type.toUpperCase()}"></div><div class="news-body"><div class="news-tags"><span class="news-tag org-${item.org}">${item.organization || (item.org === 'joint' ? 'SLC & TVC' : item.org.toUpperCase())}</span><span class="news-tag type">${item.type}</span></div><h3 class="news-title">${item.title}</h3><p class="news-excerpt">${item.excerpt}</p><div class="news-date-line">${item.date ? formatNewsDate(item.date) : item.status || ''}</div></div>`;
+    const thumb = card.querySelector('.news-thumb');
+    const tagRow = card.querySelector('.news-tags');
+    if(item.images?.length){
+      const image = document.createElement('img');
+      image.className = 'news-thumb-image';
+      image.src = item.images[0];
+      image.alt = '';
+      if(item.focusUp?.includes(0)) image.style.objectPosition = 'center 35%';
+      thumb.appendChild(image);
+    }
+    const logos = document.createElement('div');
+    logos.className = 'event-org-logos';
+    logos.setAttribute('aria-label', 'Organisasi penyelenggara');
+    renderEventOrgLogos(logos, item.org, item.logo, item.logoAlt);
+    tagRow.appendChild(logos);
+    card.addEventListener('click', ()=>openNews(item));
+    card.addEventListener('keydown', event=>{
+      if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openNews(item); }
+    });
+    list.appendChild(card);
+  });
+}
+
+function renderLatestCompletedEvent(){
+  const section = document.querySelector('.recent-event-section');
+  const item = [...NEWS]
+    .filter(event=>event.status === 'Sudah terlaksana' && event.date)
+    .sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(!item){
+    section.hidden = true;
+    return;
+  }
+  const image = document.getElementById('recentEventImage');
+  image.src = item.images?.[0] || '';
+  image.alt = item.images?.length ? `Dokumentasi ${item.title}` : '';
+  renderEventOrgLogos(document.getElementById('recentEventLogos'), item.org, item.logo, item.logoAlt);
+  document.getElementById('recentEventDate').textContent = formatNewsDate(item.date);
+  document.getElementById('recentEventHeading').textContent = item.title;
+  document.getElementById('recentEventDescription').textContent = item.excerpt;
+  document.getElementById('recentEventButton').addEventListener('click', ()=>openNews(item));
+}
+
+let newsGalleryRequestId = 0;
+function openNews(item){
+  const modal = document.getElementById('newsModal');
+  const hero = document.getElementById('newsModalHero');
+  hero.className = `news-modal-hero ${item.org}`;
+  hero.dataset.label = item.type.toUpperCase();
+  const images = item.images?.length ? item.images : [];
+  const image = document.getElementById('newsModalImage');
+  let activeImage = 0;
+  const updateGallery = (animate = false)=>{
+    const requestId = ++newsGalleryRequestId;
+    image.classList.remove('visible');
+    if(images.length){
+      image.alt = `${item.title}, foto ${activeImage + 1}`;
+      image.style.objectPosition = item.focusUp?.includes(activeImage) ? 'center 35%' : 'center';
+      const revealImage = ()=>{
+        if(requestId !== newsGalleryRequestId) return;
+        image.onload = ()=>{
+          if(requestId === newsGalleryRequestId){
+            requestAnimationFrame(()=>{
+              if(requestId === newsGalleryRequestId) image.classList.add('visible');
+            });
+          }
+        };
+        image.onerror = ()=>{
+          if(requestId === newsGalleryRequestId) image.classList.remove('visible');
+        };
+        image.src = images[activeImage];
+        if(image.complete && image.naturalWidth > 0){
+          requestAnimationFrame(()=>{
+            if(requestId === newsGalleryRequestId) image.classList.add('visible');
+          });
+        }
+      };
+      if(animate && !reduceMotion){
+        let fallback;
+        const finishFadeOut = event=>{
+          if(event && (event.target !== image || event.propertyName !== 'opacity')) return;
+          clearTimeout(fallback);
+          image.removeEventListener('transitionend', finishFadeOut);
+          revealImage();
+        };
+        image.addEventListener('transitionend', finishFadeOut);
+        image.classList.remove('visible');
+        fallback = setTimeout(()=>finishFadeOut(), 400);
+      }else{
+        revealImage();
+      }
+    }else{
+      image.onload = null;
+      image.onerror = null;
+      image.removeAttribute('src');
+      image.alt = '';
+    }
+    document.getElementById('newsGalleryCount').textContent = images.length > 1 ? `${String(activeImage + 1).padStart(2, '0')} / ${String(images.length).padStart(2, '0')}` : '';
+    document.getElementById('newsGalleryPrev').hidden = images.length < 2;
+    document.getElementById('newsGalleryNext').hidden = images.length < 2;
+  };
+  updateGallery();
+  document.getElementById('newsGalleryPrev').onclick = ()=>{ activeImage = (activeImage - 1 + images.length) % images.length; updateGallery(true); };
+  document.getElementById('newsGalleryNext').onclick = ()=>{ activeImage = (activeImage + 1) % images.length; updateGallery(true); };
+  document.getElementById('newsModalTags').innerHTML = `<span class="news-tag org-${item.org}">${item.organization || (item.org === 'joint' ? 'SLC & TVC' : item.org.toUpperCase())}</span><span class="news-tag type">${item.type}</span><div class="event-org-logos" id="newsModalLogos" aria-label="Organisasi penyelenggara"></div>`;
+  renderEventOrgLogos(document.getElementById('newsModalLogos'), item.org, item.logo, item.logoAlt);
+  document.getElementById('newsModalTitle').textContent = item.title;
+  document.getElementById('newsModalDate').textContent = item.date ? formatNewsDate(item.date) : item.status || '';
+  document.getElementById('newsModalDesc').textContent = item.body;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('newsModalClose').focus();
+}
+
+function closeNews(){
+  document.getElementById('newsModal').classList.remove('open');
+  document.getElementById('newsModal').setAttribute('aria-hidden', 'true');
+  document.documentElement.style.overflow = '';
+}
+
+document.getElementById('newsModalClose').addEventListener('click', closeNews);
+document.getElementById('newsModalBackdrop').addEventListener('click', closeNews);
+document.getElementById('profileClose').addEventListener('click', closeProfile);
+document.getElementById('profileBackdrop').addEventListener('click', closeProfile);
+document.addEventListener('keydown', event=>{
+  if(event.key === 'Escape'){ closeProfile(); closeNews(); }
+});
+
+const newsToggle = document.getElementById('newsToggle');
+const newsCards = () => [...document.querySelectorAll('#newsList .news-card')];
+const syncNewsToggle = () => {
+  const cards = newsCards();
+  const hasMore = cards.length > 3;
+  newsToggle.hidden = !hasMore;
+  if(!hasMore){
+    newsToggle.setAttribute('aria-expanded', 'false');
+    newsToggle.querySelector('.news-toggle-label').textContent = 'Tampilkan lainnya';
+    return;
+  }
+  const expanded = newsToggle.getAttribute('aria-expanded') === 'true';
+  cards.forEach((card, index)=>{
+    if(index >= 3){
+      card.hidden = !expanded;
+      card.classList.toggle('is-revealing', expanded);
+      if(expanded) card.style.animationDelay = `${(index - 3) * 0.07}s`;
+    }
+  });
+  newsToggle.querySelector('.news-toggle-label').textContent = expanded ? 'Tampilkan lebih sedikit' : 'Tampilkan lainnya';
+};
+newsToggle.addEventListener('click', ()=>{
+  const expanded = newsToggle.getAttribute('aria-expanded') === 'true';
+  newsToggle.setAttribute('aria-expanded', String(!expanded));
+  syncNewsToggle();
+});
+renderNews();
+renderLatestCompletedEvent();
+syncNewsToggle();
+
+['slc','tvc'].forEach(key=>{
+  renderLeaders(key);
+  renderDivisions(key);
+});
+
+/* ========================= page switching ========================= */
+let currentPage = 'home';
+const curtain = document.getElementById('curtain');
+const curtainMark = document.getElementById('curtainMark');
+const navButtons = document.querySelectorAll('.nav-links button');
+const startedField = { home:false, slc:false, tvc:false };
+
+function ensureField(key){
+  if(reduceMotion || startedField[key]) return;
+  startedField[key] = true;
+  if(key === 'home'){
+    createEmberField(document.getElementById('particles'), {count:46, colors:['240,168,60','224,122,42'], speedMin:0.18, speedMax:0.68});
+    createEmberField(document.getElementById('particlesNews'), {count:22, colors:['240,168,60','224,122,42'], speedMin:0.1, speedMax:0.35});
+  }else if(key === 'slc'){
+    createEmberField(document.getElementById('particlesSlc'), {count:24, colors:['240,168,60'], speedMin:0.1, speedMax:0.35});
+  }else if(key === 'tvc'){
+    createEmberField(document.getElementById('particlesTvc'), {count:24, colors:['224,122,42'], speedMin:0.1, speedMax:0.35});
+  }
+}
+
+function setMark(key){
+  if(key === 'home'){ curtainMark.textContent = '✦'; curtainMark.style.color = 'var(--paper)'; curtainMark.style.fontSize = '24px'; }
+  else if(key === 'slc'){ curtainMark.textContent = 'SLC'; curtainMark.style.color = 'var(--gold)'; curtainMark.style.fontSize = '19px'; }
+  else if(key === 'tvc'){ curtainMark.textContent = 'TVC'; curtainMark.style.color = 'var(--ember)'; curtainMark.style.fontSize = '19px'; }
+}
+
+function swapPage(key){
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === key));
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === key));
+  currentPage = key;
+  window.scrollTo(0, 0);
+  ensureField(key);
+}
+
+function goToPage(key){
+  if(key === currentPage) return;
+  if(reduceMotion){ swapPage(key); return; }
+  setMark(key);
+  curtain.classList.add('mark-show');
+  curtain.classList.remove('open');
+  setTimeout(()=>{
+    swapPage(key);
+    setTimeout(()=>{
+      curtain.classList.remove('mark-show');
+      curtain.classList.add('open');
+    }, 240);
+  }, 560);
+}
+
+navButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>goToPage(btn.dataset.target));
+});
+document.querySelectorAll('[data-goto]').forEach(el=>{
+  el.addEventListener('click', ()=>goToPage(el.dataset.goto));
+});
+
+/* ========================= curtain reveal (initial load) ========================= */
+if(reduceMotion){
+  curtain.classList.add('open');
+  ensureField('home');
+}else{
+  document.documentElement.style.overflow = 'hidden';
+  setMark('home');
+  setTimeout(()=> curtain.classList.add('mark-show'), 50);
+  setTimeout(()=>{
+    curtain.classList.remove('mark-show');
+    curtain.classList.add('open');
+    document.documentElement.style.overflow = '';
+  }, 650);
+  ensureField('home');
+}
+
+/* ========================= custom cursor ========================= */
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+if(finePointer && !reduceMotion){
+  document.body.classList.add('has-cursor');
+  const ring = document.getElementById('cursorRing');
+  const dot = document.getElementById('cursorDot');
+  let rx=innerWidth/2, ry=innerHeight/2, mx=rx, my=ry;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  window.addEventListener('mousemove', e=>{
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx+'px'; dot.style.top = my+'px';
+  });
+  (function loop(){
+    rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  const hoverables = 'a, button, select, .member-card, .leader-card, .hero-crest, .nav-mark, .news-card, .news-modal-close';
+  document.addEventListener('mouseover', e=>{
+    if(e.target.closest(hoverables)) ring.classList.add('hover');
+  });
+  document.addEventListener('mouseout', e=>{
+    if(e.target.closest(hoverables)) ring.classList.remove('hover');
+  });
+}
+
+/* ========================= tilt + mouse glow ========================= */
+if(!reduceMotion){
+  const hero = document.getElementById('home');
+  const heroGlow = document.getElementById('heroGlow');
+  hero.addEventListener('mousemove', e=>{
+    const r = hero.getBoundingClientRect();
+    heroGlow.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    heroGlow.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+
+  function attachTilt(el, max){
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(700px) rotateX(${(-py*max).toFixed(2)}deg) rotateY(${(px*max).toFixed(2)}deg) translateY(-4px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform = ''; });
+  }
+  document.querySelectorAll('.hero-crest img').forEach(im => attachTilt(im, 16));
+  document.querySelectorAll('.leader-card').forEach(c => attachTilt(c, 5));
+}
+
+/* ========================= stat count-up ========================= */
+/* ========================= nav scroll progress ========================= */
+const progressBar = document.getElementById('navProgress');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = pct + '%';
+}, { passive:true });
+
+/* ========================= ember particles ========================= */
+function createEmberField(canvasEl, opts){
+  if(!canvasEl) return;
+  const cfg = Object.assign({count:40, colors:['240,168,60'], speedMin:0.15, speedMax:0.55}, opts);
+  const ctx = canvasEl.getContext('2d');
+  let w,h,particles;
+  function resize(){
+    w = canvasEl.width = canvasEl.offsetWidth;
+    h = canvasEl.height = canvasEl.offsetHeight;
+  }
+  function makeParticles(){
+    particles = Array.from({length: cfg.count}, ()=>({
+      x: Math.random()*w,
+      y: h + Math.random()*h,
+      r: 1 + Math.random()*2.2,
+      speed: cfg.speedMin + Math.random()*(cfg.speedMax-cfg.speedMin),
+      drift: (Math.random()-0.5)*0.3,
+      alpha: 0.12 + Math.random()*0.35,
+      hue: cfg.colors[Math.floor(Math.random()*cfg.colors.length)]
+    }));
+  }
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.y -= p.speed;
+      p.x += p.drift;
+      if(p.y < -10){ p.y = h + 10; p.x = Math.random()*w; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${p.hue},${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('resize', resize);
+  resize(); makeParticles(); tick();
+}
+</script>
+</body>
+</html>
