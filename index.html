@@ -1401,6 +1401,8 @@ function renderNews(){
     if(item.images?.length){
       const image = document.createElement('img');
       image.className = 'news-thumb-image';
+      image.loading = 'lazy';
+      image.decoding = 'async';
       image.src = item.images[0];
       image.alt = '';
       if(item.focusUp?.includes(0)) image.style.objectPosition = 'center 35%';
@@ -1429,6 +1431,8 @@ function renderLatestCompletedEvent(){
     return;
   }
   const image = document.getElementById('recentEventImage');
+  image.loading = 'lazy';
+  image.decoding = 'async';
   image.src = item.images?.[0] || '';
   image.alt = item.images?.length ? `Dokumentasi ${item.title}` : '';
   renderEventOrgLogos(document.getElementById('recentEventLogos'), item.org, item.logo, item.logoAlt);
