@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Leadership Community &amp; The Vanguard Coordinator | Al Izzah Batu</title>
+<title>ALS Organization</title>
 <meta name="description" content="Ruang informasi Student Leader Community dan The Vanguard Coordinator, organisasi santri SMA Al Izzah Leadership School Batu.">
+<link rel="icon" href="image/Logo/Logo_Alizzah.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -111,9 +112,11 @@
   .nav-mark .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px var(--gold); }
   .nav-links{ display:flex; gap:8px; }
   .nav-links button{
+    display:inline-flex; align-items:center; gap:7px;
     font-size:13px; font-weight:600; padding:8px 16px; border-radius:100px;
     color:var(--muted); border:1px solid transparent; transition:all 0.3s var(--ease);
   }
+  .nav-links button img{ width:18px; height:18px; object-fit:contain; }
   .nav-links button.active{ color:var(--ink); background:var(--paper); }
   .nav-links button:not(.active):hover{ color:var(--paper); border-color:var(--line); }
   .nav-links button[data-target="slc"]{ color:var(--gold); }
@@ -182,7 +185,7 @@
   .agenda-strip{ position:relative; z-index:72; display:flex; align-items:center; padding:36px 5.5vw; background:linear-gradient(180deg, #17120d, var(--ink)); overflow:hidden; }
   .agenda-strip::before{
     content:''; position:absolute; inset:36px 5.5vw; z-index:0;
-    background-image:url('image/Event/Murobicup & Artshow/Murobicup.jpg'); background-size:cover; background-position:center 42%;
+    background-image:url('image/Event/Murobicup & Artshow/Murobicup.webp'); background-size:cover; background-position:center 42%;
     filter:saturate(0.95); border:1px solid var(--gold-line); border-radius:3px;
     box-shadow:0 24px 60px rgba(0,0,0,0.34);
   }
@@ -643,8 +646,8 @@
   <div class="nav-mark"><span class="dot"></span> ALS ORGANIZATIONS</div>
   <div class="nav-links" id="navLinks">
     <button data-target="home" class="active">Beranda</button>
-    <button data-target="slc">SLC</button>
-    <button data-target="tvc">TVC</button>
+    <button data-target="slc"><img src="image/Logo/Logo_SLC.png" alt="">SLC</button>
+    <button data-target="tvc"><img src="image/Logo/Logo_TVC.png" alt="">TVC</button>
   </div>
 </nav>
 
@@ -665,8 +668,8 @@
       <ol class="hero-index-list">
         <li class="hero-index-item"><button class="hero-index-link" type="button" data-goto="slc"><span class="hero-index-number">01</span><span class="hero-index-copy"><strong>Student Leader Community</strong><small>ORGANISASI SLC</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></button></li>
         <li class="hero-index-item"><button class="hero-index-link" type="button" data-goto="tvc"><span class="hero-index-number">02</span><span class="hero-index-copy"><strong>The Vanguard Coordinator</strong><small>ORGANISASI TVC</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></button></li>
-        <li class="hero-index-item"><a class="hero-index-link" href="#news"><span class="hero-index-number">03</span><span class="hero-index-copy"><strong>Events</strong><small>AGENDA ORGANISASI</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
-        <li class="hero-index-item"><a class="hero-index-link" href="https://forms.gle/Si2iNztbBV6wMpkx6" target="_blank" rel="noopener noreferrer"><span class="hero-index-number">04</span><span class="hero-index-copy"><strong>Beri Kami Saran</strong><small>FORM FEEDBACK</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
+        <li class="hero-index-item"><a class="hero-index-link" href="#footerContact"><span class="hero-index-number">03</span><span class="hero-index-copy"><strong>Contact Us</strong><small>HUBUNGI PANITIA</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
+        <li class="hero-index-item"><a class="hero-index-link" href="https://forms.gle/Si2iNztbBV6wMpkx6" target="_blank" rel="noopener noreferrer"><span class="hero-index-number">04</span><span class="hero-index-copy"><strong>Form Feedback</strong><small>BERI KAMI SARAN</small></span><span class="hero-index-arrow" aria-hidden="true">↗</span></a></li>
       </ol>
     </nav>
   </div>
@@ -702,9 +705,9 @@
         <p>Periode kepengurusan SLC dan TVC saat ini.</p>
       </article>
       <article class="leadership-stat">
-        <strong>02</strong>
-        <h3>Organisasi</h3>
-        <p>Student Leader Community dan The Vanguard Coordinator.</p>
+        <strong>05</strong>
+        <h3>Total Event</h3>
+        <p>Jumlah kegiatan utama yang dilaksanakan dalam satu periode kepengurusan.</p>
       </article>
     </div>
   </div>
@@ -857,7 +860,7 @@
       </div>
       <p class="footer-summary">Student Leader Community dan The Vanguard Coordinator. Bersama belajar memimpin dengan adab, lillah, dan syukur.</p>
     </section>
-    <section aria-labelledby="footerContactTitle">
+    <section id="footerContact" aria-labelledby="footerContactTitle">
       <h2 class="footer-heading" id="footerContactTitle">Hubungi Kami</h2>
       <div class="footer-contact">
         <div><span class="footer-contact-label">Alamat</span>Jl. Indragiri, Gg. 6, Sumberejo, Kec. Batu, Kota Batu, Jawa Timur 65318</div>
@@ -1124,11 +1127,11 @@ const ORGS = {
 };
 
 const NEWS = [
-  {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'Peringatan Hari Kemerdekaan Indonesia melalui upacara dan berbagai lomba di lingkungan Al Izzah Batu.',body:'Independence Day Committee (IDC) memeriahkan Hari Kemerdekaan Republik Indonesia melalui upacara dan berbagai lomba. Kegiatan ini menjadi momen untuk mengenang perjuangan bangsa sekaligus menumbuhkan semangat kebersamaan, sportivitas, dan cinta tanah air di lingkungan Al Izzah Batu.',status:'Dokumentasi kegiatan',images:['image/Event/IDC/ABD05577.JPG','image/Event/IDC/ABD07042.JPG','image/Event/IDC/ABD06779.JPG','image/Event/IDC/ABD06763.JPG','image/Event/IDC/ABD06127.JPG','image/Event/IDC/ABD07651.JPG']},
-  {date:'2026-10-01',org:'school',organization:'School',logo:'image/Event/AZKAR/Logo azkar.png',logoAlt:'Logo AZKAR',type:'Event',title:'AZKAR: Ajang Zona Kreativitas & Apresiasi Remaja',excerpt:'Perayaan Bulan Bahasa melalui AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja).',body:'AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja) diselenggarakan oleh School untuk merayakan Bulan Bahasa.',status:'Sudah terlaksana',images:['image/Event/AZKAR/IMG09980.JPG','image/Event/AZKAR/IMG09675.JPG','image/Event/AZKAR/IMG09669.JPG','image/Event/AZKAR/IMG09561.JPG','image/Event/AZKAR/IMG09551.JPG','image/Event/AZKAR/IMG09540.JPG']},
-  {date:'2026-09-16',org:'slc',type:'Agenda',title:'JMQ: Tes Jam’iyatul Qurra',excerpt:'Seleksi peserta Jam’iyatul Qurra di lingkungan Al Izzah Batu.',body:'Agenda Tes Jam’iyatul Qurra (JMQ) pada 16 September 2026. Foto pada galeri merupakan dokumentasi kegiatan dari arsip lokal situs organisasi.',images:['image/Event/JMQ/_ABD0133.JPG','image/Event/JMQ/_ABD0130.JPG','image/Event/JMQ/_ABD0110.JPG','image/Event/JMQ/_ABD0139.JPG']},
-  {date:'2026-09-12',org:'tvc',type:'Event',title:'Pramuka: Pembukaan Kegiatan',excerpt:'Pembukaan kegiatan Pramuka bersama santri Al Izzah Batu.',body:'Kegiatan pembukaan Pramuka telah terlaksana sebagai awal rangkaian pembinaan dan kegiatan kepramukaan santri Al Izzah Batu.',status:'Sudah terlaksana',images:['image/Event/Pembukaan Pramuka/IMG_1832.JPG','image/Event/Pembukaan Pramuka/IMG_1843-rotated.JPG','image/Event/Pembukaan Pramuka/IMG_1706.JPG','image/Event/Pembukaan Pramuka/IMG_1719.JPG','image/Event/Pembukaan Pramuka/IMG_1794.JPG']},
-  {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/Event/DPP/Logo_DPP.png',logoAlt:'Logo DPP',type:'Event',title:'DPP: Dewan Pergantian Pengurus',excerpt:'Momen pergantian dan serah terima amanah kepengurusan SLC dan TVC.',body:'Dewan Pergantian Pengurus (DPP) menjadi momen pergantian dan serah terima amanah kepengurusan Student Leader Community dan The Vanguard Coordinator.',images:['image/Event/DPP/ABD09161.JPG','image/Event/DPP/ABD09093.JPG','image/Event/DPP/ABD09242.JPG']},
+  {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'Peringatan Hari Kemerdekaan Indonesia melalui upacara dan berbagai lomba di lingkungan Al Izzah Batu.',body:'Independence Day Committee (IDC) memeriahkan Hari Kemerdekaan Republik Indonesia melalui upacara dan berbagai lomba. Kegiatan ini menjadi momen untuk mengenang perjuangan bangsa sekaligus menumbuhkan semangat kebersamaan, sportivitas, dan cinta tanah air di lingkungan Al Izzah Batu.',status:'Dokumentasi kegiatan',images:['image/Event/IDC/ABD05577.webp','image/Event/IDC/ABD07042.webp','image/Event/IDC/ABD06779.webp','image/Event/IDC/ABD06763.webp','image/Event/IDC/ABD06127.webp','image/Event/IDC/ABD07651.webp']},
+  {date:'2026-10-01',org:'school',organization:'School',logo:'image/Event/AZKAR/Logo azkar.webp',logoAlt:'Logo AZKAR',type:'Event',title:'AZKAR: Ajang Zona Kreativitas & Apresiasi Remaja',excerpt:'Perayaan Bulan Bahasa melalui AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja).',body:'AZKAR (Ajang Zona Kreativitas & Apresiasi Remaja) diselenggarakan oleh School untuk merayakan Bulan Bahasa.',status:'Sudah terlaksana',images:['image/Event/AZKAR/IMG09980.webp','image/Event/AZKAR/IMG09675.webp','image/Event/AZKAR/IMG09669.webp','image/Event/AZKAR/IMG09561.webp','image/Event/AZKAR/IMG09551.webp','image/Event/AZKAR/IMG09540.webp']},
+  {date:'2026-09-16',org:'slc',type:'Agenda',title:'JMQ: Tes Jam’iyatul Qurra',excerpt:'Seleksi peserta Jam’iyatul Qurra di lingkungan Al Izzah Batu.',body:'Agenda Tes Jam’iyatul Qurra (JMQ) pada 16 September 2026. Foto pada galeri merupakan dokumentasi kegiatan dari arsip lokal situs organisasi.',images:['image/Event/JMQ/_ABD0133.webp','image/Event/JMQ/_ABD0130.webp','image/Event/JMQ/_ABD0110.webp','image/Event/JMQ/_ABD0139.webp']},
+  {date:'2026-09-12',org:'tvc',type:'Event',title:'Pramuka: Pembukaan Kegiatan',excerpt:'Pembukaan kegiatan Pramuka bersama santri Al Izzah Batu.',body:'Kegiatan pembukaan Pramuka telah terlaksana sebagai awal rangkaian pembinaan dan kegiatan kepramukaan santri Al Izzah Batu.',status:'Sudah terlaksana',images:['image/Event/Pembukaan Pramuka/IMG_1832.webp','image/Event/Pembukaan Pramuka/IMG_1843.webp','image/Event/Pembukaan Pramuka/IMG_1706.webp','image/Event/Pembukaan Pramuka/IMG_1719.webp','image/Event/Pembukaan Pramuka/IMG_1794.webp']},
+  {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/Event/DPP/Logo_DPP.png',logoAlt:'Logo DPP',type:'Event',title:'DPP: Dewan Pergantian Pengurus',excerpt:'Momen pergantian dan serah terima amanah kepengurusan SLC dan TVC.',body:'Dewan Pergantian Pengurus (DPP) menjadi momen pergantian dan serah terima amanah kepengurusan Student Leader Community dan The Vanguard Coordinator.',images:['image/Event/DPP/ABD09161.webp','image/Event/DPP/ABD09093.webp','image/Event/DPP/ABD09242.webp']},
 ];
 
 /* ========================= rendering ========================= */
@@ -1268,11 +1271,16 @@ function renderLeaders(orgKey){
     backName.textContent = p.name;
     const backLine = document.createElement('div');
     backLine.className = 'leader-back-line';
-    backLine.textContent = p.line;
     const backOrigin = document.createElement('div');
     backOrigin.className = 'quote';
-    backOrigin.textContent = p.quote;
-    back.append(backRole, backName, backLine, backOrigin);
+    if(p.role === 'Ketua' || p.role === 'Wakil Ketua'){
+      backLine.textContent = 'Motto: [akan ditambahkan]';
+      back.append(backRole, backName, backLine);
+    }else{
+      backLine.textContent = p.line;
+      backOrigin.textContent = p.quote;
+      back.append(backRole, backName, backLine, backOrigin);
+    }
     const handle = String(p.instagram || '').trim().replace(/^@/, '');
     if(/^[A-Za-z0-9._]{1,30}$/.test(handle)){
       const instagram = document.createElement('a');
