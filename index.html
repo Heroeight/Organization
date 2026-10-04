@@ -368,7 +368,7 @@
   /* divisions */
   .divisions-label{ font-size:13px; color:var(--muted); margin-bottom:18px; position:relative; z-index:2; }
   .select-wrap{
-    position:relative; width:min(100%, 420px); margin-bottom:36px;
+    position:relative; width:min(100%, 420px); margin-bottom:16px;
     z-index:2;
   }
   .select-wrap::after{
@@ -393,6 +393,20 @@
   .division-select option:hover{ background-color:var(--gold-dim); color:var(--paper); }
   .org-section.tvc .division-select option:checked{ background-color:var(--ember); color:var(--ink); }
   .org-section.tvc .division-select option:hover{ background-color:var(--ember-dim); color:var(--paper); }
+
+  .division-description{
+    position:relative; max-width:760px; margin:0 0 36px; padding:20px 24px;
+    background:linear-gradient(110deg, rgba(240,168,60,0.09), rgba(34,27,20,0.72) 45%, rgba(16,13,10,0.72));
+    border:1px solid var(--gold-line); border-left:3px solid var(--gold);
+  }
+  .org-section.tvc .division-description{
+    background:linear-gradient(110deg, rgba(224,122,42,0.1), rgba(34,27,20,0.72) 45%, rgba(16,13,10,0.72));
+    border-color:var(--ember-line); border-left-color:var(--ember);
+  }
+  .division-description-label{ color:var(--gold-dim); font-size:10px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; }
+  .org-section.tvc .division-description-label{ color:var(--ember); }
+  .division-description h3{ margin-top:5px; color:var(--paper); font-size:18px; font-weight:600; }
+  .division-description p{ max-width:680px; margin-top:7px; color:var(--muted); font-size:13px; line-height:1.7; }
 
   .members-panel{ position:relative; min-height:180px; z-index:2; }
   .members-grid{
@@ -733,11 +747,8 @@
           <span class="upcoming-sponsor-label">Terbuka untuk kolaborasi</span>
           <p>Ingin mendukung acara ini sebagai sponsor? Hubungi panitia untuk berdiskusi tentang peluang kerja sama.</p>
           <div class="upcoming-sponsor-actions">
-            <a class="upcoming-sponsor-button" href="https://api.whatsapp.com/send?phone=6282333304236&amp;text=Assalamu%27alaikum%2C%20saya%20tertarik%20menjadi%20sponsor%20untuk%20Artshow%20%26%20Murobi%20Cup.%20Mohon%20informasi%20lebih%20lanjut%20tentang%20peluang%20kerja%20sama." target="_blank" rel="noopener" aria-label="Hubungi Antares melalui WhatsApp tentang sponsor Artshow dan Murobi Cup">
+            <a class="upcoming-sponsor-button" href="https://api.whatsapp.com/send?phone=6281319276006&amp;text=Assalamu%27alaikum%2C%20saya%20tertarik%20menjadi%20sponsor%20untuk%20Artshow%20%26%20Murobi%20Cup.%20Mohon%20informasi%20lebih%20lanjut%20tentang%20peluang%20kerja%20sama." target="_blank" rel="noopener" aria-label="Hubungi Website Manager melalui WhatsApp tentang sponsor Artshow dan Murobi Cup">
               Hubungi panitia <span aria-hidden="true">↗</span>
-            </a>
-            <a class="upcoming-sponsor-secondary" href="https://api.whatsapp.com/send?phone=6282152164236&amp;text=Assalamu%27alaikum%2C%20saya%20tertarik%20menjadi%20sponsor%20untuk%20Artshow%20%26%20Murobi%20Cup.%20Mohon%20informasi%20lebih%20lanjut%20tentang%20peluang%20kerja%20sama." target="_blank" rel="noopener" aria-label="Hubungi Noval melalui WhatsApp tentang sponsor Artshow dan Murobi Cup">
-              Kontak alternatif: Noval ↗
             </a>
           </div>
         </div>
@@ -778,6 +789,7 @@
     <div class="select-wrap">
       <select class="division-select" id="slcDivisionSelect" aria-label="Bidang SLC"></select>
     </div>
+    <div class="division-description" id="slcDivisionDescription" role="status" aria-live="polite"></div>
     <div class="members-panel" id="slcMembers"></div>
   </div>
 </section>
@@ -802,6 +814,7 @@
     <div class="select-wrap">
       <select class="division-select" id="tvcDivisionSelect" aria-label="Bidang TVC"></select>
     </div>
+    <div class="division-description" id="tvcDivisionDescription" role="status" aria-live="polite"></div>
     <div class="members-panel" id="tvcMembers"></div>
   </div>
 </section>
@@ -866,7 +879,7 @@
       <h2 class="footer-heading" id="footerContactTitle">Hubungi Kami</h2>
       <div class="footer-contact">
         <div><span class="footer-contact-label">Alamat</span>Jl. Indragiri, Gg. 6, Sumberejo, Kec. Batu, Kota Batu, Jawa Timur 65318</div>
-        <div><span class="footer-contact-label">Telepon</span><a href="https://api.whatsapp.com/send?phone=6282333304236" target="_blank" rel="noopener">082333304236 - Antares Aesar</a> · <a href="https://api.whatsapp.com/send?phone=6282152164236" target="_blank" rel="noopener">082152164236 - Noval Fairuz</a></div>
+        <div><span class="footer-contact-label">Telepon</span><a href="https://api.whatsapp.com/send?phone=6281319276006" target="_blank" rel="noopener">081319276006 - Website Manager</a></div>
       </div>
     </section>
     <section aria-labelledby="footerLinksTitle">
@@ -894,13 +907,13 @@ const ORGS = {
     leader:   { name: 'Rifky Azril Ar Rahman', role: 'Ketua',    line: 'Memimpin Student Leader Community Masa Jihad 2026–2027.', img: 'image/Ketua-wakil/Ketua_SLC.webp', quote: 'Asal: Jombang' },
     coLeader: { name: 'Muhammad Atthaya Rasyendria', role: 'Wakil Ketua', line: 'Mendampingi koordinasi dan kerja seluruh bidang.', img: 'image/Ketua-wakil/Wakil_SLC.webp', quote: 'Asal: Samarinda' },
     divisions: [
-      { name: 'Daily Manager', members: [
+      { name: 'Daily Manager', description: 'Mengelola administrasi, surat-menyurat, jadwal, dan pencatatan keuangan agar kegiatan organisasi berjalan tertib.', members: [
         {name:'Fathan Rafif Athaya', role:'Denpasar', unit:'Sekretaris', img:''},
         {name:'Zhaahir Ali Prabelio', role:'Jombang', unit:'Sekretaris', img:''},
         {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', unit:'Bendahara', img:''},
         {name:'Luthfi Rafif Arkana', role:'Jayapura', unit:'Bendahara', img:''},
       ]},
-      { name: 'Keamanan', members: [
+      { name: 'Keamanan', description: 'Membantu menjaga ketertiban, kedisiplinan, dan keamanan santri serta lingkungan ma’had.', members: [
         {name:'Mirzadinata Setiyawan', role:'Sidoarjo', img:''},
         {name:'Ahmad Haidar Al Farras', role:'Gresik', img:''},
         {name:'Galih Fajar Malik Hakiim', role:'Malang', img:''},
@@ -912,7 +925,7 @@ const ORGS = {
         {name:'Alfero Ramanda Ediezahirudin Rafie', role:'Probolinggo', img:''},
         {name:'Ahmad Mutanabbi Mirawanto', role:'Malang', img:''},
       ]},
-      { name: 'Multimedia', members: [
+      { name: 'Multimedia', description: 'Mendokumentasikan kegiatan serta menyiapkan materi visual dan publikasi informasi organisasi.', members: [
         {name:'Ahmad Farel Panatagama', role:'Tulungagung', img:''},
         {name:'Queenzy Hafidhu Zikry', role:'Semarang', img:''},
         {name:'Alif Luqmanurrahman Pradhana', role:'Malang', img:''},
@@ -924,7 +937,7 @@ const ORGS = {
         {name:'Akasyah Zafran Ghifari', role:'Gresik', img:''},
         {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:''},
       ]},
-      { name: 'Dakwah Masjid', members: [
+      { name: 'Dakwah Masjid', description: 'Mendukung kegiatan dakwah dan ibadah di masjid serta membantu menjaga suasana masjid yang tertib dan nyaman.', members: [
         {name:'Kiagus M Daffa Agha Afkar', role:'Sangatta', img:''},
         {name:'Radithya Al Iskandar Rayhan Putra', role:'Surabaya', img:''},
         {name:'Raka Aulia Faridi', role:'Lampung', img:''},
@@ -936,7 +949,7 @@ const ORGS = {
         {name:'Muhammad Ibra Kenbizuqi', role:'Lubuklinggau', img:''},
         {name:'Aqila Izza Adirachman', role:'Tuban', img:''},
       ]},
-      { name: 'Olahraga', members: [
+      { name: 'Olahraga', description: 'Merancang dan mendukung kegiatan olahraga untuk membangun kebugaran, sportivitas, dan kebersamaan santri.', members: [
         {name:'Muhammad Fawwaz Imaadul Haq', role:'Surabaya', img:''},
         {name:'Muhammad Fathan Abidzar Dliya`ulhaq', role:'Mojokerto', img:''},
         {name:'Muhammad Azzam Ibrahim', role:'Sidoarjo', img:''},
@@ -948,7 +961,7 @@ const ORGS = {
         {name:'Rezky Alifi Chaniago', role:'Bali', img:''},
         {name:'Syauqi Imam Azka', role:'Samarinda', img:''},
       ]},
-      { name: 'Bersih Lingkungan', members: [
+      { name: 'Bersih Lingkungan', description: 'Menggerakkan kebersihan lingkungan dan membangun kebiasaan menjaga kerapian serta kelestarian area ma’had.', members: [
         {name:'Ahmad Fauzan', role:'Sudu', img:''},
         {name:'Reyhan Axelle Bonaro Widodo', role:'Banyuwangi', img:''},
         {name:'Ahmad Maulana Zidan Amrullah', role:'Yogyakarta', img:''},
@@ -960,7 +973,7 @@ const ORGS = {
         {name:'Alfino Irwandy Yusuf', role:'Sumenep', img:''},
         {name:'Putra Aditya Soleman', role:'Manado', img:''},
       ]},
-      { name: 'Informasi', members: [
+      { name: 'Informasi', description: 'Menghimpun dan menyampaikan pengumuman organisasi secara jelas, tepat, dan mudah dipahami.', members: [
         {name:'Muhammad Naufal Adqaury Ibnu Syaifa', role:'Sorowako', img:''},
         {name:'Hanif Sandriano Shiddiq', role:'Cepu', img:''},
         {name:'Muhammad Afkar Nizam Arviansyah', role:'Jakarta', img:''},
@@ -972,7 +985,7 @@ const ORGS = {
         {name:'Mochamad Daffa Nafiis', role:'Surabaya', img:''},
         {name:'Nufail Alingga Kusworo', role:'Jakarta', img:''},
       ]},
-      { name: 'Bahasa', members: [
+      { name: 'Bahasa', description: 'Mendukung pembiasaan dan pengembangan kemampuan berbahasa melalui program serta kegiatan kebahasaan.', members: [
         {name:'Muh. Hisyaam Dzaki Mubarak', role:'Jayapura', img:''},
         {name:'Gallant Radithya Ghani Prasetyo', role:'Sangatta', img:''},
         {name:'Hafidz Rafi Rabbani', role:'Wamena', img:''},
@@ -984,7 +997,7 @@ const ORGS = {
         {name:'Qeis Fauzi Ghudzamir Zain', role:'Bandar Lampung', img:''},
         {name:'Muhammad Mikail Robbani', role:'Probolinggo', img:''},
       ]},
-      { name: 'Enterpreneur', members: [
+      { name: 'Enterpreneur', description: 'Mengembangkan kegiatan kewirausahaan, kreativitas usaha, dan pengalaman berbisnis di lingkungan organisasi.', members: [
         {name:'Antares Aesar Aulayain', role:'Surabaya', img:''},
         {name:'M. Noval Fairuz Ahmad', role:'Makassar', img:''},
         {name:'Nabil Alyasih Nur Ramadhan', role:'Malang', img:''},
@@ -999,7 +1012,7 @@ const ORGS = {
         {name:'Muhammad Yahya Yanuar', role:'Bima', img:''},
         {name:'Hadi Safwan', role:'Sidoarjo', img:''},
       ]},
-      { name: 'Bapenta', members: [
+      { name: 'Bapenta', description: 'Mendukung pengembangan minat dan potensi santri melalui program pembinaan serta kegiatan yang sesuai.', members: [
         {name:'Salahhuddin Prameswara Anindita', role:'Malang', img:''},
         {name:'Muhammad Rakha Azka', role:'Makassar', img:''},
         {name:'Faqih Ahsan Haniif', role:'Samarinda', img:''},
@@ -1013,7 +1026,7 @@ const ORGS = {
         {name:'Adhyaksa Idrus', role:'Makassar', img:''},
         {name:'Achmad Kelvin Arviansyah', role:'Surabaya', img:''},
       ]},
-      { name: 'Kesenian', members: [
+      { name: 'Kesenian', description: 'Mewadahi kreativitas seni dan membantu menyiapkan penampilan maupun kegiatan kesenian santri.', members: [
         {name:'Andra Izrami Satya Wardana', role:'Serang', img:''},
         {name:'Ibrahim Mauladi', role:'Lamongan', img:''},
         {name:'Harits Ghifar Musyafak', role:'Tangerang', img:''},
@@ -1025,7 +1038,7 @@ const ORGS = {
         {name:'Rezky Noor Fadilah', role:'Palangkaraya', img:''},
         {name:'Eka Dymaz Janitra Fatkhur Rokhman', role:'Kuta', img:''},
       ]},
-      { name: 'Dapur', members: [
+      { name: 'Dapur', description: 'Mendukung koordinasi kebutuhan dan kegiatan dapur agar pelayanan konsumsi berjalan tertib.', members: [
         {name:'Aufa Haiqal', role:'Sangatta', img:''},
         {name:'Radjendra Kafka Aelino', role:'Madiun', img:''},
         {name:'Muhammad Radja Syahputra Bachri', role:'Surabaya', img:''},
@@ -1037,7 +1050,7 @@ const ORGS = {
         {name:'Nizar Muzhaffar Sulistyono', role:'Sidoarjo', img:''},
         {name:'Akmal Rafa Hernaufal', role:'Mojokerto', img:''},
       ]},
-      { name: 'Pengajaran', members: [
+      { name: 'Pengajaran', description: 'Mendukung kegiatan belajar, pembinaan akademik, dan program pengajaran bagi santri.', members: [
         {name:'Farelle Pratadiazta Savana', role:'Sidoarjo', img:''},
         {name:'El Pandora Deni', role:'Surabaya', img:''},
         {name:'Aldito Emery Illona Masruri', role:'Tanjung Pinang', img:''},
@@ -1049,7 +1062,7 @@ const ORGS = {
         {name:'Rausyan Farras Aly Muhammad', role:'Lamongan', img:''},
         {name:'Fadhil Athaya Syadid Rizqullah', role:'Probolinggo', img:''},
       ]},
-      { name: 'Kesehatan', members: [
+      { name: 'Kesehatan', description: 'Mendukung edukasi kesehatan serta koordinasi perhatian dan bantuan awal bagi santri yang membutuhkan.', members: [
         {name:'Zufaro Ardiyoso Razak', role:'Sangatta', img:''},
         {name:'Syaamil Abdurrahman', role:'Samarinda', img:''},
         {name:'Atha Rakan Firdaus', role:'Pasuruan', img:''},
@@ -1061,7 +1074,7 @@ const ORGS = {
         {name:'Nazril Khairan Windya Putra', role:'Lombok', img:''},
         {name:'Thaha Yasin Nurwahid', role:'Paser', img:''},
       ]},
-      { name: 'Laundry', members: [
+      { name: 'Laundry', description: 'Mendukung pengelolaan layanan laundry agar proses pengumpulan dan pengembalian pakaian berjalan rapi.', members: [
         {name:'Muhammad Hilmi Fathuddin', role:'Surabaya', img:''},
         {name:'Arjuna Ghazy Wibowo', role:'Pekanbaru', img:''},
         {name:'M. Fikri Khalifah Alham Nurham', role:'Jayapura', img:''},
@@ -1077,15 +1090,15 @@ const ORGS = {
     leader:   { name: 'Yusuf Hazim Suyitno', role: 'Ketua',    line: 'Memimpin The Vanguard Coordinator.', img: 'image/Ketua-wakil/Ketua_TVC.webp', quote: 'Asal: Jakarta' },
     coLeader: { name: 'Muhammad Alfaruq Ardiansyah', role: 'Wakil Ketua', line: 'Mendampingi koordinasi The Vanguard Coordinator.', img: 'image/Ketua-wakil/Wakil_TVC.webp', quote: 'Asal: Makassar' },
     divisions: [
-      { name: 'ANKUSET', members: [
+      { name: 'ANKUSET', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
         {name:'Ibrahim Alfarisi', role:'Gresik', unit:'Anggota', img:''},
         {name:'Darren Athalla Ghifari', role:'Tanggerang', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUKUANG', members: [
+      { name: 'ANKUKUANG', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
         {name:'Akbar Prasetya', role:'Berau', unit:'Anggota', img:''},
         {name:'Arya Adriansyah Putra Pratama', role:'Palangka Raya', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKULAT', members: [
+      { name: 'ANKULAT', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
         {name:'Zhafrano Raja Triarka', role:'Banyuwangi', unit:'Anggota', img:''},
         {name:'Dimas Rasya Wibowo', role:'Makassar', unit:'Anggota', img:''},
         {name:'Muhammad Asyam Fawwaz', role:'Banjarbaru', unit:'Anggota', img:''},
@@ -1095,7 +1108,7 @@ const ORGS = {
         {name:'Ahmad Hafizh Abdurrahman', role:'Gresik', unit:'Anggota', img:''},
         {name:'Muhammad Sultan Jafri', role:'Banjarbaru', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUPERKAP', members: [
+      { name: 'ANKUPERKAP', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
         {name:'Hanif Rabbani Humayun', role:'Surabaya', unit:'Anggota', img:''},
         {name:'Arkan Athaya Basri', role:'Banyuwangi', unit:'Anggota', img:''},
         {name:'Ahmaddinajat Billah', role:'Surabaya', unit:'Anggota', img:''},
@@ -1105,7 +1118,7 @@ const ORGS = {
         {name:'Muhammad Haafiz Ramadhan', role:'Mojokerto', unit:'Anggota', img:''},
         {name:'Farel Novrinno Rizky', role:'Surabaya', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUKEDAP', members: [
+      { name: 'ANKUKEDAP', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
         {name:'Dika Achmad Luqmansyah', role:'Pasuruan', unit:'Anggota', img:''},
         {name:'Kaffi Athallah Lirfano', role:'Jakarta', unit:'Anggota', img:''},
         {name:'Adrian Arhaburrizqi Himawan', role:'Lombok', unit:'Anggota', img:''},
@@ -1115,7 +1128,7 @@ const ORGS = {
         {name:'Ibrahimovic Ghaisan', role:'Surabaya', unit:'Anggota', img:''},
         {name:'Irvin Fico Saverio', role:'Banjarbaru', unit:'Anggota', img:''},
       ]},
-      { name: 'BINDEP', members: [
+      { name: 'BINDEP', description: 'Mengoordinasikan pembinaan anggota dan mendukung pelaksanaan program kepramukaan TVC.', members: [
         {name:'Muhammad Athaillah Aidan', role:'Balikpapan', unit:'Ketua Bagian', img:''},
         {name:'Waldan Yafiq Zhafran', role:'Balikpapan', unit:'Anggota', img:''},
         {name:'KenzieUmar Muhammad Thufail', role:'Bekasi', unit:'Anggota', img:''},
@@ -1325,12 +1338,21 @@ function renderLeaders(orgKey){
 function renderDivisions(orgKey){
   const org = ORGS[orgKey];
   const divisionSelect = document.getElementById(orgKey+'DivisionSelect');
+  const descriptionEl = document.getElementById(orgKey+'DivisionDescription');
   const panelEl = document.getElementById(orgKey+'Members');
 
   function showDivision(idx){
     divisionSelect.value = String(idx);
     panelEl.innerHTML = '';
     const division = org.divisions[idx];
+    const label = document.createElement('span');
+    label.className = 'division-description-label';
+    label.textContent = 'Tugas Bidang';
+    const title = document.createElement('h3');
+    title.textContent = division.name;
+    const description = document.createElement('p');
+    description.textContent = division.description || 'Deskripsi tugas bidang ini belum tersedia.';
+    descriptionEl.replaceChildren(label, title, description);
     const grid = document.createElement('div');
     grid.className = 'members-grid';
     division.members.forEach((m,i)=>{
