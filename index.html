@@ -1339,6 +1339,10 @@ function renderDivisions(orgKey){
       card.setAttribute('aria-label', `Lihat profil ${m.name}`);
       card.style.animationDelay = (i*0.045)+'s';
       const av = avatarNode(m, 'member-avatar');
+      if(av instanceof HTMLImageElement){
+        av.loading = 'lazy';
+        av.decoding = 'async';
+      }
       card.appendChild(av);
       const name = document.createElement('div'); name.className='name'; name.textContent = m.name;
       if(m.unit){
