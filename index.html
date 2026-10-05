@@ -151,6 +151,16 @@
     display:grid; grid-template-columns:minmax(0, 1.2fr) minmax(280px, 0.62fr);
     align-items:center; gap:clamp(48px, 7vw, 110px); perspective:800px;
   }
+  .hero-scroll{
+    position:absolute; z-index:2; left:50%; bottom:28px; translate:-50% 0;
+    display:flex; flex-direction:column; align-items:center; gap:7px;
+    color:var(--muted-dim); font-size:9px; font-weight:800; letter-spacing:0.2em;
+    transition:color 0.2s ease;
+  }
+  .hero-scroll:hover,.hero-scroll:focus-visible{ color:var(--gold); }
+  .hero-scroll:focus-visible{ outline:2px solid var(--gold); outline-offset:6px; }
+  .hero-scroll-arrow{ color:var(--gold); font-size:15px; line-height:1; animation:scrollCue 1.6s ease-in-out infinite; }
+  @keyframes scrollCue{ 50%{ transform:translateY(4px); } }
   .hero-copy{ min-width:0; }
   .hero-kicker{
     font-size:11px; color:var(--muted); font-weight:700; letter-spacing:0.12em; margin-bottom:28px;
@@ -290,7 +300,7 @@
   @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
 
   /* ---------- org section shared ---------- */
-  .org-section{ padding:120px 0 100px; border-top:1px solid var(--line); overflow:hidden; }
+  .org-section{ padding:120px 0 32px; border-top:1px solid var(--line); overflow:hidden; }
   .org-section.slc{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
   .org-section.tvc{ background:linear-gradient(180deg, var(--charcoal) 0%, var(--ink) 100%); }
 
@@ -367,10 +377,10 @@
 
   /* divisions */
   .divisions-label{ font-size:13px; color:var(--muted); margin-bottom:18px; position:relative; z-index:2; }
-  .select-wrap{
-    position:relative; width:min(100%, 420px); margin-bottom:16px;
-    z-index:2;
-  }
+  .division-controls{ display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin-bottom:16px; position:relative; z-index:2; }
+  .division-control{ width:min(100%, 420px); }
+  .division-control label{ display:block; margin-bottom:8px; color:var(--muted); font-size:13px; }
+  .select-wrap{ position:relative; width:100%; }
   .select-wrap::after{
     content:'▾'; position:absolute; right:18px; top:50%; transform:translateY(-50%);
     font-size:18px; color:var(--gold); pointer-events:none; text-shadow:0 0 12px rgba(240,168,60,0.45);
@@ -393,9 +403,25 @@
   .division-select option:hover{ background-color:var(--gold-dim); color:var(--paper); }
   .org-section.tvc .division-select option:checked{ background-color:var(--ember); color:var(--ink); }
   .org-section.tvc .division-select option:hover{ background-color:var(--ember-dim); color:var(--paper); }
+  .member-search{
+    display:block; width:100%; min-height:54px; padding:0 18px;
+    border:1px solid rgba(240,168,60,0.55); border-radius:10px;
+    background:linear-gradient(180deg, rgba(35,26,20,0.96), rgba(16,13,10,0.98));
+    color:var(--paper); font:600 14px 'Manrope',sans-serif;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02), 0 18px 35px rgba(0,0,0,0.25);
+  }
+  .member-search::placeholder{ color:var(--muted-dim); }
+  .member-search:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .org-section.tvc .member-search{ border-color:rgba(224,122,42,0.55); }
+  .org-section.tvc .member-search:focus-visible{ outline-color:var(--ember); }
+  .member-search-results{ margin:0 0 28px; }
+  .member-search-results[hidden]{ display:none; }
+  .member-search-message{ margin-bottom:12px; color:var(--muted); font-size:12px; }
+  .member-search-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px; }
 
+  .division-overview{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; align-items:stretch; margin-bottom:36px; }
   .division-description{
-    position:relative; max-width:760px; margin:0 0 36px; padding:20px 24px;
+    position:relative; max-width:none; margin:0; padding:20px 24px;
     background:linear-gradient(110deg, rgba(240,168,60,0.09), rgba(34,27,20,0.72) 45%, rgba(16,13,10,0.72));
     border:1px solid var(--gold-line); border-left:3px solid var(--gold);
   }
@@ -405,8 +431,34 @@
   }
   .division-description-label{ color:var(--gold-dim); font-size:10px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; }
   .org-section.tvc .division-description-label{ color:var(--ember); }
-  .division-description h3{ margin-top:5px; color:var(--paper); font-size:18px; font-weight:600; }
+  .division-description h3{ margin:1px 0 0; color:var(--paper); font-size:18px; font-weight:600; line-height:1.2; }
   .division-description p{ max-width:680px; margin-top:7px; color:var(--muted); font-size:13px; line-height:1.7; }
+  .division-description p.division-name-expansion{ max-width:680px; margin-top:0; color:var(--paper); font-size:13px; font-weight:700; line-height:1.35; }
+
+  .division-photo-slot{ min-width:0; }
+  .division-group-photo{
+    position:relative; width:100%; height:100%; min-height:220px;
+    margin:0; overflow:hidden; border:1px dashed var(--gold-line);
+    background:radial-gradient(ellipse at 50% 100%, rgba(240,168,60,0.13), transparent 65%), linear-gradient(135deg, #211a13, #100d0a);
+  }
+  .org-section.tvc .division-group-photo{
+    border-color:var(--ember-line);
+    background:radial-gradient(ellipse at 50% 100%, rgba(224,122,42,0.14), transparent 65%), linear-gradient(135deg, #211811, #100d0a);
+  }
+  .division-group-photo img{ width:100%; height:100%; position:absolute; inset:0; object-fit:cover; }
+  .division-group-photo-placeholder{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; padding:20px; color:var(--muted); text-align:center;
+  }
+  .division-group-photo-icon{ color:var(--gold); font-size:28px; line-height:1; }
+  .org-section.tvc .division-group-photo-icon{ color:var(--ember); }
+  .division-group-photo-placeholder strong{ color:var(--paper); font-size:13px; font-weight:700; }
+  .division-group-photo-placeholder span:last-child{ color:var(--muted-dim); font-size:10px; }
+  .division-group-photo figcaption{
+    position:absolute; left:0; right:0; bottom:0; padding:24px 16px 12px;
+    background:linear-gradient(0deg, rgba(16,13,10,0.88), transparent); color:var(--paper);
+    font-size:10px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase;
+  }
 
   .members-panel{ position:relative; min-height:180px; z-index:2; }
   .members-grid{
@@ -436,9 +488,12 @@
   .org-section.tvc .member-card:focus-visible{ outline-color:var(--ember); }
 
   /* ---------- news & events ---------- */
-  .org-section.news{ background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
+  .org-section.news{ padding-bottom:32px; background:linear-gradient(180deg, var(--ink) 0%, var(--charcoal) 100%); }
   .org-section.news .org-watermark{ -webkit-text-stroke:1.5px var(--line); }
   .news-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px; position:relative; z-index:2; }
+  .site-credit{ padding:8px 24px 18px; color:var(--muted-dim); font-size:10px; font-weight:700; letter-spacing:0.1em; text-align:center; }
+  .site-credit.home,.site-credit.slc{ background:var(--charcoal); }
+  .site-credit.tvc{ background:var(--ink); }
   .news-card{ background:var(--charcoal-2); border:1px solid var(--line); cursor:pointer; overflow:hidden; clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%); transition:transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); opacity:0; animation:cardIn 0.5s var(--ease) both; }
   .news-card[hidden], .news-toggle[hidden]{ display:none; }
   .news-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); }
@@ -585,6 +640,7 @@
   @media (max-width:720px){
     body{ padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
     .hero{ min-height:100svh; align-items:flex-start; padding:118px 24px 120px; }
+    .hero-scroll{ bottom:calc(90px + env(safe-area-inset-bottom)); }
     .hero-inner{ grid-template-columns:1fr; gap:42px; }
     .hero-kicker{ margin-bottom:20px; font-size:10px; }
     .hero h1{ font-size:clamp(3rem, 10vw, 5rem); }
@@ -615,6 +671,8 @@
     .recent-event-title{ font-size:clamp(25px,7vw,34px); }
     .hero-index{ width:100%; }
     .hero-index-link{ min-height:58px; }
+    .division-overview{ grid-template-columns:1fr; gap:16px; }
+    .division-group-photo{ min-height:200px; }
     .nav{
       top:auto; left:50%; right:auto; bottom:calc(14px + env(safe-area-inset-bottom));
       transform:translateX(-50%); justify-content:center; padding:6px;
@@ -659,7 +717,7 @@
 
 <div class="nav-progress" id="navProgress"></div>
 <nav class="nav">
-  <div class="nav-mark"><span class="dot"></span> ALS ORGANIZATIONS</div>
+  <button class="nav-mark" type="button" aria-label="Kembali ke beranda"><span class="dot"></span> ALS Organization</button>
   <div class="nav-links" id="navLinks">
     <button data-target="home" class="active">Beranda</button>
     <button data-target="slc"><img src="image/Logo/Logo_SLC.png" alt="">SLC</button>
@@ -689,6 +747,10 @@
       </ol>
     </nav>
   </div>
+  <a class="hero-scroll" href="#leadershipOverview" aria-label="Scroll down ke ringkasan kepengurusan">
+    <span>SCROLL DOWN</span>
+    <span class="hero-scroll-arrow" aria-hidden="true">↓</span>
+  </a>
 </section>
 <section class="recent-event-section" aria-labelledby="recentEventHeading">
   <article class="recent-event-card" id="recentEventCard">
@@ -785,11 +847,23 @@
 
     <div class="leader-row" id="slcLeaders"></div>
 
-    <label class="divisions-label" for="slcDivisionSelect">Bidang kepengurusan</label>
-    <div class="select-wrap">
-      <select class="division-select" id="slcDivisionSelect" aria-label="Bidang SLC"></select>
+    <div class="division-controls">
+      <div class="division-control">
+        <label for="slcDivisionSelect">Bidang kepengurusan</label>
+        <div class="select-wrap">
+          <select class="division-select" id="slcDivisionSelect" aria-label="Bidang SLC"></select>
+        </div>
+      </div>
+      <div class="division-control">
+        <label for="slcMemberSearch">Cari pengurus</label>
+        <input class="member-search" id="slcMemberSearch" type="search" placeholder="Ketik nama pengurus..." autocomplete="off">
+      </div>
     </div>
-    <div class="division-description" id="slcDivisionDescription" role="status" aria-live="polite"></div>
+    <div class="member-search-results" id="slcMemberSearchResults" role="status" aria-live="polite" hidden></div>
+    <div class="division-overview" id="slcDivisionOverview">
+      <div class="division-description" id="slcDivisionDescription" role="status" aria-live="polite"></div>
+      <div class="division-photo-slot" id="slcDivisionPhoto"></div>
+    </div>
     <div class="members-panel" id="slcMembers"></div>
   </div>
 </section>
@@ -810,11 +884,23 @@
 
     <div class="leader-row" id="tvcLeaders"></div>
 
-    <label class="divisions-label" for="tvcDivisionSelect">Bidang kepengurusan</label>
-    <div class="select-wrap">
-      <select class="division-select" id="tvcDivisionSelect" aria-label="Bidang TVC"></select>
+    <div class="division-controls">
+      <div class="division-control">
+        <label for="tvcDivisionSelect">Bidang kepengurusan</label>
+        <div class="select-wrap">
+          <select class="division-select" id="tvcDivisionSelect" aria-label="Bidang TVC"></select>
+        </div>
+      </div>
+      <div class="division-control">
+        <label for="tvcMemberSearch">Cari pengurus</label>
+        <input class="member-search" id="tvcMemberSearch" type="search" placeholder="Ketik nama pengurus..." autocomplete="off">
+      </div>
     </div>
-    <div class="division-description" id="tvcDivisionDescription" role="status" aria-live="polite"></div>
+    <div class="member-search-results" id="tvcMemberSearchResults" role="status" aria-live="polite" hidden></div>
+    <div class="division-overview" id="tvcDivisionOverview">
+      <div class="division-description" id="tvcDivisionDescription" role="status" aria-live="polite"></div>
+      <div class="division-photo-slot" id="tvcDivisionPhoto"></div>
+    </div>
     <div class="members-panel" id="tvcMembers"></div>
   </div>
 </section>
@@ -863,6 +949,7 @@
   </section>
 </div>
 
+<div class="site-credit">Made By Heroeight</div>
 <footer>
   <div class="footer-main">
     <section class="footer-brand" aria-label="Identitas organisasi">
@@ -1012,7 +1099,7 @@ const ORGS = {
         {name:'Muhammad Yahya Yanuar', role:'Bima', img:''},
         {name:'Hadi Safwan', role:'Sidoarjo', img:''},
       ]},
-      { name: 'Bapenta', description: 'Mendukung pengembangan minat dan potensi santri melalui program pembinaan serta kegiatan yang sesuai.', members: [
+      { name: 'Penerimaan Tamu', description: 'Menyambut dan membantu melayani tamu yang berkunjung ke lingkungan sekolah.', members: [
         {name:'Salahhuddin Prameswara Anindita', role:'Malang', img:''},
         {name:'Muhammad Rakha Azka', role:'Makassar', img:''},
         {name:'Faqih Ahsan Haniif', role:'Samarinda', img:''},
@@ -1090,15 +1177,15 @@ const ORGS = {
     leader:   { name: 'Yusuf Hazim Suyitno', role: 'Ketua',    line: 'Memimpin The Vanguard Coordinator.', img: 'image/Ketua-wakil/Ketua_TVC.webp', quote: 'Asal: Jakarta' },
     coLeader: { name: 'Muhammad Alfaruq Ardiansyah', role: 'Wakil Ketua', line: 'Mendampingi koordinasi The Vanguard Coordinator.', img: 'image/Ketua-wakil/Wakil_TVC.webp', quote: 'Asal: Makassar' },
     divisions: [
-      { name: 'ANKUSET', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
+      { name: 'ANKUSET', fullName: 'Andalan Koordinator Urusan Sekretaris', description: 'Mengelola administrasi TVC, termasuk pencatatan, surat-menyurat, dan dokumentasi kegiatan.', members: [
         {name:'Ibrahim Alfarisi', role:'Gresik', unit:'Anggota', img:''},
         {name:'Darren Athalla Ghifari', role:'Tanggerang', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUKUANG', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
+      { name: 'ANKUKUANG', fullName: 'Andalan Koordinator Urusan Keuangan', description: 'Mengatur pencatatan pemasukan dan pengeluaran serta membantu penyusunan dan pertanggungjawaban anggaran kegiatan TVC.', members: [
         {name:'Akbar Prasetya', role:'Berau', unit:'Anggota', img:''},
         {name:'Arya Adriansyah Putra Pratama', role:'Palangka Raya', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKULAT', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
+      { name: 'ANKULAT', fullName: 'Andalan Koordinator Urusan Latihan', description: 'Merencanakan dan membantu pelaksanaan latihan kepramukaan untuk mengembangkan keterampilan dan kesiapan anggota.', members: [
         {name:'Zhafrano Raja Triarka', role:'Banyuwangi', unit:'Anggota', img:''},
         {name:'Dimas Rasya Wibowo', role:'Makassar', unit:'Anggota', img:''},
         {name:'Muhammad Asyam Fawwaz', role:'Banjarbaru', unit:'Anggota', img:''},
@@ -1108,7 +1195,7 @@ const ORGS = {
         {name:'Ahmad Hafizh Abdurrahman', role:'Gresik', unit:'Anggota', img:''},
         {name:'Muhammad Sultan Jafri', role:'Banjarbaru', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUPERKAP', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
+      { name: 'ANKUPERKAP', fullName: 'Andalan Koordinator Urusan Perlengkapan', description: 'Menyiapkan, mendata, dan menjaga perlengkapan yang dibutuhkan untuk kegiatan dan latihan TVC.', members: [
         {name:'Hanif Rabbani Humayun', role:'Surabaya', unit:'Anggota', img:''},
         {name:'Arkan Athaya Basri', role:'Banyuwangi', unit:'Anggota', img:''},
         {name:'Ahmaddinajat Billah', role:'Surabaya', unit:'Anggota', img:''},
@@ -1118,7 +1205,7 @@ const ORGS = {
         {name:'Muhammad Haafiz Ramadhan', role:'Mojokerto', unit:'Anggota', img:''},
         {name:'Farel Novrinno Rizky', role:'Surabaya', unit:'Anggota', img:''},
       ]},
-      { name: 'ANKUKEDAP', description: 'Mendukung koordinasi dan pelaksanaan program kepramukaan sesuai pembagian tugas di TVC.', members: [
+      { name: 'ANKUKEDAP', fullName: 'Andalan Koordinator Urusan KEDAP', description: 'Mengoordinasikan kebutuhan dan pelaksanaan tugas urusan KEDAP dalam kegiatan TVC.', members: [
         {name:'Dika Achmad Luqmansyah', role:'Pasuruan', unit:'Anggota', img:''},
         {name:'Kaffi Athallah Lirfano', role:'Jakarta', unit:'Anggota', img:''},
         {name:'Adrian Arhaburrizqi Himawan', role:'Lombok', unit:'Anggota', img:''},
@@ -1128,7 +1215,7 @@ const ORGS = {
         {name:'Ibrahimovic Ghaisan', role:'Surabaya', unit:'Anggota', img:''},
         {name:'Irvin Fico Saverio', role:'Banjarbaru', unit:'Anggota', img:''},
       ]},
-      { name: 'BINDEP', description: 'Mengoordinasikan pembinaan anggota dan mendukung pelaksanaan program kepramukaan TVC.', members: [
+      { name: 'BINDEP', fullName: 'Barisan Depan', description: 'Mengoordinasikan pembinaan anggota Barisan Depan serta membantu memastikan kegiatan kepramukaan berjalan tertib.', members: [
         {name:'Muhammad Athaillah Aidan', role:'Balikpapan', unit:'Ketua Bagian', img:''},
         {name:'Waldan Yafiq Zhafran', role:'Balikpapan', unit:'Anggota', img:''},
         {name:'KenzieUmar Muhammad Thufail', role:'Bekasi', unit:'Anggota', img:''},
@@ -1335,10 +1422,139 @@ function renderLeaders(orgKey){
   });
 }
 
+function isDivisionLeader(orgKey, divisionName, index){
+  return index === 0 && !(
+    (orgKey === 'slc' && divisionName === 'Daily Manager') ||
+    (orgKey === 'tvc' && ['ANKUSET', 'ANKUKUANG'].includes(divisionName))
+  );
+}
+
+function createMemberCard(member, orgKey, divisionName, index, { searchResult = false } = {}){
+  const card = document.createElement('div');
+  card.className = 'member-card';
+  card.tabIndex = 0;
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', `Lihat profil ${member.name}`);
+  card.style.animationDelay = (index*0.045)+'s';
+  const av = avatarNode(member, 'member-avatar');
+  if(av instanceof HTMLImageElement){
+    av.loading = 'lazy';
+    av.decoding = 'async';
+  }
+  card.appendChild(av);
+  const name = document.createElement('div');
+  name.className = 'name';
+  name.textContent = member.name;
+  card.appendChild(name);
+  if(searchResult && (member.divisionLeader || member.unit)){
+    const unit = document.createElement('div');
+    unit.className = 'unit';
+    unit.textContent = member.divisionLeader ? 'Ketua Bidang' : member.unit;
+    card.appendChild(unit);
+  }else if(!searchResult && (member.divisionLeader || member.unit)){
+    const unit = document.createElement('div');
+    unit.className = 'unit';
+    unit.textContent = member.divisionLeader ? 'Ketua Bidang' : member.unit;
+    card.appendChild(unit);
+  }
+  const role = document.createElement('div');
+  role.className = 'role';
+  role.textContent = searchResult ? divisionName : member.role;
+  card.appendChild(role);
+  const person = {
+    ...member,
+    org:orgKey,
+    orgName:orgKey === 'slc' ? 'SLC' : 'TVC',
+    division:divisionName,
+    role:member.divisionLeader
+      ? `Ketua Bidang · ${divisionName}`
+      : (member.unit ? `${member.unit} · ${divisionName}` : `Anggota · ${divisionName}`),
+    origin:member.role
+  };
+  card.addEventListener('click', ()=>openProfile(person));
+  card.addEventListener('keydown', event=>{
+    if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openProfile(person); }
+  });
+  return card;
+}
+
+function renderMemberSearch(orgKey){
+  const org = ORGS[orgKey];
+  const input = document.getElementById(orgKey+'MemberSearch');
+  const resultsEl = document.getElementById(orgKey+'MemberSearchResults');
+  const divisionSelect = document.getElementById(orgKey+'DivisionSelect');
+  const overviewEl = document.getElementById(orgKey+'DivisionOverview');
+  const panelEl = document.getElementById(orgKey+'Members');
+  const searchingOption = document.createElement('option');
+  searchingOption.value = 'searching';
+  searchingOption.textContent = 'Searching';
+  searchingOption.disabled = true;
+  let searchActive = false;
+  let previousDivision = divisionSelect.value;
+  const searchRecords = org.divisions.flatMap(division=>
+    division.members.map((member,index)=>({
+      member:{...member, divisionLeader:isDivisionLeader(orgKey, division.name, index)},
+      division:division.name
+    }))
+  );
+  input.addEventListener('input', ()=>{
+    const query = input.value.trim().toLocaleLowerCase('id-ID');
+    resultsEl.replaceChildren();
+    if(!query){
+      if(searchActive){
+        divisionSelect.disabled = false;
+        searchingOption.remove();
+        divisionSelect.value = previousDivision;
+        searchActive = false;
+      }
+      overviewEl.hidden = false;
+      panelEl.hidden = false;
+      resultsEl.hidden = true;
+      return;
+    }
+    if(!searchActive){
+      previousDivision = divisionSelect.value;
+      divisionSelect.appendChild(searchingOption);
+      searchActive = true;
+    }
+    divisionSelect.value = searchingOption.value;
+    divisionSelect.disabled = true;
+    overviewEl.hidden = true;
+    panelEl.hidden = true;
+    resultsEl.hidden = false;
+    const message = document.createElement('p');
+    message.className = 'member-search-message';
+    if(query.length < 2){
+      message.textContent = 'Ketik minimal 2 karakter untuk mencari pengurus.';
+      resultsEl.appendChild(message);
+      return;
+    }
+    const matches = searchRecords.filter(({member})=>
+      member.name.toLocaleLowerCase('id-ID').includes(query)
+    );
+    if(matches.length === 0){
+      message.textContent = 'Pengurus tidak ditemukan.';
+      resultsEl.appendChild(message);
+      return;
+    }
+    const visibleMatches = matches.slice(0, 12);
+    message.textContent = matches.length > visibleMatches.length
+      ? `Ditemukan ${matches.length} pengurus. Menampilkan 12 hasil pertama:`
+      : `Ditemukan ${matches.length} pengurus:`;
+    const grid = document.createElement('div');
+    grid.className = 'member-search-grid';
+    visibleMatches.forEach(({member, division}, index)=>
+      grid.appendChild(createMemberCard(member, orgKey, division, index, {searchResult:true}))
+    );
+    resultsEl.append(message, grid);
+  });
+}
+
 function renderDivisions(orgKey){
   const org = ORGS[orgKey];
   const divisionSelect = document.getElementById(orgKey+'DivisionSelect');
   const descriptionEl = document.getElementById(orgKey+'DivisionDescription');
+  const photoSlot = document.getElementById(orgKey+'DivisionPhoto');
   const panelEl = document.getElementById(orgKey+'Members');
 
   function showDivision(idx){
@@ -1350,40 +1566,48 @@ function renderDivisions(orgKey){
     label.textContent = 'Tugas Bidang';
     const title = document.createElement('h3');
     title.textContent = division.name;
+    const fullName = division.fullName ? document.createElement('p') : null;
+    if(fullName){
+      fullName.className = 'division-name-expansion';
+      fullName.textContent = division.fullName;
+    }
     const description = document.createElement('p');
     description.textContent = division.description || 'Deskripsi tugas bidang ini belum tersedia.';
-    descriptionEl.replaceChildren(label, title, description);
+    descriptionEl.replaceChildren(label, title, ...(fullName ? [fullName] : []), description);
+    const groupPhoto = document.createElement('figure');
+    groupPhoto.className = 'division-group-photo';
+    groupPhoto.setAttribute('aria-label', `Foto bersama bidang ${division.name}`);
+    if(division.groupPhoto){
+      const image = document.createElement('img');
+      image.src = division.groupPhoto;
+      image.alt = `Foto bersama bidang ${division.name}`;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      groupPhoto.appendChild(image);
+    }else{
+      const placeholder = document.createElement('div');
+      placeholder.className = 'division-group-photo-placeholder';
+      const icon = document.createElement('span');
+      icon.className = 'division-group-photo-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = '＋';
+      const title = document.createElement('strong');
+      title.textContent = 'COMING SOON';
+      placeholder.append(icon, title);
+      groupPhoto.appendChild(placeholder);
+    }
+    const caption = document.createElement('figcaption');
+    caption.textContent = `Foto bersama · ${division.name}`;
+    groupPhoto.appendChild(caption);
     const grid = document.createElement('div');
     grid.className = 'members-grid';
-    division.members.forEach((m,i)=>{
-      const card = document.createElement('div');
-      card.className = 'member-card';
-      card.tabIndex = 0;
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `Lihat profil ${m.name}`);
-      card.style.animationDelay = (i*0.045)+'s';
-      const av = avatarNode(m, 'member-avatar');
-      if(av instanceof HTMLImageElement){
-        av.loading = 'lazy';
-        av.decoding = 'async';
-      }
-      card.appendChild(av);
-      const name = document.createElement('div'); name.className='name'; name.textContent = m.name;
-      if(m.unit){
-        const unit = document.createElement('div'); unit.className='unit'; unit.textContent = m.unit;
-        card.appendChild(name); card.appendChild(unit);
-      }else{
-        card.appendChild(name);
-      }
-      const role = document.createElement('div'); role.className='role'; role.textContent = m.role;
-      card.appendChild(role);
-      const person = { ...m, org:orgKey, orgName:orgKey === 'slc' ? 'SLC' : 'TVC', division:division.name, role:m.unit ? `${m.unit} · ${division.name}` : `Anggota · ${division.name}`, origin:m.role };
-      card.addEventListener('click', ()=>openProfile(person));
-      card.addEventListener('keydown', event=>{
-        if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openProfile(person); }
-      });
-      grid.appendChild(card);
-    });
+    division.members.forEach((member,index)=>
+      grid.appendChild(createMemberCard({
+        ...member,
+        divisionLeader:isDivisionLeader(orgKey, division.name, index)
+      }, orgKey, division.name, index))
+    );
+    photoSlot.replaceChildren(groupPhoto);
     panelEl.appendChild(grid);
   }
 
@@ -1395,6 +1619,7 @@ function renderDivisions(orgKey){
   });
   divisionSelect.addEventListener('change', ()=>showDivision(Number(divisionSelect.value)));
   showDivision(0);
+  renderMemberSearch(orgKey);
 }
 
 function formatNewsDate(date){
@@ -1592,7 +1817,9 @@ syncNewsToggle();
 });
 
 /* ========================= page switching ========================= */
-let currentPage = 'home';
+const pageKeys = ['home', 'slc', 'tvc'];
+const pageFromUrl = new URLSearchParams(window.location.search).get('page');
+let currentPage = pageKeys.includes(pageFromUrl) ? pageFromUrl : 'home';
 const curtain = document.getElementById('curtain');
 const curtainMark = document.getElementById('curtainMark');
 const navButtons = document.querySelectorAll('.nav-links button');
@@ -1620,13 +1847,22 @@ function setMark(key){
 function swapPage(key){
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === key));
   navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === key));
+  const siteCredit = document.querySelector('.site-credit');
+  siteCredit.classList.remove(...pageKeys);
+  siteCredit.classList.add(key);
   currentPage = key;
   window.scrollTo(0, 0);
   ensureField(key);
 }
 
-function goToPage(key){
+function goToPage(key, { updateUrl = true } = {}){
   if(key === currentPage) return;
+  if(updateUrl){
+    const url = new URL(window.location.href);
+    if(key === 'home') url.searchParams.delete('page');
+    else url.searchParams.set('page', key);
+    window.history.pushState({ page:key }, '', url);
+  }
   if(reduceMotion){ swapPage(key); return; }
   setMark(key);
   curtain.classList.add('mark-show');
@@ -1643,24 +1879,36 @@ function goToPage(key){
 navButtons.forEach(btn=>{
   btn.addEventListener('click', ()=>goToPage(btn.dataset.target));
 });
+document.querySelector('.nav-mark').addEventListener('click', ()=>goToPage('home'));
 document.querySelectorAll('[data-goto]').forEach(el=>{
   el.addEventListener('click', ()=>goToPage(el.dataset.goto));
 });
+window.addEventListener('popstate', ()=>goToPage(
+  pageKeys.includes(new URLSearchParams(window.location.search).get('page'))
+    ? new URLSearchParams(window.location.search).get('page')
+    : 'home',
+  { updateUrl:false }
+));
+document.querySelector('.hero-index-link[href="#footerContact"]').addEventListener('click', event=>{
+  event.preventDefault();
+  document.getElementById('footerContact').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
+});
 
 /* ========================= curtain reveal (initial load) ========================= */
+swapPage(currentPage);
 if(reduceMotion){
   curtain.classList.add('open');
-  ensureField('home');
+  ensureField(currentPage);
 }else{
   document.documentElement.style.overflow = 'hidden';
-  setMark('home');
+  setMark(currentPage);
   setTimeout(()=> curtain.classList.add('mark-show'), 50);
   setTimeout(()=>{
     curtain.classList.remove('mark-show');
     curtain.classList.add('open');
     document.documentElement.style.overflow = '';
   }, 650);
-  ensureField('home');
+  ensureField(currentPage);
 }
 
 /* ========================= custom cursor ========================= */
