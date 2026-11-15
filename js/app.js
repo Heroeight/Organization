@@ -1,6 +1,43 @@
 
 /* Data pengurus dan dokumentasi kegiatan organisasi. */
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const JAKARTA_TZ = 'Asia/Jakarta';
+
+function jakartaTodayParts(){
+  const parts = new Intl.DateTimeFormat('en-CA', {timeZone:JAKARTA_TZ, year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(new Date());
+  const value = type => Number(parts.find(part => part.type === type).value);
+  return {y:value('year'), m:value('month'), d:value('day')};
+}
+function parseISODateParts(dateStr){
+  const [y, m, d] = String(dateStr).split('-').map(Number);
+  return {y, m, d};
+}
+function dayIndex(parts){
+  return Date.UTC(parts.y, parts.m - 1, parts.d) / 86400000;
+}
+function daysFromToday(dateStr){
+  return dayIndex(parseISODateParts(dateStr)) - dayIndex(jakartaTodayParts());
+}
+function eventStatusLabel(dateStr){
+  if(!dateStr) return '';
+  const diff = daysFromToday(dateStr);
+  if(diff > 0) return 'Akan Datang';
+  if(diff === 0) return 'Hari Ini';
+  if(diff >= -30) return 'Baru Terlaksana';
+  return '';
+}
+function isFutureEvent(item){
+  return Boolean(item.date) && daysFromToday(item.date) > 0;
+}
+function isPastOrTodayEvent(item){
+  return Boolean(item.date) && daysFromToday(item.date) <= 0;
+}
+function eventImageList(item){
+  return (item.images || []).map(image => typeof image === 'string' ? {src:image, caption:''} : {src:image.src, caption:image.caption || ''}).filter(image => image.src);
+}
+function countOrgOfficers(org){
+  return 2 + org.divisions.reduce((sum, division) => sum + division.members.length, 0);
+}
 
 /* ========================= rendering ========================= */
 function initials(name){
@@ -59,7 +96,7 @@ function openProfile(person){
 
   const facts = document.getElementById('profileFacts');
   facts.innerHTML = '';
-  [{label:'Asal', value:person.origin}, {label:'Bidang', value:person.division}].forEach(fact=>{
+  [{label:'Asal', value:SITE.showMemberOrigin ? person.origin : ''}, {label:'Bidang', value:person.division}].forEach(fact=>{
     if(!fact.value) return;
     const item = document.createElement('div');
     item.className = 'profile-fact';
@@ -137,18 +174,7 @@ function renderLeaders(orgKey){
     const backName = document.createElement('div');
     backName.className = 'leader-back-name';
     backName.textContent = p.name;
-    const backLine = document.createElement('div');
-    backLine.className = 'leader-back-line';
-    const backOrigin = document.createElement('div');
-    backOrigin.className = 'quote';
-    if(p.role === 'Ketua' || p.role === 'Wakil Ketua'){
-      backLine.textContent = 'Motto: [akan ditambahkan]';
-      back.append(backRole, backName, backLine);
-    }else{
-      backLine.textContent = p.line;
-      backOrigin.textContent = p.quote;
-      back.append(backRole, backName, backLine, backOrigin);
-    }
+    back.append(backRole, backName);
     const handle = String(p.instagram || '').trim().replace(/^@/, '');
     if(/^[A-Za-z0-9._]{1,30}$/.test(handle)){
       const instagram = document.createElement('a');
@@ -206,18 +232,18 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
   if(av instanceof HTMLImageElement){
     av.loading = 'lazy';
     av.decoding = 'async';
+    const frame = document.createElement('span');
+    frame.className = 'member-avatar-frame';
+    frame.appendChild(av);
+    card.appendChild(frame);
+  }else{
+    card.appendChild(av);
   }
-  card.appendChild(av);
   const name = document.createElement('div');
   name.className = 'name';
   name.textContent = member.name;
   card.appendChild(name);
-  if(searchResult && (member.divisionLeader || member.unit)){
-    const unit = document.createElement('div');
-    unit.className = 'unit';
-    unit.textContent = member.divisionLeader ? 'Ketua Bidang' : member.unit;
-    card.appendChild(unit);
-  }else if(!searchResult && (member.divisionLeader || member.unit)){
+  if(member.divisionLeader || member.unit){
     const unit = document.createElement('div');
     unit.className = 'unit';
     unit.textContent = member.divisionLeader ? 'Ketua Bidang' : member.unit;
@@ -225,8 +251,13 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
   }
   const role = document.createElement('div');
   role.className = 'role';
-  role.textContent = searchResult ? divisionName : member.role;
-  card.appendChild(role);
+  if(searchResult){
+    role.textContent = divisionName;
+    card.appendChild(role);
+  }else if(SITE.showMemberOrigin && member.role){
+    role.textContent = member.role;
+    card.appendChild(role);
+  }
   const person = {
     ...member,
     org:orgKey,
@@ -320,7 +351,6 @@ function renderDivisions(orgKey){
   const org = ORGS[orgKey];
   const divisionSelect = document.getElementById(orgKey+'DivisionSelect');
   const descriptionEl = document.getElementById(orgKey+'DivisionDescription');
-  const photoSlot = document.getElementById(orgKey+'DivisionPhoto');
   const panelEl = document.getElementById(orgKey+'Members');
 
   function showDivision(idx){
@@ -340,31 +370,6 @@ function renderDivisions(orgKey){
     const description = document.createElement('p');
     description.textContent = division.description || 'Deskripsi tugas bidang ini belum tersedia.';
     descriptionEl.replaceChildren(label, title, ...(fullName ? [fullName] : []), description);
-    const groupPhoto = document.createElement('figure');
-    groupPhoto.className = 'division-group-photo';
-    groupPhoto.setAttribute('aria-label', `Foto bersama bidang ${division.name}`);
-    if(division.groupPhoto){
-      const image = document.createElement('img');
-      image.src = division.groupPhoto;
-      image.alt = `Foto bersama bidang ${division.name}`;
-      image.loading = 'lazy';
-      image.decoding = 'async';
-      groupPhoto.appendChild(image);
-    }else{
-      const placeholder = document.createElement('div');
-      placeholder.className = 'division-group-photo-placeholder';
-      const icon = document.createElement('span');
-      icon.className = 'division-group-photo-icon';
-      icon.setAttribute('aria-hidden', 'true');
-      icon.textContent = '＋';
-      const title = document.createElement('strong');
-      title.textContent = 'COMING SOON';
-      placeholder.append(icon, title);
-      groupPhoto.appendChild(placeholder);
-    }
-    const caption = document.createElement('figcaption');
-    caption.textContent = `Foto bersama · ${division.name}`;
-    groupPhoto.appendChild(caption);
     const grid = document.createElement('div');
     grid.className = 'members-grid';
     division.members.forEach((member,index)=>
@@ -373,7 +378,6 @@ function renderDivisions(orgKey){
         divisionLeader:isDivisionLeader(orgKey, division.name, index)
       }, orgKey, division.name, index))
     );
-    photoSlot.replaceChildren(groupPhoto);
     panelEl.appendChild(grid);
   }
 
@@ -389,12 +393,22 @@ function renderDivisions(orgKey){
 }
 
 function formatNewsDate(date){
-  return new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'}).format(new Date(`${date}T00:00:00Z`));
+  return new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'long', year:'numeric', timeZone:JAKARTA_TZ}).format(new Date(`${date}T12:00:00+07:00`));
+}
+
+function upcomingItems(){
+  const dated = NEWS.filter(isFutureEvent);
+  return [...UPCOMING, ...dated];
+}
+
+function kegiatanItems(){
+  return NEWS.filter(item => !item.date || isPastOrTodayEvent(item));
 }
 
 function renderEventOrgLogos(container, org, logoPath, logoAlt){
   container.replaceChildren();
-  const orgs = logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${org.toUpperCase()}`}]
+  if(!logoPath && !org) return;
+  const orgs = logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${(org || '').toUpperCase()}`}]
     : (org === 'joint' ? ['slc','tvc'] : [org]).map(key=>({key, src:`image/Logo/Logo_${key.toUpperCase()}.png`, alt:`Logo ${key.toUpperCase()}`}));
   orgs.forEach(({key,src,alt})=>{
     const logo = document.createElement('img');
@@ -405,24 +419,36 @@ function renderEventOrgLogos(container, org, logoPath, logoAlt){
   });
 }
 
+function appendStatusBadge(parent, dateStr){
+  const label = eventStatusLabel(dateStr);
+  if(!label) return;
+  const badge = document.createElement('span');
+  badge.className = 'news-tag status';
+  badge.textContent = label;
+  parent.appendChild(badge);
+}
+
 function renderNews(){
   const list = document.getElementById('newsList');
-  [...NEWS].sort((a,b)=>(b.date || '').localeCompare(a.date || '')).forEach((item,index)=>{
+  [...kegiatanItems()].sort((a,b)=>(b.date || '').localeCompare(a.date || '')).forEach((item,index)=>{
     const card = document.createElement('article');
-    card.className = `news-card ${item.org}`;
+    card.className = `news-card ${item.org || ''}`;
     card.style.animationDelay = `${index * 0.05}s`;
     card.hidden = index >= 3;
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
-    card.innerHTML = `<div class="news-thumb ${item.org}" data-label="${item.type.toUpperCase()}"></div><div class="news-body"><div class="news-tags"><span class="news-tag org-${item.org}">${item.organization || (item.org === 'joint' ? 'SLC & TVC' : item.org.toUpperCase())}</span><span class="news-tag type">${item.type}</span></div><h3 class="news-title">${item.title}</h3><p class="news-excerpt">${item.excerpt}</p><div class="news-date-line">${item.date ? formatNewsDate(item.date) : item.status || ''}</div></div>`;
+    const orgLabel = item.organization || (item.org === 'joint' ? 'SLC & TVC' : (item.org || '').toUpperCase());
+    card.innerHTML = `<div class="news-thumb ${item.org || ''}" data-label="${(item.type || '').toUpperCase()}"></div><div class="news-body"><div class="news-tags">${orgLabel ? `<span class="news-tag org-${item.org}">${orgLabel}</span>` : ''}${item.type ? `<span class="news-tag type">${item.type}</span>` : ''}</div><h3 class="news-title">${item.title}</h3><p class="news-excerpt">${item.excerpt || ''}</p><div class="news-date-line">${item.date ? formatNewsDate(item.date) : ''}</div></div>`;
     const thumb = card.querySelector('.news-thumb');
     const tagRow = card.querySelector('.news-tags');
-    if(item.images?.length){
+    appendStatusBadge(tagRow, item.date);
+    const photos = eventImageList(item);
+    if(photos.length){
       const image = document.createElement('img');
       image.className = 'news-thumb-image';
       image.loading = 'lazy';
       image.decoding = 'async';
-      image.src = item.images[0];
+      image.src = photos[0].src;
       image.alt = '';
       if(item.focusUp?.includes(0)) image.style.objectPosition = 'center 35%';
       thumb.appendChild(image);
@@ -442,23 +468,191 @@ function renderNews(){
 
 function renderLatestCompletedEvent(){
   const section = document.querySelector('.recent-event-section');
-  const item = [...NEWS]
-    .filter(event=>event.status === 'Sudah terlaksana' && event.date)
+  const item = [...kegiatanItems()]
+    .filter(event=>event.date)
     .sort((a,b)=>b.date.localeCompare(a.date))[0];
   if(!item){
     section.hidden = true;
     return;
   }
+  const photos = eventImageList(item);
   const image = document.getElementById('recentEventImage');
   image.loading = 'lazy';
   image.decoding = 'async';
-  image.src = item.images?.[0] || '';
-  image.alt = item.images?.length ? `Dokumentasi ${item.title}` : '';
+  image.src = photos[0]?.src || '';
+  image.alt = photos.length ? `Dokumentasi ${item.title}` : '';
   renderEventOrgLogos(document.getElementById('recentEventLogos'), item.org, item.logo, item.logoAlt);
-  document.getElementById('recentEventDate').textContent = formatNewsDate(item.date);
+  const badge = document.getElementById('recentEventBadge');
+  const status = eventStatusLabel(item.date);
+  badge.textContent = status;
+  badge.hidden = !status;
+  document.getElementById('recentEventDate').textContent = item.date ? formatNewsDate(item.date) : '';
   document.getElementById('recentEventHeading').textContent = item.title;
-  document.getElementById('recentEventDescription').textContent = item.excerpt;
-  document.getElementById('recentEventButton').addEventListener('click', ()=>openNews(item));
+  document.getElementById('recentEventDescription').textContent = item.excerpt || '';
+  const button = document.getElementById('recentEventButton');
+  const label = document.getElementById('recentEventButtonLabel');
+  if(item.story){
+    label.textContent = 'Lihat cerita kegiatan';
+    button.hidden = false;
+  }else if(photos.length){
+    label.textContent = 'Lihat foto';
+    button.hidden = false;
+  }else{
+    button.hidden = true;
+  }
+  button.addEventListener('click', ()=>openNews(item));
+}
+
+function renderUpcoming(){
+  const section = document.getElementById('upcomingSection');
+  const list = document.getElementById('upcomingList');
+  const items = upcomingItems();
+  list.replaceChildren();
+  if(!items.length){
+    section.hidden = true;
+    return;
+  }
+  section.hidden = false;
+  items.forEach(item=>{
+    const article = document.createElement('article');
+    article.className = 'upcoming-item upcoming-item-single';
+    const copy = document.createElement('div');
+    copy.className = 'upcoming-event-copy';
+    const label = document.createElement('div');
+    label.className = 'upcoming-event-label';
+    label.textContent = eventStatusLabel(item.date) || 'ACARA MENDATANG';
+    const title = document.createElement('h2');
+    title.textContent = item.title;
+    const desc = document.createElement('p');
+    desc.textContent = item.excerpt || '';
+    copy.append(label, title);
+    if(item.date){
+      const dateLine = document.createElement('p');
+      dateLine.textContent = formatNewsDate(item.date);
+      copy.appendChild(dateLine);
+    }
+    if(desc.textContent) copy.appendChild(desc);
+    article.appendChild(copy);
+    list.appendChild(article);
+  });
+}
+
+function renderLeadershipStats(){
+  const slcCount = countOrgOfficers(ORGS.slc);
+  const tvcCount = countOrgOfficers(ORGS.tvc);
+  const eventCount = NEWS.length;
+  const slcDivisions = ORGS.slc.divisions.length;
+  const tvcDivisions = ORGS.tvc.divisions.length;
+  document.getElementById('leadershipPeriod').textContent = SITE.periodLabel;
+  const stats = [
+    {value:String(slcCount + tvcCount), title:'Pengurus', copy:`${slcCount} pengurus SLC dan ${tvcCount} pengurus TVC.`},
+    {value:String(slcDivisions + tvcDivisions), title:'Bidang', copy:`${slcDivisions} bidang SLC dan ${tvcDivisions} bidang TVC.`},
+    {value:String(eventCount).padStart(2, '0'), title:'Total Event', copy:'Jumlah kegiatan utama yang dilaksanakan dalam satu periode kepengurusan.'},
+  ];
+  const root = document.getElementById('leadershipStats');
+  root.replaceChildren();
+  stats.forEach(stat=>{
+    const article = document.createElement('article');
+    article.className = 'leadership-stat';
+    article.innerHTML = `<strong>${stat.value}</strong><h3>${stat.title}</h3><p>${stat.copy}</p>`;
+    root.appendChild(article);
+  });
+}
+
+function svgIcon(name){
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('focusable', 'false');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('fill', 'currentColor');
+  const d = {
+    instagram: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2zm0 7.9A3.1 3.1 0 1 1 15.1 12 3.1 3.1 0 0 1 12 15.1zM17.6 6.5a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z',
+    tiktok: 'M14.2 3h2.3c.2 2.1 1.4 3.6 3.5 3.8v2.3c-1.2 0-2.3-.4-3.3-1.1v6.7A6.7 6.7 0 1 1 9.9 8.1v2.5a4.2 4.2 0 1 0 4.3 4.2V3z',
+    youtube: 'M23 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C19.3 5.4 12 5.4 12 5.4s-7.3 0-8.8.4c-.9.2-1.6.9-1.8 1.8C1 9 1 12.2 1 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.5.4 8.8.4 8.8.4s7.3 0 8.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6zM9.8 15.6V8.8l6.2 3.4z',
+  }[name];
+  path.setAttribute('d', d);
+  svg.appendChild(path);
+  return svg;
+}
+
+function renderSiteChrome(){
+  document.getElementById('slcOrgDescription').textContent = ORGS.slc.description;
+  document.getElementById('tvcOrgDescription').textContent = ORGS.tvc.description;
+  const feedback = document.getElementById('heroFeedbackLink');
+  if(SITE.feedbackFormUrl) feedback.href = SITE.feedbackFormUrl;
+  else feedback.hidden = true;
+
+  const contactRoot = document.getElementById('footerContactList');
+  contactRoot.replaceChildren();
+  const {address, email, phoneDisplay, phoneTel, whatsapp, phoneLabel} = SITE.contact;
+  if(address){
+    const row = document.createElement('div');
+    row.innerHTML = '<span class="footer-contact-label">Alamat</span>';
+    row.appendChild(document.createTextNode(address));
+    contactRoot.appendChild(row);
+  }
+  if(whatsapp || phoneTel){
+    const row = document.createElement('div');
+    const label = document.createElement('span');
+    label.className = 'footer-contact-label';
+    label.textContent = 'Telepon';
+    row.appendChild(label);
+    const links = document.createElement('span');
+    links.className = 'footer-contact-links';
+    if(whatsapp){
+      const wa = document.createElement('a');
+      wa.href = `https://wa.me/${whatsapp}`;
+      wa.target = '_blank';
+      wa.rel = 'noopener noreferrer';
+      wa.textContent = phoneLabel ? `${phoneDisplay} - ${phoneLabel}` : phoneDisplay;
+      links.appendChild(wa);
+    }
+    if(phoneTel){
+      if(whatsapp) links.appendChild(document.createTextNode(' · '));
+      const tel = document.createElement('a');
+      tel.href = `tel:${phoneTel}`;
+      tel.textContent = 'Telepon';
+      links.appendChild(tel);
+    }
+    row.appendChild(links);
+    contactRoot.appendChild(row);
+  }
+  if(email){
+    const row = document.createElement('div');
+    row.innerHTML = '<span class="footer-contact-label">Email</span>';
+    const mail = document.createElement('a');
+    mail.href = `mailto:${email}`;
+    mail.textContent = email;
+    row.appendChild(mail);
+    contactRoot.appendChild(row);
+  }
+
+  const socials = document.getElementById('footerSocials');
+  socials.replaceChildren();
+  [
+    {key:'instagram', label:'Instagram'},
+    {key:'tiktok', label:'TikTok'},
+    {key:'youtube', label:'YouTube'},
+  ].forEach(({key, label})=>{
+    const href = SITE.social[key];
+    if(!href) return;
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', label);
+    a.appendChild(svgIcon(key));
+    socials.appendChild(a);
+  });
+
+  const schoolLink = document.getElementById('footerSchoolLink');
+  if(SITE.social.school){
+    schoolLink.href = SITE.social.school;
+    schoolLink.hidden = false;
+  }else{
+    schoolLink.hidden = true;
+  }
 }
 
 let newsGalleryRequestId = 0;
@@ -467,14 +661,18 @@ function openNews(item){
   const hero = document.getElementById('newsModalHero');
   hero.className = `news-modal-hero ${item.org}`;
   hero.dataset.label = item.type.toUpperCase();
-  const images = item.images?.length ? item.images : [];
+  const images = eventImageList(item);
   const image = document.getElementById('newsModalImage');
+  const captionEl = document.getElementById('newsModalCaption');
   let activeImage = 0;
   const updateGallery = (animate = false)=>{
     const requestId = ++newsGalleryRequestId;
     image.classList.remove('visible');
+    const caption = images[activeImage]?.caption || '';
+    captionEl.textContent = caption;
+    captionEl.hidden = !caption;
     if(images.length){
-      image.alt = `${item.title}, foto ${activeImage + 1}`;
+      image.alt = caption || `${item.title}, foto ${activeImage + 1}`;
       image.style.objectPosition = item.focusUp?.includes(activeImage) ? 'center 35%' : 'center';
       const revealImage = ()=>{
         if(requestId !== newsGalleryRequestId) return;
@@ -488,7 +686,7 @@ function openNews(item){
         image.onerror = ()=>{
           if(requestId === newsGalleryRequestId) image.classList.remove('visible');
         };
-        image.src = images[activeImage];
+        image.src = images[activeImage].src;
         if(image.complete && image.naturalWidth > 0){
           requestAnimationFrame(()=>{
             if(requestId === newsGalleryRequestId) image.classList.add('visible');
@@ -522,11 +720,15 @@ function openNews(item){
   updateGallery();
   document.getElementById('newsGalleryPrev').onclick = ()=>{ activeImage = (activeImage - 1 + images.length) % images.length; updateGallery(true); };
   document.getElementById('newsGalleryNext').onclick = ()=>{ activeImage = (activeImage + 1) % images.length; updateGallery(true); };
-  document.getElementById('newsModalTags').innerHTML = `<span class="news-tag org-${item.org}">${item.organization || (item.org === 'joint' ? 'SLC & TVC' : item.org.toUpperCase())}</span><span class="news-tag type">${item.type}</span><div class="event-org-logos" id="newsModalLogos" aria-label="Organisasi penyelenggara"></div>`;
+  const orgLabel = item.organization || (item.org === 'joint' ? 'SLC & TVC' : (item.org || '').toUpperCase());
+  document.getElementById('newsModalTags').innerHTML = `${orgLabel ? `<span class="news-tag org-${item.org}">${orgLabel}</span>` : ''}${item.type ? `<span class="news-tag type">${item.type}</span>` : ''}<div class="event-org-logos" id="newsModalLogos" aria-label="Organisasi penyelenggara"></div>`;
+  appendStatusBadge(document.getElementById('newsModalTags'), item.date);
   renderEventOrgLogos(document.getElementById('newsModalLogos'), item.org, item.logo, item.logoAlt);
   document.getElementById('newsModalTitle').textContent = item.title;
-  document.getElementById('newsModalDate').textContent = item.date ? formatNewsDate(item.date) : item.status || '';
-  document.getElementById('newsModalDesc').textContent = item.body;
+  document.getElementById('newsModalDate').textContent = item.date ? formatNewsDate(item.date) : '';
+  const desc = document.getElementById('newsModalDesc');
+  desc.textContent = item.story || '';
+  desc.hidden = !item.story;
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   document.documentElement.style.overflow = 'hidden';
@@ -573,6 +775,9 @@ newsToggle.addEventListener('click', ()=>{
   newsToggle.setAttribute('aria-expanded', String(!expanded));
   syncNewsToggle();
 });
+renderSiteChrome();
+renderLeadershipStats();
+renderUpcoming();
 renderNews();
 renderLatestCompletedEvent();
 syncNewsToggle();
@@ -588,6 +793,11 @@ const pageFromUrl = new URLSearchParams(window.location.search).get('page');
 let currentPage = pageKeys.includes(pageFromUrl) ? pageFromUrl : 'home';
 const curtain = document.getElementById('curtain');
 const curtainMark = document.getElementById('curtainMark');
+const curtainLogos = {
+  home: 'image/Logo/Logo_Alizzah.ico',
+  slc: 'image/Logo/Logo_SLC.png',
+  tvc: 'image/Logo/Logo_TVC.png'
+};
 const navButtons = document.querySelectorAll('.nav-links button');
 const startedField = { home:false, slc:false, tvc:false };
 
@@ -605,17 +815,12 @@ function ensureField(key){
 }
 
 function setMark(key){
-  if(key === 'home'){ curtainMark.textContent = '✦'; curtainMark.style.color = 'var(--paper)'; curtainMark.style.fontSize = '24px'; }
-  else if(key === 'slc'){ curtainMark.textContent = 'SLC'; curtainMark.style.color = 'var(--gold)'; curtainMark.style.fontSize = '19px'; }
-  else if(key === 'tvc'){ curtainMark.textContent = 'TVC'; curtainMark.style.color = 'var(--ember)'; curtainMark.style.fontSize = '19px'; }
+  curtainMark.src = curtainLogos[key];
 }
 
 function swapPage(key){
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === key));
   navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === key));
-  const siteCredit = document.querySelector('.site-credit');
-  siteCredit.classList.remove(...pageKeys);
-  siteCredit.classList.add(key);
   currentPage = key;
   window.scrollTo(0, 0);
   ensureField(key);
