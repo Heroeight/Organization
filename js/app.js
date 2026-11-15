@@ -1,5 +1,5 @@
 
-/* Data pengurus dan dokumentasi kegiatan organisasi. */
+/* Organization leadership and event archive data. */
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const JAKARTA_TZ = 'Asia/Jakarta';
 
@@ -21,9 +21,9 @@ function daysFromToday(dateStr){
 function eventStatusLabel(dateStr){
   if(!dateStr) return '';
   const diff = daysFromToday(dateStr);
-  if(diff > 0) return 'Akan Datang';
-  if(diff === 0) return 'Hari Ini';
-  if(diff >= -30) return 'Baru Terlaksana';
+  if(diff > 0) return 'Upcoming';
+  if(diff === 0) return 'Today';
+  if(diff >= -30) return 'Recently Held';
   return '';
 }
 function isFutureEvent(item){
@@ -96,7 +96,7 @@ function openProfile(person){
 
   const facts = document.getElementById('profileFacts');
   facts.innerHTML = '';
-  [{label:'Asal', value:SITE.showMemberOrigin ? person.origin : ''}, {label:'Bidang', value:person.division}].forEach(fact=>{
+  [{label:'From', value:SITE.showMemberOrigin ? person.origin : ''}, {label:'Division', value:person.division}].forEach(fact=>{
     if(!fact.value) return;
     const item = document.createElement('div');
     item.className = 'profile-fact';
@@ -126,7 +126,7 @@ function openProfile(person){
   const images = Array.isArray(person.gallery) ? person.gallery.filter(Boolean) : [];
   images.forEach((src, index)=>{
     const image = document.createElement('img');
-    image.src = src; image.alt = `${person.name}, foto ${index + 1}`;
+    image.src = src;     image.alt = `${person.name}, photo ${index + 1}`;
     galleryGrid.appendChild(image);
   });
   gallery.hidden = images.length === 0;
@@ -152,7 +152,7 @@ function renderLeaders(orgKey){
     card.className = 'leader-card';
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `Balik kartu profil ${p.name}`);
+    card.setAttribute('aria-label', `Flip ${p.name}'s profile card`);
     card.setAttribute('aria-pressed', 'false');
 
     const inner = document.createElement('div');
@@ -188,7 +188,7 @@ function renderLeaders(orgKey){
     }
     const backHint = document.createElement('div');
     backHint.className = 'quote-hint';
-    backHint.textContent = 'Klik untuk kembali';
+    backHint.textContent = 'Click to flip back';
     back.appendChild(backHint);
 
     inner.appendChild(front); inner.appendChild(back);
@@ -226,7 +226,7 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
   card.className = 'member-card';
   card.tabIndex = 0;
   card.setAttribute('role', 'button');
-  card.setAttribute('aria-label', `Lihat profil ${member.name}`);
+  card.setAttribute('aria-label', `View ${member.name}'s profile`);
   card.style.animationDelay = (index*0.045)+'s';
   const av = avatarNode(member, 'member-avatar');
   if(av instanceof HTMLImageElement){
@@ -243,10 +243,11 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
   name.className = 'name';
   name.textContent = member.name;
   card.appendChild(name);
-  if(member.divisionLeader || member.unit){
+  const unitLabel = member.unit === 'Anggota' ? 'Member' : member.unit;
+  if(member.divisionLeader || unitLabel){
     const unit = document.createElement('div');
     unit.className = 'unit';
-    unit.textContent = member.divisionLeader ? 'Ketua Bidang' : member.unit;
+    unit.textContent = member.divisionLeader ? 'Division Lead' : unitLabel;
     card.appendChild(unit);
   }
   const role = document.createElement('div');
@@ -264,8 +265,8 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
     orgName:orgKey === 'slc' ? 'SLC' : 'TVC',
     division:divisionName,
     role:member.divisionLeader
-      ? `Ketua Bidang · ${divisionName}`
-      : (member.unit ? `${member.unit} · ${divisionName}` : `Anggota · ${divisionName}`),
+      ? `Division Lead · ${divisionName}`
+      : (unitLabel ? `${unitLabel} · ${divisionName}` : `Member · ${divisionName}`),
     origin:member.role
   };
   card.addEventListener('click', ()=>openProfile(person));
@@ -295,7 +296,7 @@ function renderMemberSearch(orgKey){
     }))
   );
   input.addEventListener('input', ()=>{
-    const query = input.value.trim().toLocaleLowerCase('id-ID');
+    const query = input.value.trim().toLocaleLowerCase('en');
     resultsEl.replaceChildren();
     if(!query){
       if(searchActive){
@@ -322,22 +323,22 @@ function renderMemberSearch(orgKey){
     const message = document.createElement('p');
     message.className = 'member-search-message';
     if(query.length < 2){
-      message.textContent = 'Ketik minimal 2 karakter untuk mencari pengurus.';
+      message.textContent = 'Enter at least 2 characters to search members.';
       resultsEl.appendChild(message);
       return;
     }
     const matches = searchRecords.filter(({member})=>
-      member.name.toLocaleLowerCase('id-ID').includes(query)
+      member.name.toLocaleLowerCase('en').includes(query)
     );
     if(matches.length === 0){
-      message.textContent = 'Pengurus tidak ditemukan.';
+      message.textContent = 'No members found.';
       resultsEl.appendChild(message);
       return;
     }
     const visibleMatches = matches.slice(0, 12);
     message.textContent = matches.length > visibleMatches.length
-      ? `Ditemukan ${matches.length} pengurus. Menampilkan 12 hasil pertama:`
-      : `Ditemukan ${matches.length} pengurus:`;
+      ? `${matches.length} members found. Showing the first 12 results:`
+      : `${matches.length} members found:`;
     const grid = document.createElement('div');
     grid.className = 'member-search-grid';
     visibleMatches.forEach(({member, division}, index)=>
@@ -359,7 +360,7 @@ function renderDivisions(orgKey){
     const division = org.divisions[idx];
     const label = document.createElement('span');
     label.className = 'division-description-label';
-    label.textContent = 'Tugas Bidang';
+    label.textContent = 'Division Responsibilities';
     const title = document.createElement('h3');
     title.textContent = division.name;
     const fullName = division.fullName ? document.createElement('p') : null;
@@ -368,7 +369,7 @@ function renderDivisions(orgKey){
       fullName.textContent = division.fullName;
     }
     const description = document.createElement('p');
-    description.textContent = division.description || 'Deskripsi tugas bidang ini belum tersedia.';
+    description.textContent = division.description || 'A description for this division is not available yet.';
     descriptionEl.replaceChildren(label, title, ...(fullName ? [fullName] : []), description);
     const grid = document.createElement('div');
     grid.className = 'members-grid';
@@ -393,7 +394,7 @@ function renderDivisions(orgKey){
 }
 
 function formatNewsDate(date){
-  return new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'long', year:'numeric', timeZone:JAKARTA_TZ}).format(new Date(`${date}T12:00:00+07:00`));
+  return new Intl.DateTimeFormat('en-GB', {day:'numeric', month:'long', year:'numeric', timeZone:JAKARTA_TZ}).format(new Date(`${date}T12:00:00+07:00`));
 }
 
 function upcomingItems(){
@@ -409,7 +410,7 @@ function renderEventOrgLogos(container, org, logoPath, logoAlt){
   container.replaceChildren();
   if(!logoPath && !org) return;
   const orgs = logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${(org || '').toUpperCase()}`}]
-    : (org === 'joint' ? ['slc','tvc'] : [org]).map(key=>({key, src:`image/Logo/Logo_${key.toUpperCase()}.png`, alt:`Logo ${key.toUpperCase()}`}));
+    : (org === 'joint' ? ['slc','tvc'] : [org]).map(key=>({key, src:`image/Logo/Logo_${key.toUpperCase()}.png`, alt:`${key.toUpperCase()} logo`}));
   orgs.forEach(({key,src,alt})=>{
     const logo = document.createElement('img');
     logo.className = `event-org-logo ${key}`;
@@ -455,7 +456,7 @@ function renderNews(){
     }
     const logos = document.createElement('div');
     logos.className = 'event-org-logos';
-    logos.setAttribute('aria-label', 'Organisasi penyelenggara');
+    logos.setAttribute('aria-label', 'Organizing organizations');
     renderEventOrgLogos(logos, item.org, item.logo, item.logoAlt);
     tagRow.appendChild(logos);
     card.addEventListener('click', ()=>openNews(item));
@@ -480,7 +481,7 @@ function renderLatestCompletedEvent(){
   image.loading = 'lazy';
   image.decoding = 'async';
   image.src = photos[0]?.src || '';
-  image.alt = photos.length ? `Dokumentasi ${item.title}` : '';
+  image.alt = photos.length ? `${item.title} event photo` : '';
   renderEventOrgLogos(document.getElementById('recentEventLogos'), item.org, item.logo, item.logoAlt);
   const badge = document.getElementById('recentEventBadge');
   const status = eventStatusLabel(item.date);
@@ -492,10 +493,10 @@ function renderLatestCompletedEvent(){
   const button = document.getElementById('recentEventButton');
   const label = document.getElementById('recentEventButtonLabel');
   if(item.story){
-    label.textContent = 'Lihat cerita kegiatan';
+    label.textContent = 'Read the story';
     button.hidden = false;
   }else if(photos.length){
-    label.textContent = 'Lihat foto';
+    label.textContent = 'View photos';
     button.hidden = false;
   }else{
     button.hidden = true;
@@ -520,7 +521,7 @@ function renderUpcoming(){
     copy.className = 'upcoming-event-copy';
     const label = document.createElement('div');
     label.className = 'upcoming-event-label';
-    label.textContent = eventStatusLabel(item.date) || 'ACARA MENDATANG';
+    label.textContent = eventStatusLabel(item.date) || 'UPCOMING EVENT';
     const title = document.createElement('h2');
     title.textContent = item.title;
     const desc = document.createElement('p');
@@ -545,9 +546,9 @@ function renderLeadershipStats(){
   const tvcDivisions = ORGS.tvc.divisions.length;
   document.getElementById('leadershipPeriod').textContent = SITE.periodLabel;
   const stats = [
-    {value:String(slcCount + tvcCount), title:'Pengurus', copy:`${slcCount} pengurus SLC dan ${tvcCount} pengurus TVC.`},
-    {value:String(slcDivisions + tvcDivisions), title:'Bidang', copy:`${slcDivisions} bidang SLC dan ${tvcDivisions} bidang TVC.`},
-    {value:String(eventCount).padStart(2, '0'), title:'Total Event', copy:'Jumlah kegiatan utama yang dilaksanakan dalam satu periode kepengurusan.'},
+    {value:String(slcCount + tvcCount), title:'Members', copy:`${slcCount} SLC members and ${tvcCount} TVC members.`},
+    {value:String(slcDivisions + tvcDivisions), title:'Divisions', copy:`${slcDivisions} SLC divisions and ${tvcDivisions} TVC divisions.`},
+    {value:String(eventCount).padStart(2, '0'), title:'Total Events', copy:'The number of main activities held during one leadership term.'},
   ];
   const root = document.getElementById('leadershipStats');
   root.replaceChildren();
@@ -588,7 +589,7 @@ function renderSiteChrome(){
   const {address, email, phoneDisplay, phoneTel, whatsapp, phoneLabel} = SITE.contact;
   if(address){
     const row = document.createElement('div');
-    row.innerHTML = '<span class="footer-contact-label">Alamat</span>';
+    row.innerHTML = '<span class="footer-contact-label">Address</span>';
     row.appendChild(document.createTextNode(address));
     contactRoot.appendChild(row);
   }
@@ -596,7 +597,7 @@ function renderSiteChrome(){
     const row = document.createElement('div');
     const label = document.createElement('span');
     label.className = 'footer-contact-label';
-    label.textContent = 'Telepon';
+    label.textContent = 'Phone';
     row.appendChild(label);
     const links = document.createElement('span');
     links.className = 'footer-contact-links';
@@ -612,7 +613,7 @@ function renderSiteChrome(){
       if(whatsapp) links.appendChild(document.createTextNode(' · '));
       const tel = document.createElement('a');
       tel.href = `tel:${phoneTel}`;
-      tel.textContent = 'Telepon';
+      tel.textContent = 'Call';
       links.appendChild(tel);
     }
     row.appendChild(links);
@@ -721,7 +722,7 @@ function openNews(item){
   document.getElementById('newsGalleryPrev').onclick = ()=>{ activeImage = (activeImage - 1 + images.length) % images.length; updateGallery(true); };
   document.getElementById('newsGalleryNext').onclick = ()=>{ activeImage = (activeImage + 1) % images.length; updateGallery(true); };
   const orgLabel = item.organization || (item.org === 'joint' ? 'SLC & TVC' : (item.org || '').toUpperCase());
-  document.getElementById('newsModalTags').innerHTML = `${orgLabel ? `<span class="news-tag org-${item.org}">${orgLabel}</span>` : ''}${item.type ? `<span class="news-tag type">${item.type}</span>` : ''}<div class="event-org-logos" id="newsModalLogos" aria-label="Organisasi penyelenggara"></div>`;
+  document.getElementById('newsModalTags').innerHTML = `${orgLabel ? `<span class="news-tag org-${item.org}">${orgLabel}</span>` : ''}${item.type ? `<span class="news-tag type">${item.type}</span>` : ''}<div class="event-org-logos" id="newsModalLogos" aria-label="Organizing organizations"></div>`;
   appendStatusBadge(document.getElementById('newsModalTags'), item.date);
   renderEventOrgLogos(document.getElementById('newsModalLogos'), item.org, item.logo, item.logoAlt);
   document.getElementById('newsModalTitle').textContent = item.title;
@@ -757,7 +758,7 @@ const syncNewsToggle = () => {
   newsToggle.hidden = !hasMore;
   if(!hasMore){
     newsToggle.setAttribute('aria-expanded', 'false');
-    newsToggle.querySelector('.news-toggle-label').textContent = 'Tampilkan lainnya';
+    newsToggle.querySelector('.news-toggle-label').textContent = 'Show more';
     return;
   }
   const expanded = newsToggle.getAttribute('aria-expanded') === 'true';
@@ -768,7 +769,7 @@ const syncNewsToggle = () => {
       if(expanded) card.style.animationDelay = `${(index - 3) * 0.07}s`;
     }
   });
-  newsToggle.querySelector('.news-toggle-label').textContent = expanded ? 'Tampilkan lebih sedikit' : 'Tampilkan lainnya';
+  newsToggle.querySelector('.news-toggle-label').textContent = expanded ? 'Show less' : 'Show more';
 };
 newsToggle.addEventListener('click', ()=>{
   const expanded = newsToggle.getAttribute('aria-expanded') === 'true';
