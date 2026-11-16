@@ -57,7 +57,7 @@ const ORGS = {
         {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', unit:'Treasurer', img:"image/anggota/SLC/Daily Manager/22. RAMAIZAN ROISUR R_converted_result.webp"},
         {name:'Luthfi Rafif Arkana', role:'Jayapura', unit:'Treasurer', img:"image/anggota/SLC/Daily Manager/15. LUTHFI RAFIF ARKANA_converted_result.webp"},
       ]},
-      { name: 'Security', description: 'Helping maintain order, discipline, and safety for students and across the school community.', members: [
+      { name: 'Keamanan', description: 'Helping maintain order, discipline, and safety for students and across the school community.', members: [
         {name:'Mirzadinata Setiyawan', role:'Sidoarjo', img:"image/anggota/SLC/Keamanan/11. MIRZADINATA SETIYAWAN_converted_result.webp"},
         {name:'Ahmad Haidar Al Farras', role:'Gresik', img:"image/anggota/SLC/Keamanan/1. AHMAD HAIDAR ALFARRAS_converted_result.webp"},
         {name:'Galih Fajar Malik Hakiim', role:'Malang', img:"image/anggota/SLC/Keamanan/5. GALIH FAJAR MALIK H_converted_result.webp"},
@@ -76,12 +76,12 @@ const ORGS = {
         {name:'Muhammad Thoriq Akbar', role:'Malang', img:"image/anggota/SLC/Multimedia/17. MUH THORIQ AKBAR_converted_result.webp"},
         {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:"image/anggota/SLC/Multimedia/17. KENZIE AFHAM MAHIJA J_converted_result.webp"},
         {name:'Ali Qiyal Mukhlis', role:'Lampung', img:"image/anggota/SLC/Multimedia/5. ALI QIYAL MUKHLIS_converted_result.webp"},
-        {name:'Faith Athallah Efendi', role:'Tuban', img:"image/anggota/SLC/Multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
+        {name:'Faith Athallah Efendi', role:'Tuban', unit:'Website Manager', img:"image/anggota/SLC/Multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
         {name:'Abdurrahman', role:'Samarinda', img:"image/anggota/SLC/Multimedia/1. ABDURRAHMAN_converted_result.webp"},
         {name:'Akasyah Zafran Ghifari', role:'Gresik', img:"image/anggota/SLC/Multimedia/1. AKASYAH ZAFRAN GHIFARI_converted_result.webp"},
         {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:"image/anggota/SLC/Multimedia/13. LUTFI REZA RAMADHAN R_converted_result.webp"},
       ]},
-      { name: 'Mosque Outreach', description: 'Supporting outreach and worship activities at the mosque, and helping keep it welcoming and orderly.', members: [
+      { name: 'Dakwah Masjid', description: 'Supporting outreach and worship activities at the mosque, and helping keep it welcoming and orderly.', members: [
         {name:'Kiagus M Daffa Agha Afkar', role:'Sangatta', img:"image/anggota/SLC/Dakwah Masjid/7. KIAGUS M DAFFA AGHA A_converted_result.webp"},
         {name:'Radithya Al Iskandar Rayhan Putra', role:'Surabaya', img:"image/anggota/SLC/Dakwah Masjid/19. RADITHYA AL I R P_converted_result.webp"},
         {name:'Raka Aulia Faridi', role:'Lampung', img:"image/anggota/SLC/Dakwah Masjid/21. RAKA AULIA FARIDI_converted_result.webp"},
@@ -93,7 +93,7 @@ const ORGS = {
         {name:'Muhammad Ibra Kenbizuqi', role:'Lubuklinggau', img:"image/anggota/SLC/Dakwah Masjid/18. MUH IBRA KENBIZUQI_converted_result.webp"},
         {name:'Aqila Izza Adirachman', role:'Tuban', img:"image/anggota/SLC/Dakwah Masjid/4. AQILA IZZA ADIRACHMAN_converted_result.webp"},
       ]},
-      { name: 'Sports', description: 'Planning and supporting sports activities that build fitness, sportsmanship, and camaraderie among students.', members: [
+      { name: 'Olahraga', description: 'Planning and supporting sports activities that build fitness, sportsmanship, and camaraderie among students.', members: [
         {name:'Muhammad Fawwaz Imaadul Haq', role:'Surabaya', img:"image/anggota/SLC/Olahraga/19. M FAWWAZ IMAADUL HAQ_converted_result.webp"},
         {name:'Muhammad Fathan Abidzar Dliya`ulhaq', role:'Mojokerto', img:"image/anggota/SLC/Olahraga/15. MUH FATHAN ABIDZAR D_converted_result.webp"},
         {name:'Muhammad Azzam Ibrahim', role:'Sidoarjo', img:"image/anggota/SLC/Olahraga/14. MUH AZZAM IBRAHIM_converted_result.webp"},
@@ -105,7 +105,7 @@ const ORGS = {
         {name:'Rezky Alifi Chaniago', role:'Bali', img:"image/anggota/SLC/Olahraga/23. REZKY ALIFI CHANIAGO_converted_result.webp"},
         {name:'Syauqi Imam Azka', role:'Samarinda', img:"image/anggota/SLC/Olahraga/25. SYAUQI IMAM AZKA_converted_result.webp"},
       ]},
-      { name: 'Environment', description: 'Promoting cleanliness and building habits that keep the school grounds tidy and well cared for.', members: [
+      { name: 'Bersih Lingkungan', description: 'Promoting cleanliness and building habits that keep the school grounds tidy and well cared for.', members: [
         {name:'Ahmad Fauzan', role:'Sudu', img:"image/anggota/SLC/Bersih Lingkungan/5. AHMAD FAUZAN_converted_result.webp"},
         {name:'Reyhan Axelle Bonaro Widodo', role:'Banyuwangi', img:"image/anggota/SLC/Bersih Lingkungan/24. REYHAN AXELLE_converted_result.webp"},
         {name:'Ahmad Maulana Zidan Amrullah', role:'Yogyakarta', img:"image/anggota/SLC/Bersih Lingkungan/5. AHMAD MAULANA ZIDAN A_converted_result.webp"},
@@ -117,7 +117,7 @@ const ORGS = {
         {name:'Alfino Irwandy Yusuf', role:'Sumenep', img:"image/anggota/SLC/Bersih Lingkungan/7. ALFINO IRWANDY YUSUF_converted_result.webp"},
         {name:'Putra Aditya Soleman', role:'Manado', img:"image/anggota/SLC/Bersih Lingkungan/22. PUTRA ADITYA SOLEMAN_converted_result.webp"},
       ]},
-      { name: 'Communications', description: 'Gathering and sharing organizational announcements clearly, accurately, and accessibly.', members: [
+      { name: 'Informasi', description: 'Gathering and sharing organizational announcements clearly, accurately, and accessibly.', members: [
         {name:'Muhammad Naufal Adqaury Ibnu Syaifa', role:'Sorowako', img:"image/anggota/SLC/Informasi/12. M NAUFAL AQQAURY IBNU S_converted_result.webp"},
         {name:'Hanif Sandriano Shiddiq', role:'Cepu', img:"image/anggota/SLC/Informasi/6. HANIF SANDRIANO S_converted_result.webp"},
         {name:'Muhammad Afkar Nizam Arviansyah', role:'Jakarta', img:"image/anggota/SLC/Informasi/19. MUH AFKAR NIZAM A_converted_result.webp"},
@@ -129,7 +129,7 @@ const ORGS = {
         {name:'Mochamad Daffa Nafiis', role:'Surabaya', img:"image/anggota/SLC/Informasi/11. MOCHAMAD DAFFA NAFIIS_converted_result.webp"},
         {name:'Nufail Alingga Kusworo', role:'Jakarta', img:"image/anggota/SLC/Informasi/20. NUFAIL ALINGGA K_converted_result.webp"},
       ]},
-      { name: 'Languages', description: 'Encouraging language practice and skill development through language programs and activities.', members: [
+      { name: 'Bahasa', description: 'Encouraging language practice and skill development through language programs and activities.', members: [
         {name:'Muh. Hisyaam Dzaki Mubarak', role:'Jayapura', img:"image/anggota/SLC/Bahasa/11. MUH. HISYAAM DZAKI M_converted_result.webp"},
         {name:'Gallant Radithya Ghani Prasetyo', role:'Sangatta', img:"image/anggota/SLC/Bahasa/5. GALLANT RADITHYA GP_converted_result.webp"},
         {name:'Hafidz Rafi Rabbani', role:'Wamena', img:"image/anggota/SLC/Bahasa/10. HAFIDZ RAFI RABBANI_converted_result.webp"},
@@ -141,7 +141,7 @@ const ORGS = {
         {name:'Qeis Fauzi Ghudzamir Zain', role:'Bandar Lampung', img:"image/anggota/SLC/Bahasa/18. QEIS FAUZI GHUDZAMIR Z_converted_result.webp"},
         {name:'Muhammad Mikail Robbani', role:'Probolinggo', img:"image/anggota/SLC/Bahasa/16. MUH MIKAIL ROBBANI_converted_result.webp"},
       ]},
-      { name: 'Entrepreneurship', description: 'Developing entrepreneurship activities, business creativity, and practical business experience within the organization.', members: [
+      { name: 'Entrepreneur', description: 'Developing entrepreneurship activities, business creativity, and practical business experience within the organization.', members: [
         {name:'Antares Aesar Aulayain', role:'Surabaya', img:"image/anggota/SLC/Enterpreneur/7. ANTARES AESAR AULAYAIN_converted_result.webp"},
         {name:'M. Noval Fairuz Ahmad', role:'Makassar', img:"image/anggota/SLC/Enterpreneur/16. M.NOVAL FAIRUZ AHMAD_converted_result.webp"},
         {name:'Nabil Alyasih Nur Ramadhan', role:'Malang', img:"image/anggota/SLC/Enterpreneur/21. NABIL ALYASIH NUR R_converted_result.webp"},
@@ -156,7 +156,7 @@ const ORGS = {
         {name:'Muhammad Yahya Yanuar', role:'Bima', img:"image/anggota/SLC/Enterpreneur/16. MUH YAHYA YANUAR_converted_result.webp"},
         {name:'Hadi Safwan', role:'Sidoarjo', img:"image/anggota/SLC/Enterpreneur/12. HADI SAFWAN_converted_result.webp"},
       ]},
-      { name: 'Guest Relations', description: 'Welcoming and assisting guests visiting the school.', members: [
+      { name: 'Penerimaan Tamu', description: 'Welcoming and assisting guests visiting the school.', members: [
         {name:'Salahhuddin Prameswara Anindita', role:'Malang', img:"image/anggota/SLC/Penerimaan Tamu/23. SALAHHUDDIN P A_converted_result.webp"},
         {name:'Muhammad Rakha Azka', role:'Makassar', img:"image/anggota/SLC/Penerimaan Tamu/18. MUHAMMAD RAKHA AZKA_converted_result.webp"},
         {name:'Faqih Ahsan Haniif', role:'Samarinda', img:"image/anggota/SLC/Penerimaan Tamu/12. FAQIH AHSAN HANIIF_converted_result.webp"},
@@ -170,7 +170,7 @@ const ORGS = {
         {name:'Adhyaksa Idrus', role:'Makassar', img:"image/anggota/SLC/Penerimaan Tamu/3. ADHYAKSA IDRUS_converted_result.webp"},
         {name:'Achmad Kelvin Arviansyah', role:'Surabaya', img:"image/anggota/SLC/Penerimaan Tamu/1. ACHMAD KELVIN A_converted_result.webp"},
       ]},
-      { name: 'Arts', description: 'Fostering artistic creativity and helping prepare student performances and arts activities.', members: [
+      { name: 'Kesenian', description: 'Fostering artistic creativity and helping prepare student performances and arts activities.', members: [
         {name:'Andra Izrami Satya Wardana', role:'Serang', img:"image/anggota/SLC/Kesenian/8. ANDRA IZRAMI SATYA W_converted_result.webp"},
         {name:'Ibrahim Mauladi', role:'Lamongan', img:"image/anggota/SLC/Kesenian/10. IBRAHIM MAULADI_converted_result.webp"},
         {name:'Harits Ghifar Musyafak', role:'Tangerang', img:"image/anggota/SLC/Kesenian/8. HARITS GHIFAR MUSYAFAK_converted_result.webp"},
@@ -182,7 +182,7 @@ const ORGS = {
         {name:'Rezky Noor Fadilah', role:'Palangkaraya', img:"image/anggota/SLC/Kesenian/25. REZKY NOOR FADILAH_converted_result.webp"},
         {name:'Eka Dymaz Janitra Fatkhur Rokhman', role:'Kuta', img:"image/anggota/SLC/Kesenian/8. EKA DYMAS JANITRA F R_converted_result.webp"},
       ]},
-      { name: 'Kitchen', description: 'Coordinating kitchen needs and activities to support smooth meal service.', members: [
+      { name: 'Dapur', description: 'Coordinating kitchen needs and activities to support smooth meal service.', members: [
         {name:'Aufa Haiqal', role:'Sangatta', img:"image/anggota/SLC/Dapur/7. AUFA HAIQAL_converted_result.webp"},
         {name:'Radjendra Kafka Aelino', role:'Madiun', img:"image/anggota/SLC/Dapur/25. RADJENDRA KAFKA A_converted_result.webp"},
         {name:'Muhammad Radja Syahputra Bachri', role:'Surabaya', img:"image/anggota/SLC/Dapur/18. MUH RADJA SYAHPUTRA B_converted_result.webp"},
@@ -194,7 +194,7 @@ const ORGS = {
         {name:'Nizar Muzhaffar Sulistyono', role:'Sidoarjo', img:"image/anggota/SLC/Dapur/21. NIZAR MUZHAFFAR S_converted_result.webp"},
         {name:'Akmal Rafa Hernaufal', role:'Mojokerto', img:"image/anggota/SLC/Dapur/6. AKMAL RAFA HERNAUFAL_converted_result.webp"},
       ]},
-      { name: 'Teaching', description: 'Supporting learning activities, academic guidance, and educational programs for students.', members: [
+      { name: 'Pengajaran', description: 'Supporting learning activities, academic guidance, and educational programs for students.', members: [
         {name:'Farelle Pratadiazta Savana', role:'Sidoarjo', img:"image/anggota/SLC/Pengajaran/8. FARELLE PRATADIAZTA S_converted_result.webp"},
         {name:'El Pandora Deni', role:'Surabaya', img:"image/anggota/SLC/Pengajaran/4. EL PANDORA DENI_converted_result.webp"},
         {name:'Aldito Emery Illona Masruri', role:'Tanjung Pinang', img:"image/anggota/SLC/Pengajaran/6. ALDITO EMERY ILLONA M_converted_result.webp"},
@@ -206,12 +206,12 @@ const ORGS = {
         {name:'Rausyan Farras Aly Muhammad', role:'Lamongan', img:"image/anggota/SLC/Pengajaran/24. RAUSYAN FARRAS ALY M_converted_result.webp"},
         {name:'Fadhil Athaya Syadid Rizqullah', role:'Probolinggo', img:"image/anggota/SLC/Pengajaran/11. FADHIL ATHAYA SYADID R_converted_result.webp"},
       ]},
-      { name: 'Health', description: 'Supporting health education and coordinating initial care for students who need assistance.', members: [
+      { name: 'Kesehatan', description: 'Supporting health education and coordinating initial care for students who need assistance.', members: [
         {name:'Zufaro Ardiyoso Razak', role:'Sangatta', img:"image/anggota/SLC/Kesehatan/26. ZUFARO ARDIYOSO RAZAK_converted_result.webp"},
         {name:'Syaamil Abdurrahman', role:'Samarinda', img:"image/anggota/SLC/Kesehatan/24. SYAAMIL ABDURRAHMAN_converted_result.webp"},
         {name:'Atha Rakan Firdaus', role:'Pasuruan', img:"image/anggota/SLC/Kesehatan/9. ATHA RAKAN FIRDAUS_converted_result.webp"},
         {name:'Dheyya Alhijri Rochim', role:'Depok', img:"image/anggota/SLC/Kesehatan/10. DHEYYA ALHIJRI ROCHIM_converted_result.webp"},
-        {name:'Muhammad Kenzie Pratinanggawa', role:'Bekasi'},
+        {name:'Muhammad Kenzie Pratinanggawa', role:'Bekasi', img:"image/anggota/SLC/Kesehatan/15. MUH KENZIE P_converted_result.webp"},
         {name:'Alden Salim Widagdo', role:'Sidoarjo', img:"image/anggota/SLC/Kesehatan/6. ALDEN SALIM WIDAGDO_converted_result.webp"},
         {name:'Athaya Daffa Rafif', role:'Riau', img:"image/anggota/SLC/Kesehatan/6. ATHAYA DAFFA RAFIF_converted_result.webp"},
         {name:'Narendra Kasyafani Majeed', role:'Sidoarjo', img:"image/anggota/SLC/Kesehatan/20. NARENDRA KASYAFANI M_converted_result.webp"},
@@ -221,7 +221,6 @@ const ORGS = {
       { name: 'Laundry', description: 'Helping manage laundry services so clothing collection and return stay organized.', members: [
         {name:'Muhammad Hilmi Fathuddin', role:'Surabaya', img:"image/anggota/SLC/Laundry/19. MUH HILMI FATHUDDIN_converted_result.webp"},
         {name:'Arjuna Ghazy Wibowo', role:'Pekanbaru', img:"image/anggota/SLC/Laundry/3. ARJUNA GHAZY WIBOWO_converted_result.webp"},
-        {name:'M. Fikri Khalifah Alham Nurham', role:'Jayapura', img:"image/anggota/SLC/Laundry/8. M. FIKRI KHALIFAH A N_converted_result.webp"},
         {name:'Muhammad Qanantha Syauqie', role:'Jayapura'},
         {name:'Malvino Garde Gana', role:'Sumatera Selatan', img:"image/anggota/SLC/Laundry/18. MALVINO GARDE GANA_converted_result.webp"},
         {name:'Muhammad Fairus Irzam', role:'Balikpapan', img:"image/anggota/SLC/Laundry/14. MUHAMMAD FAIRUS IRZAM_converted_result.webp"},
@@ -234,15 +233,15 @@ const ORGS = {
     leader:   { name: 'Yusuf Hazim Suyitno', role: 'Leader', line: 'Leading The Vanguard Coordinator.', img: 'image/Ketua-wakil/Ketua_TVC.webp', quote: 'From: Jakarta' },
     coLeader: { name: 'Muhammad Alfaruq Ardiansyah', role: 'Vice Leader', line: 'Supporting coordination for The Vanguard Coordinator.', img: 'image/Ketua-wakil/Wakil_TVC.webp', quote: 'From: Makassar' },
     divisions: [
-      { name: 'ANKUSET', fullName: 'Secretary Affairs Coordinator', description: 'Managing TVC administration, including records, correspondence, and activity documentation.', members: [
+      { name: 'ANKUSET', fullName: 'Andalan Koordinator Urusan Sekretaris', description: 'Managing TVC administration, including records, correspondence, and activity documentation.', members: [
         {name:'Ibrahim Alfarisi', role:'Gresik', unit:'Member', img:"image/anggota/TVC/ANKUSET/20. MUH IBRAHIM AL FARISI_converted_result.webp"},
         {name:'Darren Athalla Ghifari', role:'Tangerang', unit:'Member', img:"image/anggota/TVC/ANKUSET/10. DARREN ATHALLA GHIFARI_converted_result.webp"},
       ]},
-      { name: 'ANKUKUANG', fullName: 'Finance Affairs Coordinator', description: 'Managing income and expense records, and helping prepare and account for TVC activity budgets.', members: [
+      { name: 'ANKUKUANG', fullName: 'Andalan Koordinator Urusan Keuangan', description: 'Managing income and expense records, and helping prepare and account for TVC activity budgets.', members: [
         {name:'Akbar Prasetya', role:'Berau', unit:'Member', img:"image/anggota/TVC/ANKUKUANG/3. AKBAR PRASETYA HUTAMA_converted_result.webp"},
         {name:'Arya Adriansyah Putra Pratama', role:'Palangka Raya', unit:'Member', img:"image/anggota/TVC/ANKUKUANG/2. ARYA ADRIANSYAH PUTRA P_converted_result.webp"},
       ]},
-      { name: 'ANKULAT', fullName: 'Training Affairs Coordinator', description: 'Planning and supporting Scouting training to develop members’ skills and readiness.', members: [
+      { name: 'ANKULAT', fullName: 'Andalan Koordinator Urusan Latihan', description: 'Planning and supporting Scouting training to develop members’ skills and readiness.', members: [
         {name:'Zhafrano Raja Triarka', role:'Banyuwangi', unit:'Member', img:"image/anggota/TVC/ANKULAT/26. ZHAFRANO RAJA TRIARKA_converted_result.webp"},
         {name:'Dimas Rasya Wibowo', role:'Makassar', unit:'Anggota', img:"image/anggota/TVC/ANKULAT/13. DIMAS RASYA WIBOWO_converted_result.webp"},
         {name:'Muhammad Asyam Fawwaz', role:'Banjarbaru', unit:'Anggota', img:"image/anggota/TVC/ANKULAT/13. MUH ASYAM FAWWAZ_converted_result.webp"},
@@ -252,7 +251,7 @@ const ORGS = {
         {name:'Ahmad Hafizh Abdurrahman', role:'Gresik', unit:'Anggota', img:"image/anggota/TVC/ANKULAT/4. A HAFIZH ABDURRAHMAN_converted_result.webp"},
         {name:'Muhammad Sultan Jafri', role:'Banjarbaru', unit:'Anggota', img:"image/anggota/TVC/ANKULAT/20. MUHAMMAD SULTAN JAFRI_converted_result.webp"},
       ]},
-      { name: 'ANKUPERKAP', fullName: 'Equipment Affairs Coordinator', description: 'Preparing, tracking, and maintaining the equipment needed for TVC activities and training.', members: [
+      { name: 'ANKUPERKAP', fullName: 'Andalan Koordinator Urusan Perlengkapan', description: 'Preparing, tracking, and maintaining the equipment needed for TVC activities and training.', members: [
         {name:'Hanif Rabbani Humayun', role:'Surabaya', unit:'Anggota', img:"image/anggota/TVC/ANKUPERKAP/13. HANIF RABBANI HUMAYUN_converted_result.webp"},
         {name:'Arkan Athaya Basri', role:'Banyuwangi', unit:'Anggota', img:"image/anggota/TVC/ANKUPERKAP/4. ARKAN ATHAYA BASRI_converted_result.webp"},
         {name:'Ahmadinajat Billah', role:'Surabaya', unit:'Anggota', img:"image/anggota/TVC/ANKUPERKAP/3. AHMADINAJAT BILLAH_converted_result.webp"},
@@ -262,7 +261,7 @@ const ORGS = {
         {name:'Muhammad Haafiz Ramadhan', role:'Mojokerto', unit:'Anggota', img:"image/anggota/TVC/ANKUPERKAP/15. MUH HAAFIZ RAMADHAN_converted_result.webp"},
         {name:'Farel Novrinno Rizky', role:'Surabaya', unit:'Anggota', img:"image/anggota/TVC/ANKUPERKAP/14. FAREL NOVRINNO RIZKY_converted_result.webp"},
       ]},
-      { name: 'ANKUKEDAP', fullName: 'KEDAP Affairs Coordinator', description: 'Coordinating KEDAP-related needs and responsibilities during TVC activities.', members: [
+      { name: 'ANKUKEDAP', fullName: 'Andalan Koordinator Urusan Kedai Pramuka', description: 'Coordinating the Scout shop (Kedai Pramuka) and its needs during TVC activities.', members: [
         {name:'Dika Achmad Luqmansyah', role:'Pasuruan', unit:'Anggota', img:"image/anggota/TVC/ANKUKEDAP/12. DIKA ACHLUKMANSYAH_converted_result.webp"},
         {name:'Kaffi Athallah Lirfano', role:'Jakarta', unit:'Anggota', img:"image/anggota/TVC/ANKUKEDAP/16. KAFFI ATALLAH LIRFANO_converted_result.webp"},
         {name:'Adrian Arhaburrizqi Himawan', role:'Lombok', unit:'Anggota', img:"image/anggota/TVC/ANKUKEDAP/2. ADRIAN ARHABURRIZQI H_converted_result.webp"},
@@ -272,7 +271,7 @@ const ORGS = {
         {name:'Ibrahimovic Ghaisan', role:'Surabaya', unit:'Anggota', img:"image/anggota/TVC/ANKUKEDAP/11. IBRAHIMOVIC GHAISAN A_converted_result.webp"},
         {name:'Irvin Fico Saverio', role:'Banjarbaru', unit:'Anggota', img:"image/anggota/TVC/ANKUKEDAP/9. IRVIN FICO SAVERIO_converted_result.webp"},
       ]},
-      { name: 'BINDEP', fullName: 'Frontline Unit', description: 'Coordinating the development of Frontline Unit members and helping ensure Scouting activities run smoothly.', members: [
+      { name: 'BINDEP', fullName: 'Barisan Depan', description: 'Coordinating the development of Frontline Unit members and helping ensure Scouting activities run smoothly.', members: [
         {name:'Muhammad Athaillah Aidan', role:'Balikpapan', unit:'Division Lead', img:"image/anggota/TVC/BINDEP/18. MUH ATHAILLAH AIDAN_converted_result.webp"},
         {name:'Waldan Yafiq Zhafran', role:'Balikpapan', unit:'Anggota', img:"image/anggota/TVC/BINDEP/26. WALDAN YAFIQ ZHAFRAN_converted_result.webp"},
         {name:'KenzieUmar Muhammad Thufail', role:'Bekasi', unit:'Anggota', img:"image/anggota/TVC/BINDEP/17. KENZIEUMAR MUHTHUFAIL_converted_result.webp"},
@@ -289,7 +288,7 @@ const ORGS = {
 const NEWS = [
   {date:'2026-10-04',org:'joint',type:'Event',title:'Murobi Cup & Artshow',excerpt:'Highlights from the Murobi Cup and Artshow, held on Sunday, October 4, 2026.',story:'The Murobi Cup and Artshow took place on Sunday, October 4, 2026.',images:['image/events/Murobicup & Artshow/murobicup1.webp','image/events/Murobicup & Artshow/murobicup2.webp','image/events/Murobicup & Artshow/murobicup3.webp']},
   {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'A celebration of Indonesia’s Independence Day, featuring a ceremony and a variety of competitions at Al Izzah Batu.',story:'The Independence Day Committee (IDC) celebrated Indonesia’s Independence Day with a ceremony and a variety of competitions. The event honored the nation’s struggle while fostering unity, sportsmanship, and patriotism at Al Izzah Batu.',images:['image/events/IDC/idc1.webp','image/events/IDC/idc2.webp','image/events/IDC/idc3.webp']},
-  {date:'2026-10-01',org:'school',organization:'School',logo:'image/events/AZKAR/azkar-logo.webp',logoAlt:'AZKAR logo',type:'Event',title:'AZKAR: Youth Creativity & Appreciation Zone',excerpt:'A celebration of Language Month through AZKAR (Youth Creativity & Appreciation Zone).',story:'AZKAR (Youth Creativity & Appreciation Zone) was organized by the school to celebrate Language Month.',images:['image/events/AZKAR/azkar1.webp','image/events/AZKAR/azkar2.webp','image/events/AZKAR/azkar3.webp']},
+  {date:'2026-10-01',org:'school',organization:'School',logo:'image/events/AZKAR/azkar-logo.webp',logoAlt:'AZKAR logo',type:'Event',title:'AZKAR: Ajang Zona Kreativitas dan Apresiasi Remaja',excerpt:'A celebration of Language Month through AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja).',story:'AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja) was organized by the school to celebrate Language Month.',images:['image/events/AZKAR/azkar1.webp','image/events/AZKAR/azkar2.webp','image/events/AZKAR/azkar3.webp']},
   {date:'2026-09-16',org:'slc',type:'Schedule',title:'JMQ: Jam’iyatul Qurra Selection Test',excerpt:'Selection for Jam’iyatul Qurra participants at Al Izzah Batu.',story:'The Jam’iyatul Qurra (JMQ) selection test was held on September 16, 2026. The gallery features photos from the organization’s local archive.',images:['image/events/JMQ/jmq1.webp','image/events/JMQ/jmq2.webp','image/events/JMQ/jmq3.webp']},
   {date:'2026-09-12',org:'tvc',type:'Event',title:'Scouting: Opening Ceremony',excerpt:'The opening of a Scouting event with Al Izzah Batu students.',story:'The Scouting opening ceremony marked the start of a series of development and Scouting activities for students at Al Izzah Batu.',images:['image/events/Pembukaan Pramuka/pramuka1.webp','image/events/Pembukaan Pramuka/pramuka2.webp','image/events/Pembukaan Pramuka/pramuka3.webp']},
   {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/events/DPP/dpp-logo.png',logoAlt:'DPP logo',type:'Event',title:'DPP: Leadership Handover Board',excerpt:'A moment to transfer leadership responsibilities and formally hand over duties between SLC and TVC.',story:'The Leadership Handover Board (DPP) marked the transfer of leadership responsibilities between the Student Leader Community and The Vanguard Coordinator.',images:['image/events/DPP/dpp1.webp','image/events/DPP/dpp2.webp','image/events/DPP/dpp3.webp']},
