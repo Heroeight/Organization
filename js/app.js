@@ -96,7 +96,7 @@ function openProfile(person){
 
   const facts = document.getElementById('profileFacts');
   facts.innerHTML = '';
-  [{label:'From', value:SITE.showMemberOrigin ? person.origin : ''}, {label:'Division', value:person.division}].forEach(fact=>{
+  [{label:'Origin', value:person.origin}, {label:'Division', value:person.division}].forEach(fact=>{
     if(!fact.value) return;
     const item = document.createElement('div');
     item.className = 'profile-fact';
@@ -175,6 +175,12 @@ function renderLeaders(orgKey){
     backName.className = 'leader-back-name';
     backName.textContent = p.name;
     back.append(backRole, backName);
+    if(p.quote){
+      const origin = document.createElement('div');
+      origin.className = 'quote';
+      origin.textContent = p.quote;
+      back.appendChild(origin);
+    }
     const handle = String(p.instagram || '').trim().replace(/^@/, '');
     if(/^[A-Za-z0-9._]{1,30}$/.test(handle)){
       const instagram = document.createElement('a');
@@ -243,7 +249,7 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
   name.className = 'name';
   name.textContent = member.name;
   card.appendChild(name);
-  const unitLabel = member.unit === 'Anggota' ? 'Member' : member.unit;
+  const unitLabel = ['Anggota', 'Member'].includes(member.unit) ? '' : member.unit;
   if(member.divisionLeader || unitLabel){
     const unit = document.createElement('div');
     unit.className = 'unit';
@@ -266,7 +272,7 @@ function createMemberCard(member, orgKey, divisionName, index, { searchResult = 
     division:divisionName,
     role:member.divisionLeader
       ? `Division Lead · ${divisionName}`
-      : (unitLabel ? `${unitLabel} · ${divisionName}` : `Member · ${divisionName}`),
+      : (unitLabel ? `${unitLabel} · ${divisionName}` : divisionName),
     origin:member.role
   };
   card.addEventListener('click', ()=>openProfile(person));
@@ -358,9 +364,6 @@ function renderDivisions(orgKey){
     divisionSelect.value = String(idx);
     panelEl.innerHTML = '';
     const division = org.divisions[idx];
-    const label = document.createElement('span');
-    label.className = 'division-description-label';
-    label.textContent = 'Division Responsibilities';
     const title = document.createElement('h3');
     title.textContent = division.name;
     const fullName = division.fullName ? document.createElement('p') : null;
@@ -370,7 +373,7 @@ function renderDivisions(orgKey){
     }
     const description = document.createElement('p');
     description.textContent = division.description || 'A description for this division is not available yet.';
-    descriptionEl.replaceChildren(label, title, ...(fullName ? [fullName] : []), description);
+    descriptionEl.replaceChildren(title, ...(fullName ? [fullName] : []), description);
     const grid = document.createElement('div');
     grid.className = 'members-grid';
     division.members.forEach((member,index)=>
@@ -521,7 +524,7 @@ function renderUpcoming(){
     copy.className = 'upcoming-event-copy';
     const label = document.createElement('div');
     label.className = 'upcoming-event-label';
-    label.textContent = eventStatusLabel(item.date) || 'UPCOMING EVENT';
+    label.textContent = eventStatusLabel(item.date) || 'THE VANGUARD COORDINATOR';
     const title = document.createElement('h2');
     title.textContent = item.title;
     const desc = document.createElement('p');
@@ -790,8 +793,13 @@ syncNewsToggle();
 
 /* ========================= page switching ========================= */
 const pageKeys = ['home', 'slc', 'tvc'];
-const pageFromUrl = new URLSearchParams(window.location.search).get('page');
-let currentPage = pageKeys.includes(pageFromUrl) ? pageFromUrl : 'home';
+function pageFromLocation(){
+  const hashPage = window.location.hash.slice(1).replace(/^\/+|\/+$/g, '');
+  if(pageKeys.includes(hashPage)) return hashPage;
+  const legacyPage = new URLSearchParams(window.location.search).get('page');
+  return pageKeys.includes(legacyPage) ? legacyPage : 'home';
+}
+let currentPage = pageFromLocation();
 const curtain = document.getElementById('curtain');
 const curtainMark = document.getElementById('curtainMark');
 const curtainLogos = {
@@ -831,8 +839,8 @@ function goToPage(key, { updateUrl = true } = {}){
   if(key === currentPage) return;
   if(updateUrl){
     const url = new URL(window.location.href);
-    if(key === 'home') url.searchParams.delete('page');
-    else url.searchParams.set('page', key);
+    url.searchParams.delete('page');
+    url.hash = key === 'home' ? '' : `#${key}`;
     window.history.pushState({ page:key }, '', url);
   }
   if(reduceMotion){ swapPage(key); return; }
@@ -855,12 +863,7 @@ document.querySelector('.nav-mark').addEventListener('click', ()=>goToPage('home
 document.querySelectorAll('[data-goto]').forEach(el=>{
   el.addEventListener('click', ()=>goToPage(el.dataset.goto));
 });
-window.addEventListener('popstate', ()=>goToPage(
-  pageKeys.includes(new URLSearchParams(window.location.search).get('page'))
-    ? new URLSearchParams(window.location.search).get('page')
-    : 'home',
-  { updateUrl:false }
-));
+window.addEventListener('popstate', ()=>goToPage(pageFromLocation(), { updateUrl:false }));
 document.querySelector('.hero-index-link[href="#footerContact"]').addEventListener('click', event=>{
   event.preventDefault();
   document.getElementById('footerContact').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
