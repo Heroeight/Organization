@@ -409,10 +409,11 @@ function kegiatanItems(){
   return NEWS.filter(item => !item.date || isPastOrTodayEvent(item));
 }
 
-function renderEventOrgLogos(container, org, logoPath, logoAlt){
+function renderEventOrgLogos(container, org, logoPath, logoAlt, customLogos){
   container.replaceChildren();
-  if(!logoPath && !org) return;
-  const orgs = logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${(org || '').toUpperCase()}`}]
+  if(!customLogos?.length && !logoPath && !org) return;
+  const orgs = customLogos?.length ? customLogos
+    : logoPath ? [{key:org, src:logoPath, alt:logoAlt || `Logo ${(org || '').toUpperCase()}`}]
     : (org === 'joint' ? ['slc','tvc'] : [org]).map(key=>({key, src:`image/Logo/Logo_${key.toUpperCase()}.png`, alt:`${key.toUpperCase()} logo`}));
   orgs.forEach(({key,src,alt})=>{
     const logo = document.createElement('img');
@@ -434,7 +435,10 @@ function appendStatusBadge(parent, dateStr){
 
 function renderNews(){
   const list = document.getElementById('newsList');
-  [...kegiatanItems()].sort((a,b)=>(b.date || '').localeCompare(a.date || '')).forEach((item,index)=>{
+  [...kegiatanItems()].sort((a,b)=>
+    Number(b.title.includes('Murobi Cup')) - Number(a.title.includes('Murobi Cup')) ||
+    (b.date || '').localeCompare(a.date || '')
+  ).forEach((item,index)=>{
     const card = document.createElement('article');
     card.className = `news-card ${item.org || ''}`;
     card.style.animationDelay = `${index * 0.05}s`;
@@ -460,7 +464,7 @@ function renderNews(){
     const logos = document.createElement('div');
     logos.className = 'event-org-logos';
     logos.setAttribute('aria-label', 'Organizing organizations');
-    renderEventOrgLogos(logos, item.org, item.logo, item.logoAlt);
+    renderEventOrgLogos(logos, item.org, item.logo, item.logoAlt, item.logos);
     tagRow.appendChild(logos);
     card.addEventListener('click', ()=>openNews(item));
     card.addEventListener('keydown', event=>{
@@ -468,43 +472,6 @@ function renderNews(){
     });
     list.appendChild(card);
   });
-}
-
-function renderLatestCompletedEvent(){
-  const section = document.querySelector('.recent-event-section');
-  const item = [...kegiatanItems()]
-    .filter(event=>event.date)
-    .sort((a,b)=>b.date.localeCompare(a.date))[0];
-  if(!item){
-    section.hidden = true;
-    return;
-  }
-  const photos = eventImageList(item);
-  const image = document.getElementById('recentEventImage');
-  image.loading = 'lazy';
-  image.decoding = 'async';
-  image.src = photos[0]?.src || '';
-  image.alt = photos.length ? `${item.title} event photo` : '';
-  renderEventOrgLogos(document.getElementById('recentEventLogos'), item.org, item.logo, item.logoAlt);
-  const badge = document.getElementById('recentEventBadge');
-  const status = eventStatusLabel(item.date);
-  badge.textContent = status;
-  badge.hidden = !status;
-  document.getElementById('recentEventDate').textContent = item.date ? formatNewsDate(item.date) : '';
-  document.getElementById('recentEventHeading').textContent = item.title;
-  document.getElementById('recentEventDescription').textContent = item.excerpt || '';
-  const button = document.getElementById('recentEventButton');
-  const label = document.getElementById('recentEventButtonLabel');
-  if(item.story){
-    label.textContent = 'Read the story';
-    button.hidden = false;
-  }else if(photos.length){
-    label.textContent = 'View photos';
-    button.hidden = false;
-  }else{
-    button.hidden = true;
-  }
-  button.addEventListener('click', ()=>openNews(item));
 }
 
 function renderUpcoming(){
@@ -520,23 +487,88 @@ function renderUpcoming(){
   items.forEach(item=>{
     const article = document.createElement('article');
     article.className = 'upcoming-item upcoming-item-single';
+    if(item.image){
+      article.classList.add('has-background');
+      const background = document.createElement('img');
+      background.className = 'upcoming-item-background';
+      background.src = item.image;
+      background.alt = '';
+      background.setAttribute('aria-hidden', 'true');
+      article.appendChild(background);
+    }
     const copy = document.createElement('div');
     copy.className = 'upcoming-event-copy';
     const label = document.createElement('div');
     label.className = 'upcoming-event-label';
-    label.textContent = eventStatusLabel(item.date) || 'THE VANGUARD COORDINATOR';
+    label.appendChild(document.createTextNode(item.organization || eventStatusLabel(item.date) || 'THE VANGUARD COORDINATOR'));
     const title = document.createElement('h2');
     title.textContent = item.title;
     const desc = document.createElement('p');
     desc.textContent = item.excerpt || '';
     copy.append(label, title);
-    if(item.date){
+    if(item.date && !item.time){
       const dateLine = document.createElement('p');
       dateLine.textContent = formatNewsDate(item.date);
       copy.appendChild(dateLine);
     }
     if(desc.textContent) copy.appendChild(desc);
+    let countdown;
+    let videoLink;
+    if(item.date && item.time){
+      const targetTime = new Date(`${item.date}T${item.time}:00+07:00`).getTime();
+      countdown = document.createElement('div');
+      countdown.className = 'upcoming-countdown';
+      countdown.setAttribute('role', 'timer');
+      countdown.setAttribute('aria-label', `Countdown to ${item.title}`);
+      countdown.setAttribute('aria-live', 'off');
+      const countdownHeading = document.createElement('span');
+      countdownHeading.className = 'upcoming-countdown-heading';
+      countdownHeading.textContent = `Time left until ${item.title}`;
+      countdown.appendChild(countdownHeading);
+      const values = ['Days', 'Hours', 'Minutes', 'Seconds'].map(unit=>{
+        const segment = document.createElement('div');
+        segment.className = 'upcoming-countdown-unit';
+        const value = document.createElement('strong');
+        const label = document.createElement('span');
+        label.textContent = unit;
+        segment.append(value, label);
+        countdown.appendChild(segment);
+        return value;
+      });
+      let intervalId;
+      const updateCountdown = ()=>{
+        const remaining = targetTime - Date.now();
+        if(remaining <= 0){
+          countdown.classList.add('is-complete');
+          countdown.textContent = 'The event has started.';
+          if(intervalId) clearInterval(intervalId);
+          return;
+        }
+        let seconds = Math.floor(remaining / 1000);
+        const amounts = [
+          Math.floor(seconds / 86400),
+          Math.floor((seconds % 86400) / 3600),
+          Math.floor((seconds % 3600) / 60),
+          seconds % 60
+        ];
+        amounts.forEach((amount, index)=>{
+          values[index].textContent = String(amount).padStart(2, '0');
+        });
+      };
+      updateCountdown();
+      if(targetTime > Date.now()) intervalId = setInterval(updateCountdown, 1000);
+      if(item.videoUrl){
+        videoLink = document.createElement('a');
+        videoLink.className = 'upcoming-video-link';
+        videoLink.href = item.videoUrl;
+        videoLink.target = '_blank';
+        videoLink.rel = 'noopener noreferrer';
+        videoLink.textContent = `Watch ${item.title} Trailer`;
+      }
+    }
     article.appendChild(copy);
+    if(countdown) article.appendChild(countdown);
+    if(videoLink) article.appendChild(videoLink);
     list.appendChild(article);
   });
 }
@@ -727,7 +759,7 @@ function openNews(item){
   const orgLabel = item.organization || (item.org === 'joint' ? 'SLC & TVC' : (item.org || '').toUpperCase());
   document.getElementById('newsModalTags').innerHTML = `${orgLabel ? `<span class="news-tag org-${item.org}">${orgLabel}</span>` : ''}${item.type ? `<span class="news-tag type">${item.type}</span>` : ''}<div class="event-org-logos" id="newsModalLogos" aria-label="Organizing organizations"></div>`;
   appendStatusBadge(document.getElementById('newsModalTags'), item.date);
-  renderEventOrgLogos(document.getElementById('newsModalLogos'), item.org, item.logo, item.logoAlt);
+  renderEventOrgLogos(document.getElementById('newsModalLogos'), item.org, item.logo, item.logoAlt, item.logos);
   document.getElementById('newsModalTitle').textContent = item.title;
   document.getElementById('newsModalDate').textContent = item.date ? formatNewsDate(item.date) : '';
   const desc = document.getElementById('newsModalDesc');
@@ -783,7 +815,6 @@ renderSiteChrome();
 renderLeadershipStats();
 renderUpcoming();
 renderNews();
-renderLatestCompletedEvent();
 syncNewsToggle();
 
 ['slc','tvc'].forEach(key=>{
@@ -861,13 +892,12 @@ navButtons.forEach(btn=>{
 });
 document.querySelector('.nav-mark').addEventListener('click', ()=>goToPage('home'));
 document.querySelectorAll('[data-goto]').forEach(el=>{
-  el.addEventListener('click', ()=>goToPage(el.dataset.goto));
+  el.addEventListener('click', event=>{
+    event.preventDefault();
+    goToPage(el.dataset.goto);
+  });
 });
 window.addEventListener('popstate', ()=>goToPage(pageFromLocation(), { updateUrl:false }));
-document.querySelector('.hero-index-link[href="#footerContact"]').addEventListener('click', event=>{
-  event.preventDefault();
-  document.getElementById('footerContact').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
-});
 
 /* ========================= curtain reveal (initial load) ========================= */
 swapPage(currentPage);
@@ -893,17 +923,22 @@ if(finePointer && !reduceMotion){
   const ring = document.getElementById('cursorRing');
   const dot = document.getElementById('cursorDot');
   let rx=innerWidth/2, ry=innerHeight/2, mx=rx, my=ry;
+  let cursorFrame = 0;
   dot.style.left = mx+'px'; dot.style.top = my+'px';
   ring.style.left = rx+'px'; ring.style.top = ry+'px';
   window.addEventListener('mousemove', e=>{
     mx = e.clientX; my = e.clientY;
     dot.style.left = mx+'px'; dot.style.top = my+'px';
+    if(!cursorFrame) cursorFrame = requestAnimationFrame(loop);
   });
-  (function loop(){
+  function loop(){
+    cursorFrame = 0;
     rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
     ring.style.left = rx+'px'; ring.style.top = ry+'px';
-    requestAnimationFrame(loop);
-  })();
+    if(Math.abs(mx-rx) > 0.1 || Math.abs(my-ry) > 0.1){
+      cursorFrame = requestAnimationFrame(loop);
+    }
+  }
   const hoverables = 'a, button, select, .member-card, .leader-card, .hero-crest, .nav-mark, .news-card, .news-modal-close';
   document.addEventListener('mouseover', e=>{
     if(e.target.closest(hoverables)) ring.classList.add('hover');
@@ -950,7 +985,7 @@ function createEmberField(canvasEl, opts){
   if(!canvasEl) return;
   const cfg = Object.assign({count:40, colors:['240,168,60'], speedMin:0.15, speedMax:0.55}, opts);
   const ctx = canvasEl.getContext('2d');
-  let w,h,particles;
+  let w,h,particles,frameId=0,isVisible=false;
   function resize(){
     w = canvasEl.width = canvasEl.offsetWidth;
     h = canvasEl.height = canvasEl.offsetHeight;
@@ -967,6 +1002,8 @@ function createEmberField(canvasEl, opts){
     }));
   }
   function tick(){
+    frameId = 0;
+    if(!isVisible || document.hidden) return;
     ctx.clearRect(0,0,w,h);
     particles.forEach(p=>{
       p.y -= p.speed;
@@ -977,8 +1014,29 @@ function createEmberField(canvasEl, opts){
       ctx.fillStyle = `rgba(${p.hue},${p.alpha})`;
       ctx.fill();
     });
-    requestAnimationFrame(tick);
+    frameId = requestAnimationFrame(tick);
+  }
+  function stop(){
+    if(frameId) cancelAnimationFrame(frameId);
+    frameId = 0;
+  }
+  function updateVisibility(visible){
+    isVisible = visible;
+    if(isVisible && !document.hidden){
+      if(!frameId) frameId = requestAnimationFrame(tick);
+    }else{
+      stop();
+    }
   }
   window.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', ()=>updateVisibility(isVisible));
   resize(); makeParticles(); tick();
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(entries=>{
+      updateVisibility(entries[0].isIntersecting);
+    });
+    observer.observe(canvasEl);
+  }else{
+    updateVisibility(true);
+  }
 }
