@@ -17,6 +17,7 @@
  * @property {string} [organization]
  * @property {string} [logo]
  * @property {string} [logoAlt]
+ * @property {Array<{key:string,src:string,alt:string}>} [logos]
  * @property {'Event'|'Schedule'} [type]
  * @property {string} title
  * @property {string} [excerpt]
@@ -47,15 +48,15 @@ const SITE = {
 
 const ORGS = {
   slc: {
-    description: 'A student organization at Al Izzah Boys’ Senior High School that designs activities and develops students’ potential through its divisions, encouraging them to take initiative, serve, and contribute to the school community.',
+    description: 'A student organization at Al Izzah Senior High School that designs activities and develops students’ potential through its divisions, encouraging them to take initiative, serve, and contribute to the school community.',
     leader:   { name: 'Rifky Azril Ar Rahman', role: 'Leader', line: 'Leading the Student Leader Community for the 2026–2027 term.', img: 'image/Ketua-wakil/Ketua_SLC.webp', quote: 'From: Jombang' },
     coLeader: { name: 'Muhammad Atthaya Rasyendria', role: 'Vice Leader', line: 'Supporting coordination and the work of every division.', img: 'image/Ketua-wakil/Wakil_SLC.webp', quote: 'From: Samarinda' },
     divisions: [
       { name: 'Daily Manager', description: 'Managing administration, correspondence, schedules, and financial records to keep the organization running smoothly.', members: [
-        {name:'Fathan Rafif Athaya', role:'Denpasar', unit:'Secretary', img:"image/anggota/SLC/Daily Manager/10. FATHAN RAFIF ATHAYA_converted_result.webp"},
-        {name:'Zhaahir Ali Prabelio', role:'Jombang', unit:'Secretary', img:"image/anggota/SLC/Daily Manager/26. ZHAAHIR ALI PRABELIO_converted_result.webp"},
-        {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', unit:'Treasurer', img:"image/anggota/SLC/Daily Manager/22. RAMAIZAN ROISUR R_converted_result.webp"},
-        {name:'Luthfi Rafif Arkana', role:'Jayapura', unit:'Treasurer', img:"image/anggota/SLC/Daily Manager/15. LUTHFI RAFIF ARKANA_converted_result.webp"},
+        {name:'Fathan Rafif Athaya', role:'Denpasar', unit:'Sekretaris', img:"image/anggota/SLC/Daily Manager/10. FATHAN RAFIF ATHAYA_converted_result.webp"},
+        {name:'Zhaahir Ali Prabelio', role:'Jombang', unit:'Sekretaris', img:"image/anggota/SLC/Daily Manager/26. ZHAAHIR ALI PRABELIO_converted_result.webp"},
+        {name:'Ramaizan Roisur Rukhaim', role:'Sidoarjo', unit:'Bendahara', img:"image/anggota/SLC/Daily Manager/22. RAMAIZAN ROISUR R_converted_result.webp"},
+        {name:'Luthfi Rafif Arkana', role:'Jayapura', unit:'Bendahara', img:"image/anggota/SLC/Daily Manager/15. LUTHFI RAFIF ARKANA_converted_result.webp"},
       ]},
       { name: 'Keamanan', description: 'Helping maintain order, discipline, and safety for students and across the school community.', members: [
         {name:'Mirzadinata Setiyawan', role:'Sidoarjo', img:"image/anggota/SLC/Keamanan/11. MIRZADINATA SETIYAWAN_converted_result.webp"},
@@ -70,16 +71,16 @@ const ORGS = {
         {name:'Ahmad Mutanabbi Mirawanto', role:'Malang', img:"image/anggota/SLC/Keamanan/3. AHMAD MUTANABBI M_converted_result.webp"},
       ]},
       { name: 'Multimedia', description: 'Documenting activities and preparing visual content and communications for the organization.', members: [
-        {name:'Ahmad Farel Panatagama', role:'Tulungagung', img:"image/anggota/SLC/Multimedia/2. A FAREL PANATAGAMA_converted_result.webp"},
-        {name:'Queenzy Hafidhu Zikry', role:'Semarang', img:"image/anggota/SLC/Multimedia/23. QUEENZY HAFIDHU ZIKRY_converted_result.webp"},
-        {name:'Alif Luqmanurrahman Pradhana', role:'Malang', img:"image/anggota/SLC/Multimedia/6. ALIF LUQMANURRAHMAN P_converted_result.webp"},
-        {name:'Muhammad Thoriq Akbar', role:'Malang', img:"image/anggota/SLC/Multimedia/17. MUH THORIQ AKBAR_converted_result.webp"},
-        {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:"image/anggota/SLC/Multimedia/17. KENZIE AFHAM MAHIJA J_converted_result.webp"},
-        {name:'Ali Qiyal Mukhlis', role:'Lampung', img:"image/anggota/SLC/Multimedia/5. ALI QIYAL MUKHLIS_converted_result.webp"},
-        {name:'Faith Athallah Efendi', role:'Tuban', unit:'Website Manager', img:"image/anggota/SLC/Multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
-        {name:'Abdurrahman', role:'Samarinda', img:"image/anggota/SLC/Multimedia/1. ABDURRAHMAN_converted_result.webp"},
-        {name:'Akasyah Zafran Ghifari', role:'Gresik', img:"image/anggota/SLC/Multimedia/1. AKASYAH ZAFRAN GHIFARI_converted_result.webp"},
-        {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:"image/anggota/SLC/Multimedia/13. LUTFI REZA RAMADHAN R_converted_result.webp"},
+        {name:'Ahmad Farel Panatagama', role:'Tulungagung', img:"image/anggota/SLC/multimedia/2. A FAREL PANATAGAMA_converted_result.webp"},
+        {name:'Queenzy Hafidhu Zikry', role:'Semarang', img:"image/anggota/SLC/multimedia/23. QUEENZY HAFIDHU ZIKRY_converted_result.webp"},
+        {name:'Alif Luqmanurrahman Pradhana', role:'Malang', img:"image/anggota/SLC/multimedia/6. ALIF LUQMANURRAHMAN P_converted_result.webp"},
+        {name:'Muhammad Thoriq Akbar', role:'Malang', img:"image/anggota/SLC/multimedia/17. MUH THORIQ AKBAR_converted_result.webp"},
+        {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:"image/anggota/SLC/multimedia/17. KENZIE AFHAM MAHIJA J_converted_result.webp"},
+        {name:'Ali Qiyal Mukhlis', role:'Lampung', img:"image/anggota/SLC/multimedia/5. ALI QIYAL MUKHLIS_converted_result.webp"},
+        {name:'Faith Athallah Efendi', role:'Tuban', unit:'Website Manager', img:"image/anggota/SLC/multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
+        {name:'Abdurrahman', role:'Samarinda', img:"image/anggota/SLC/multimedia/1. ABDURRAHMAN_converted_result.webp"},
+        {name:'Akasyah Zafran Ghifari', role:'Gresik', img:"image/anggota/SLC/multimedia/1. AKASYAH ZAFRAN GHIFARI_converted_result.webp"},
+        {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:"image/anggota/SLC/multimedia/13. LUTFI REZA RAMADHAN R_converted_result.webp"},
       ]},
       { name: 'Dakwah Masjid', description: 'Supporting outreach and worship activities at the mosque, and helping keep it welcoming and orderly.', members: [
         {name:'Kiagus M Daffa Agha Afkar', role:'Sangatta', img:"image/anggota/SLC/Dakwah Masjid/7. KIAGUS M DAFFA AGHA A_converted_result.webp"},
@@ -229,7 +230,7 @@ const ORGS = {
     ]
   },
   tvc: {
-    description: 'The Vanguard Coordinator is a student organization at Al Izzah Boys’ Senior High School focused on Scouting and coordinating divisions and activities. While SLC designs activities and develops student potential, TVC helps ensure plans are carried out responsibly and in an orderly manner.',
+    description: 'The Vanguard Coordinator is a student organization at Al Izzah Senior High School focused on Scouting and coordinating divisions and activities. While SLC designs activities and develops student potential, TVC helps ensure plans are carried out responsibly and in an orderly manner.',
     leader:   { name: 'Yusuf Hazim Suyitno', role: 'Leader', line: 'Leading The Vanguard Coordinator.', img: 'image/Ketua-wakil/Ketua_TVC.webp', quote: 'From: Jakarta' },
     coLeader: { name: 'Muhammad Alfaruq Ardiansyah', role: 'Vice Leader', line: 'Supporting coordination for The Vanguard Coordinator.', img: 'image/Ketua-wakil/Wakil_TVC.webp', quote: 'From: Makassar' },
     divisions: [
@@ -286,15 +287,15 @@ const ORGS = {
 
 /* TODO(user): Add event stories and photo captions when available ({src, caption}). */
 const NEWS = [
-  {date:'2026-10-04',org:'joint',type:'Event',title:'Murobi Cup & Artshow',excerpt:'Highlights from the Murobi Cup and Artshow, held on Sunday, October 4, 2026.',story:'The Murobi Cup and Artshow took place on Sunday, October 4, 2026.',images:['image/events/Murobicup & Artshow/murobicup1.webp','image/events/Murobicup & Artshow/murobicup2.webp','image/events/Murobicup & Artshow/murobicup3.webp']},
-  {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'A celebration of Indonesia’s Independence Day, featuring a ceremony and a variety of competitions at Al Izzah Batu.',story:'The Independence Day Committee (IDC) celebrated Indonesia’s Independence Day with a ceremony and a variety of competitions. The event honored the nation’s struggle while fostering unity, sportsmanship, and patriotism at Al Izzah Batu.',images:['image/events/IDC/idc1.webp','image/events/IDC/idc2.webp','image/events/IDC/idc3.webp']},
-  {date:'2026-10-01',org:'school',organization:'School',logo:'image/events/AZKAR/azkar-logo.webp',logoAlt:'AZKAR logo',type:'Event',title:'AZKAR: Ajang Zona Kreativitas dan Apresiasi Remaja',excerpt:'A celebration of Language Month through AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja).',story:'AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja) was organized by the school to celebrate Language Month.',images:['image/events/AZKAR/azkar1.webp','image/events/AZKAR/azkar2.webp','image/events/AZKAR/azkar3.webp']},
-  {date:'2026-09-16',org:'slc',type:'Schedule',title:'JMQ: Jam’iyatul Qurra Selection Test',excerpt:'Selection for Jam’iyatul Qurra participants at Al Izzah Batu.',story:'The Jam’iyatul Qurra (JMQ) selection test was held on September 16, 2026. The gallery features photos from the organization’s local archive.',images:['image/events/JMQ/jmq1.webp','image/events/JMQ/jmq2.webp','image/events/JMQ/jmq3.webp']},
-  {date:'2026-09-12',org:'tvc',type:'Event',title:'Scouting: Opening Ceremony',excerpt:'The opening of a Scouting event with Al Izzah Batu students.',story:'The Scouting opening ceremony marked the start of a series of development and Scouting activities for students at Al Izzah Batu.',images:['image/events/Pembukaan Pramuka/pramuka1.webp','image/events/Pembukaan Pramuka/pramuka2.webp','image/events/Pembukaan Pramuka/pramuka3.webp']},
-  {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/events/DPP/dpp-logo.png',logoAlt:'DPP logo',type:'Event',title:'DPP: Leadership Handover Board',excerpt:'A moment to transfer leadership responsibilities and formally hand over duties between SLC and TVC.',story:'The Leadership Handover Board (DPP) marked the transfer of leadership responsibilities between the Student Leader Community and The Vanguard Coordinator.',images:['image/events/DPP/dpp1.webp','image/events/DPP/dpp2.webp','image/events/DPP/dpp3.webp']},
+  {date:'2026-10-04',org:'joint',organization:'SLC',logos:[{key:'murobi-cup',src:'image/Logo/Logo_MC.webp',alt:'Murobi Cup logo'},{key:'artshow',src:'image/Logo/Logo_AS.webp',alt:'Artshow logo'}],type:'Event',title:'Murobi Cup & Artshow',excerpt:'Highlights from the Murobi Cup and Artshow, held on Sunday, October 4, 2026.',story:'The Murobi Cup and Artshow took place at Al Izzah Batu on Sunday, October 4, 2026, bringing together a sporting competition and a student art showcase. This gallery captures highlights from both activities and celebrates the students’ participation and creativity.',images:['image/events/Murobicup & Artshow/murobicup1.webp','image/events/Murobicup & Artshow/murobicup2.webp','image/events/Murobicup & Artshow/murobicup3.webp']},
+  {date:'2026-08-17',org:'joint',type:'Event',title:'IDC: Independence Day Committee',excerpt:'A celebration of Indonesia’s Independence Day, featuring a ceremony and a variety of competitions at Al Izzah Batu.',story:'The Independence Day Committee (IDC) celebrated Indonesia’s Independence Day with a ceremony and a variety of competitions. The event honored the nation’s struggle while bringing students together and fostering unity, sportsmanship, and patriotism at Al Izzah Batu.',images:['image/events/IDC/idc1.webp','image/events/IDC/idc2.webp','image/events/IDC/idc3.webp']},
+  {date:'2026-10-01',org:'school',organization:'School',logo:'image/events/AZKAR/azkar-logo.webp',logoAlt:'AZKAR logo',type:'Event',title:'AZKAR: Ajang Zona Kreativitas dan Apresiasi Remaja',excerpt:'A celebration of Language Month through AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja).',story:'AZKAR (Ajang Zona Kreativitas dan Apresiasi Remaja) was organized by the school to celebrate Language Month. The program put a focus on creativity, appreciation, and student expression through an event dedicated to language and young people.',images:['image/events/AZKAR/azkar1.webp','image/events/AZKAR/azkar2.webp','image/events/AZKAR/azkar3.webp']},
+  {date:'2026-09-16',org:'slc',type:'Schedule',title:'JMQ: Jam’iyatul Qurra Selection Test',excerpt:'Selection for Jam’iyatul Qurra participants at Al Izzah Batu.',story:'The Jam’iyatul Qurra (JMQ) selection test was held at Al Izzah Batu on September 16, 2026. The selection gave prospective participants an opportunity to take part in the process of joining the organization, with moments from the event preserved in this gallery.',images:['image/events/JMQ/jmq1.webp','image/events/JMQ/jmq2.webp','image/events/JMQ/jmq3.webp']},
+  {date:'2026-09-12',org:'tvc',type:'Event',title:'Scouting: Opening Ceremony',excerpt:'The opening of a Scouting event with Al Izzah Batu students.',story:'The Scouting opening ceremony marked the start of a series of development and Scouting activities for students at Al Izzah Batu. It brought participants together at the beginning of the program and set the stage for the activities that followed.',images:['image/events/Pembukaan Pramuka/pramuka1.webp','image/events/Pembukaan Pramuka/pramuka2.webp','image/events/Pembukaan Pramuka/pramuka3.webp']},
+  {date:'2026-08-22',org:'joint',organization:'SLC & TVC',logo:'image/events/DPP/dpp-logo.png',logoAlt:'DPP logo',type:'Event',title:'DPP: Leadership Handover Board',excerpt:'A moment to transfer leadership responsibilities and formally hand over duties between SLC and TVC.',story:'The Leadership Handover Board (DPP) marked the transfer of leadership responsibilities between the Student Leader Community and The Vanguard Coordinator. This formal transition recognized the change in responsibilities and the continuation of leadership service across both student organizations.',images:['image/events/DPP/dpp1.webp','image/events/DPP/dpp2.webp','image/events/DPP/dpp3.webp']},
 ];
 
 /* Undated events are kept here and are not included in completed activity totals. */
 const UPCOMING = [
-  {title:'COSMOTION', excerpt:'A Scouting event for the special units of each troop.'},
+  {date:'2026-11-19', time:'07:00', organization:'The Vanguard Coordinator', title:'COSMOTION', excerpt:'A Scouting event for the special units of each troop.', image:'image/events/Cosmotion/cosmotion_1.webp', videoUrl:'https://youtu.be/czYH4FyNl2I'},
 ];
