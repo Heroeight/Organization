@@ -77,7 +77,7 @@ const ORGS = {
         {name:'Muhammad Thoriq Akbar', role:'Malang', img:"image/anggota/SLC/multimedia/17. MUH THORIQ AKBAR_converted_result.webp"},
         {name:'Kenzie Afham Mahija Jati', role:'Bojonegoro', img:"image/anggota/SLC/multimedia/17. KENZIE AFHAM MAHIJA J_converted_result.webp"},
         {name:'Ali Qiyal Mukhlis', role:'Lampung', img:"image/anggota/SLC/multimedia/5. ALI QIYAL MUKHLIS_converted_result.webp"},
-        {name:'Faith Athallah Efendi', role:'Tuban', unit:'Website Manager', img:"image/anggota/SLC/multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
+        {name:'Faith Athallah Efendi', role:'Tuban', img:"image/anggota/SLC/multimedia/11. FAITH ATHALLAH EFENDI_converted_result.webp"},
         {name:'Abdurrahman', role:'Samarinda', img:"image/anggota/SLC/multimedia/1. ABDURRAHMAN_converted_result.webp"},
         {name:'Akasyah Zafran Ghifari', role:'Gresik', img:"image/anggota/SLC/multimedia/1. AKASYAH ZAFRAN GHIFARI_converted_result.webp"},
         {name:'Lutfi Reza Ramadhan Rifa\'i', role:'Batu', img:"image/anggota/SLC/multimedia/13. LUTFI REZA RAMADHAN R_converted_result.webp"},
@@ -297,5 +297,5 @@ const NEWS = [
 
 /* Undated events are kept here and are not included in completed activity totals. */
 const UPCOMING = [
-  {date:'2026-11-19', time:'07:00', organization:'The Vanguard Coordinator', title:'COSMOTION', excerpt:'A Scouting event for the special units of each troop.', image:'image/events/Cosmotion/cosmotion_1.webp', videoUrl:'https://youtu.be/czYH4FyNl2I'},
+  {date:'2026-11-22', time:'07:00', organization:'Student Leader Community', title:'Pekan Olahraga Santri', excerpt:'A sporting event for students to compete and build teamwork.', image:'image/events/POS/POS_1.webp'},
 ];
