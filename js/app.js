@@ -498,9 +498,11 @@ function renderUpcoming(){
     }
     const copy = document.createElement('div');
     copy.className = 'upcoming-event-copy';
+    const labelText = item.organization || eventStatusLabel(item.date);
     const label = document.createElement('div');
     label.className = 'upcoming-event-label';
-    label.appendChild(document.createTextNode(item.organization || eventStatusLabel(item.date) || 'THE VANGUARD COORDINATOR'));
+    if(labelText) label.appendChild(document.createTextNode(labelText));
+    else label.hidden = true;
     const title = document.createElement('h2');
     title.textContent = item.title;
     const desc = document.createElement('p');
@@ -523,7 +525,7 @@ function renderUpcoming(){
       countdown.setAttribute('aria-live', 'off');
       const countdownHeading = document.createElement('span');
       countdownHeading.className = 'upcoming-countdown-heading';
-      countdownHeading.textContent = `Time left until ${item.title}`;
+      countdownHeading.textContent = 'Time left';
       countdown.appendChild(countdownHeading);
       const values = ['Days', 'Hours', 'Minutes', 'Seconds'].map(unit=>{
         const segment = document.createElement('div');
@@ -595,23 +597,6 @@ function renderLeadershipStats(){
   });
 }
 
-function svgIcon(name){
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('fill', 'currentColor');
-  const d = {
-    instagram: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.2A4.8 4.8 0 1 0 16.8 12 4.8 4.8 0 0 0 12 7.2zm0 7.9A3.1 3.1 0 1 1 15.1 12 3.1 3.1 0 0 1 12 15.1zM17.6 6.5a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z',
-    tiktok: 'M14.2 3h2.3c.2 2.1 1.4 3.6 3.5 3.8v2.3c-1.2 0-2.3-.4-3.3-1.1v6.7A6.7 6.7 0 1 1 9.9 8.1v2.5a4.2 4.2 0 1 0 4.3 4.2V3z',
-    youtube: 'M23 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C19.3 5.4 12 5.4 12 5.4s-7.3 0-8.8.4c-.9.2-1.6.9-1.8 1.8C1 9 1 12.2 1 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.5.4 8.8.4 8.8.4s7.3 0 8.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6zM9.8 15.6V8.8l6.2 3.4z',
-  }[name];
-  path.setAttribute('d', d);
-  svg.appendChild(path);
-  return svg;
-}
-
 function renderSiteChrome(){
   document.getElementById('slcOrgDescription').textContent = ORGS.slc.description;
   document.getElementById('tvcOrgDescription').textContent = ORGS.tvc.description;
@@ -648,7 +633,7 @@ function renderSiteChrome(){
       if(whatsapp) links.appendChild(document.createTextNode(' · '));
       const tel = document.createElement('a');
       tel.href = `tel:${phoneTel}`;
-      tel.textContent = 'Call';
+      tel.textContent = 'Faith';
       links.appendChild(tel);
     }
     row.appendChild(links);
@@ -663,24 +648,6 @@ function renderSiteChrome(){
     row.appendChild(mail);
     contactRoot.appendChild(row);
   }
-
-  const socials = document.getElementById('footerSocials');
-  socials.replaceChildren();
-  [
-    {key:'instagram', label:'Instagram'},
-    {key:'tiktok', label:'TikTok'},
-    {key:'youtube', label:'YouTube'},
-  ].forEach(({key, label})=>{
-    const href = SITE.social[key];
-    if(!href) return;
-    const a = document.createElement('a');
-    a.href = href;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', label);
-    a.appendChild(svgIcon(key));
-    socials.appendChild(a);
-  });
 
   const schoolLink = document.getElementById('footerSchoolLink');
   if(SITE.social.school){
@@ -861,6 +828,7 @@ function setMark(key){
 function swapPage(key){
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === key));
   navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === key));
+  document.querySelector('.nav').classList.remove('nav-hidden');
   currentPage = key;
   window.scrollTo(0, 0);
   ensureField(key);
@@ -974,10 +942,19 @@ if(!reduceMotion){
 /* ========================= stat count-up ========================= */
 /* ========================= nav scroll progress ========================= */
 const progressBar = document.getElementById('navProgress');
+let lastNavScrollY = window.scrollY;
 window.addEventListener('scroll', ()=>{
   const h = document.documentElement;
   const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
   progressBar.style.width = pct + '%';
+  const currentY = window.scrollY;
+  const nav = document.querySelector('.nav');
+  if(currentY < 80 || currentY < lastNavScrollY - 6){
+    nav.classList.remove('nav-hidden');
+  }else if(currentY > lastNavScrollY + 6){
+    nav.classList.add('nav-hidden');
+  }
+  lastNavScrollY = currentY;
 }, { passive:true });
 
 /* ========================= ember particles ========================= */
