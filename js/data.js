@@ -297,5 +297,5 @@ const NEWS = [
 
 /* Undated events are kept here and are not included in completed activity totals. */
 const UPCOMING = [
-  {date:'2026-11-22', time:'07:00', organization:'Student Leader Community', title:'Pekan Olahraga Santri', excerpt:'A sporting event for students to compete and build teamwork.', image:'image/events/POS/POS_1.webp'},
+  {date:'2026-11-29', time:'07:00', organization:'Student Leader Community', title:'Pekan Olahraga Santri', excerpt:'A sporting event for students to compete and build teamwork.', image:'image/events/POS/POS_1.webp'},
 ];
